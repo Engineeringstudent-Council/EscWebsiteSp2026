@@ -1,0 +1,76 @@
+/*Title Section*/
+#title-wrapper {
+	height: 100%;
+	width: 100%;
+	background-color: #34495e; 
+	overflow: hidden;
+}
+
+#title {
+	margin: .5em auto; /*Top margin push under nav bar*/
+	width: 80%;
+    
+    color: white;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    font-size: 4em;
+    text-align: center;
+
+    border-bottom: white solid 0.05em;
+}
+
+/*Our Mission Section*/
+#mission-section {
+	height: 40em;
+	overflow: hidden;
+}
+
+#mission-text {
+	margin: auto;
+	width: 80%;
+	height: 100%;
+
+
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 100;
+    text-align: center;
+}
+
+#mission-details {
+	padding: 1em;
+}
+
+/*Box shadows */
+#mission-description, .mission-service {
+	padding: 2em;
+	border: gray solid 0.025em;
+}
+
+.mission-service {
+	display: inline-block;
+	margin: .5em;
+	width: 25%;
+	height: 23em;
+	overflow: hidden;
+}
+
+.service-icon img {
+	margin-top: 2em;
+}
+
+.service-title {
+	margin: .5em;
+    font-size: 2em;
+}
+
+#mission-description, .service-description {
+    font-size: 1em;
+    line-height: 1.8;
+    color: #7f7f7f;
+    font-family: "Lato";
+}
+
+
+
+
+

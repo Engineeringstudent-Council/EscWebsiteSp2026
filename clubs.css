@@ -1,0 +1,111 @@
+/*Page Title Section*/
+#page-wrapper {
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
+	font-family: "Lato", sans-serif;
+
+}
+
+.title {
+	font-size: 2em;
+	font-weight: bold;
+	margin: 0 .5em;
+}
+
+.category {
+	width: 42em;
+	position: relative;
+	vertical-align: top;
+	margin-bottom: 3em;
+
+	padding: 1em;
+}
+
+.category ul {
+	margin: 1em 1em;
+
+}
+
+.category li {
+	line-height: 2;
+}
+
+.category ul a {
+	color: #ffffff;
+	font-weight: lighter;
+	padding: 0 1em;
+	display: block;
+}
+
+.category li:hover {
+	background-color: #000066;
+}
+
+.category li:hover > a {
+	color: white;
+}
+
+#search {
+	top: 17.3em;
+	right: 13em;
+	margin: .5em;
+	padding: 1em;
+
+}
+
+
+#categoryUL li {
+    margin-top: -1px; /* Prevent double borders */
+    padding: .5em; /* Add some padding */
+    font-size: 16px; /* Increase the font-size */
+    color: #FBB03B; /* Add a black text color */
+    display: block; /* Make it into a block element to fill the whole list */
+    font-weight: 200;
+}
+
+#categoryUL li:hover{
+	color: white;
+    background-color: #000066; /* Add a hover effect to all links, except for headers */
+}
+
+@media only screen and (max-width: 1000px) {
+    #search {
+        display: none;
+    }
+		.category li{
+				font-size:9px;
+	}
+}
+
+/* Acordion Help Section Styling */
+
+ /* Style the buttons that are used to open and close the accordion panel */
+.accordion {
+  font-size: 12px;
+  text-align: left;
+  background-color: #7c7c82;
+  color: #444;
+  cursor: pointer;
+  padding: 3px;
+  width: 100%;
+  text-align: left;
+  border: none;
+  outline: none;
+  transition: 0.4s;
+}
+
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+.active, .accordion:hover {
+  background-color: #071966;
+}
+
+/* Style the accordion panel. Note: hidden by default */
+#acor_pan {
+  padding: 0 15px;
+  background-color: #7c7c82;;
+  color: white;
+  max-height: 0px;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+}

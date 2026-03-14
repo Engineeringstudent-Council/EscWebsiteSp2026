@@ -1,0 +1,65 @@
+#page-wrapper {
+	position: fixed;
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
+}
+
+/*Box shadows */
+#mission-header, .mission-service {
+	padding: 2em;
+	border: gray solid 0.025em;
+}
+
+#mission-text {
+	position: absolute;
+	right: 50%;
+	transform: translateX(50%);
+	top: 10%;
+	width: 100%;
+	height: 100%;
+
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 100;
+    text-align: center;
+}
+
+#mission-header {
+	width: 80%;
+	padding: 1em;
+	margin: auto;
+}
+
+#mission-title {
+	margin: .5em;
+    border-bottom: gray solid 0.025em;
+    font-size: 3em;
+}
+
+#mission-details {
+	padding: 1em;
+}
+
+.mission-service {
+	display: inline-block;
+	margin: .5em;
+	max-width: 20em;
+	height: 20em;
+	overflow: hidden;
+}
+
+.service-icon img {
+	margin-top: 2em;
+}
+
+.service-title {
+	margin: .5em;
+    font-size: 2em;
+}
+
+#mission-description, .service-description {
+    font-size: 1em;
+    line-height: 1.8;
+    color: #7f7f7f;
+    font-family: "Lato";
+}

@@ -1,0 +1,304 @@
+body {
+	margin: 0;
+    background-color: #f2f2f2;
+}
+
+a {
+    color: inherit;
+	text-decoration: none;
+}
+
+ul, li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* Top Bar */
+#top-bar {
+    position: fixed;
+    width: 100%;
+    background-color: rgba(43, 60, 78, .9); 
+    /*background-color: #34495e;*/
+    color: #fff;
+    z-index: 10;
+    border-bottom: #0d0d0d solid 0.05em;
+    box-shadow: 2px 2px 4px #4D4D4D;
+}
+
+/*Logo*/
+#organization-logo {
+    padding: 0.625em;
+    margin-left: 3.125em;
+    height: 1.85em;
+    float: left;
+}
+
+#organization-logo img {
+    height: 100%;
+}
+
+/*Nav and Items*/
+nav {
+	display: block;
+    float: right;
+    /*height: 3.25em;*/
+    margin-right: 0.625em;
+    font-size: 1.15em;
+    /*font-family: "Lato", sans-serif;*/
+}
+
+nav ul li {
+    float: left;
+    position: relative;
+}
+
+nav ul li:hover > ul {
+    height: auto;
+    opacity: 1;
+    transform: translateY(2.65em);
+}
+
+nav ul ul {
+    position: absolute;
+    transform: translateY(-200%);
+    opacity: 0;
+    overflow: hidden;
+    z-index: 15;
+    background-color: #4f6f8f;
+    -moz-border-radius-bottomleft: 3px;
+    -webkit-border-bottom-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    -moz-border-radius-bottomright: 3px;
+    -webkit-border-bottom-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    -webkit-transition: opacity 125ms ease-in;
+    -moz-transition: opacity 125ms ease-in;
+    -o-transition: opacity 125ms ease-in;
+    transition: opacity 125ms ease-in;
+}
+
+nav ul ul li {
+    display: block;
+    position: relative;
+    top: 100%;
+    width: 100%;
+}
+
+
+nav ul ul li a {
+    display: block;
+    width: 100%;
+}
+
+.nav-title, .nav-subtitle {
+    float: left;
+    padding: .75em 1em;
+    transition: linear 0.2s;
+    -webkit-transition: linear 0.2s;
+    -moz-transition: linear 0.2s;
+
+    /*font-family: 'Lato', sans-serif;
+    letter-spacing: 2px;*/
+}
+
+.nav-subtitle {
+    width: 100%;
+}
+
+.nav-title:hover, .nav-subtitle:hover, #organization-logo:hover {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+/*nav a {
+    color: #fff;
+    display: inline;
+    font-size: 1.175em;
+    font-weight: 400;
+    padding: 10px 20px;
+    text-decoration: none;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-transition: all 125ms ease-in;
+    -moz-transition: all 125ms ease-in;
+    -o-transition: all 125ms ease-in;
+    transition: all 125ms ease-in
+}
+
+nav a.selected {
+    color: #000;
+    font-weight: 600
+}
+
+nav a:active, nav a:hover {
+    background-color: rgba(255, 255, 255, 0.3)!important;
+    color: #000;
+    text-decoration: none
+}*/
+
+/*.nav-child-arrow-container {
+    display: none
+}*/
+
+/*#subnav {
+    background-color: #eee;
+    border-bottom: 1px solid gray;
+    -webkit-box-shadow: inset 0 0 5px #999;
+    -moz-box-shadow: inset 0 0 5px #999;
+    box-shadow: inset 0 0 5px #999
+}
+
+#subnav a {
+    color: #333;
+    font-size: 1em;
+    padding: 5px 15px
+}
+
+#subnav a:hover, #subnav a.selected {
+    background-color: #fff;
+    color: #000;
+    text-decoration: none;
+    -webkit-border-radius: .3em;
+    -moz-border-radius: .3em;
+    -ms-border-radius: .3em;
+    -o-border-radius: .3em;
+    border-radius: .3em
+}
+
+#subnav a.selected {
+    font-weight: 600
+}
+
+#subnav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 10px 0
+}*/
+
+
+
+/*@media only screen and (max-width: 820px){
+	nav ul{
+		padding:0;
+		top:0;
+	}
+
+	nav ul ul {
+        border: 0;
+        height: auto;
+        margin: 0;
+        opacity: 1;
+        position: static;
+        -webkit-border-radius: 0;
+        -moz-border-radius: 0;
+        -ms-border-radius: 0;
+        -o-border-radius: 0;
+        border-radius: 0;
+        -webkit-transition: none;
+        -moz-transition: none;
+        -o-transition: none;
+        transition: none
+    }
+
+    nav ul ul li {
+        background-color: rgba(0, 0, 0, 0.15);
+        width: 100%
+    }
+
+    nav ul ul li:hover {
+        background: none
+    }
+
+    nav ul ul a {
+        padding-left: 7%;
+        padding-right: 7%
+    }
+
+    nav a {
+        display: block;
+        padding: 6px 5%
+    }
+
+    nav a.selected {
+        background-color: rgba(255, 255, 255, 0.15)
+    }
+
+    nav>ul>li>a {
+        height: 38px
+    }
+
+    nav>ul>li>a.selected {
+        background-color: rgba(255, 255, 255, 0.23)
+    }
+
+    .nav-child-arrow-container {
+        background-color: rgba(0, 0, 0, 0.15);
+        cursor: pointer;
+        display: table;
+        height: 38px;
+        margin: 0;
+        position: absolute;
+        right: 0;
+        text-align: center;
+        top: 0;
+        width: 65px;
+        z-index: 80
+    }
+    .nav-child-arrow-container:hover {
+        background-color: rgba(255, 255, 255, 0.3)
+    }
+    .nav-child-arrow-container .nav-child-arrow {
+        display: table-cell;
+        font-size: 25px;
+        vertical-align: middle
+    }
+    .nav-child-arrow-container .nav-child-arrow.fa-caret-right {
+        padding-left: 3px
+    }
+
+    #subnav .selected>a {
+        background-color: #fff;
+        color: #000;
+        font-weight: 600;
+        text-decoration: none;
+        -webkit-border-radius: .3em;
+        -moz-border-radius: .3em;
+        -ms-border-radius: .3em;
+        -o-border-radius: .3em;
+        border-radius: .3em
+    }
+
+    #subnav {
+        display: none
+    }
+}*/
+
+/*Page Background*/
+#page-wrapper {
+    height: 100%;
+    width: 100%;
+    /*background-color: #34495e; */
+    overflow: hidden;
+}
+
+.card {
+    width: 80%;
+    height: 100%;
+    margin: 2em auto;
+    padding: 2em;
+    box-shadow: 3px 3px 20px 1px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+
+    background-color: #ffffff;
+}
+
+#title {
+    color: #34495e;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    font-size: 3em;
+    /*text-align: center;*/
+
+    border-bottom: #34495e solid 0.05em;
+}
