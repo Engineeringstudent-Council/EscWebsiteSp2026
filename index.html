@@ -20,6 +20,28 @@
 			   short one-paragraph hero. Trim it down for this shorter landing page. */
 			#banner:before { height: 42vh; }
 			#banner { min-height: 34vh; }
+
+			/* Fade the hero photo in once it's actually loaded, instead of it
+			   popping in over the navy fallback color. The fallback color and
+			   text stay visible immediately either way.
+			   #banner normally sets its own background-image directly (from the
+			   shared stylesheet) with #banner:after darkening it on top. We
+			   remove that native background here and re-create it as this one
+			   fadeable layer instead, in the same DOM position/stacking so the
+			   existing :after darkening overlay still applies on top of it
+			   exactly as before — otherwise we'd end up with two copies of the
+			   photo layered on top of each other. */
+			#banner { background-image: none; }
+			.banner-bg-fade {
+				position: absolute;
+				top: 0; left: 0; right: 0; bottom: 0;
+				background-image: url("images/ESC_banner.jpg");
+				background-position: center center;
+				background-size: cover;
+				opacity: 0;
+				transition: opacity 0.6s ease;
+			}
+			.banner-bg-fade.is-loaded { opacity: 1; }
 		</style>
 	</head>
 	<body class="is-preload">
@@ -33,6 +55,7 @@
 
 			<!-- Hero (same pattern as index.html's #banner) -->
 			<section id="banner">
+				<div class="banner-bg-fade" aria-hidden="true"></div>
 				<div class="content">
 					<header>
 						<center>
@@ -89,5 +112,18 @@
 
 
 		</div>
+
+		<script>
+			(function () {
+				var bg = document.querySelector('.banner-bg-fade');
+				if (!bg) { return; }
+				var img = new Image();
+				img.onload = function () { bg.classList.add('is-loaded'); };
+				img.src = 'images/ESC_banner.jpg';
+				// If it's already cached and loads instantly/synchronously in some
+				// browsers, make sure we still end up in the loaded state.
+				if (img.complete) { bg.classList.add('is-loaded'); }
+			})();
+		</script>
 	</body>
 </html>
