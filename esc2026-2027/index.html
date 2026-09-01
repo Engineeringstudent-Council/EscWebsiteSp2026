@@ -1,0 +1,94 @@
+<!DOCTYPE HTML>
+<!--
+	Engineering Student Council — 2026-2027 redesign preview
+	Staged at /esc2026-2027/ for review, not linked from the live site's nav.
+	Reuses the real ../assets/css/main.css and markup patterns already used
+	site-wide (index.html hero, mission.html content sections/header,
+	shared footer icon list) — not a custom stylesheet. Nothing else in this
+	repo was modified to add this preview.
+-->
+<html>
+	<head>
+		<title>Engineering Student Council</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel='icon' href='../favicon.ico'/ >
+		<link rel="stylesheet" href="../assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="../assets/css/noscript.css" /></noscript>
+		<style>
+			/* Scoped to this page only: the real #banner pattern reserves ~80vh
+			   for its centering trick, which leaves a huge empty gap under a
+			   short one-paragraph hero. Trim it down for this shorter landing page. */
+			#banner:before { height: 42vh; }
+			#banner { min-height: 34vh; }
+		</style>
+	</head>
+	<body class="is-preload">
+		<div id="page-wrapper">
+
+			<!-- Header: logo only, no nav/tabs -->
+			<header id="header">
+				<h1 id="logo"><a href="index.html">
+					<span class="image"><img src="../images/MAIN_long_nobackground.png" alt="Engineering Student Council" height="90" width="244" style="width:auto;"/></span></a></h1>
+			</header>
+
+			<!-- Hero (same pattern as index.html's #banner) -->
+			<section id="banner">
+				<div class="content">
+					<header>
+						<center>
+						<h1 style="color:#FFFFFF;font-weight:bold;">Engineering Student Council</h1>
+						<h3 style="color:#FFFFFF;font-style:italic;"> For over 30 years, ESC has been responsible for handling and disbursing ASUC funds to engineering student organizations. We also help run the College of Engineering's Blue &amp; Gold certification program as
+							well as one of the largest engineering themed events on campus: Engineers' Week (E-Week). </h3>
+						</center>
+					</header>
+				</div>
+			</section>
+
+			<!-- Mission: the real boxed treatment from index.html's own homepage blurb -->
+			<div id="main" class="container" style="padding:2.75em 0 2.25em;">
+				<div style="box-shadow: 0 0.075em 1em 0 rgba(0,0,0,0.2); padding:2.5em 2em; margin: 0 0 1em 0;">
+					<center><h2 style="font-size:30px;color:#000066;font-style:italic;">Our mission is to represent the engineering student body,
+					support engineering groups in reaching their full potential,
+					and promote a diverse community through successful collaboration
+					between students, faculty, groups, and the College of Engineering.</h2></center>
+				</div>
+			</div>
+
+			<!-- Footer: real structure from bottom-bar.js — logo embedded alongside About Us, like the live site -->
+			<footer id="footer" style="margin-top:2em;background:#f4f4f4;">
+				<div style="max-width:1100px;margin:0 auto;padding:3.5em 1.5em 1.5em;">
+
+					<div style="display:grid;grid-template-columns:1.9fr 1fr 1fr;gap:2.5em;align-items:start;">
+						<div style="display:flex;gap:1.3em;align-items:flex-start;">
+							<span class="image" style="flex:0 0 auto;margin-top:0.15em;"><img src="../images/MAIN_nobackground.png" alt="Engineering Student Council Logo" height="120" style="width:auto;"/></span>
+							<div>
+								<p style="font-weight:bold;margin:0 0 0.6em;">About Us</p>
+								<p style="margin:0 0 1em;">Our mission is to represent the engineering student body; support engineering societies in reaching their full potential; and promote a diverse community through successful collaboration between students, faculty, societies, and the College of Engineering.</p>
+								<ul class="icons" style="margin:0;">
+									<li><a href="https://www.facebook.com/ESC.Berkeley" class="icon brands alt fa-facebook-f" target="_blank"><span class="label">Facebook</span></a></li>
+									<li><a href="https://www.instagram.com/berkeleyesc/" class="icon brands alt fa-instagram" target="_blank"><span class="label">Instagram</span></a></li>
+								</ul>
+							</div>
+						</div>
+						<div>
+							<p style="font-weight:bold;margin:0 0 0.6em;">Join the Team</p>
+							<p style="margin:0 0 1em;">Interested in getting involved with ESC? Fill out the application form to get started.</p>
+							<a href="https://docs.google.com/forms/d/e/1FAIpQLSekmRMjn2weQUrBLl4xukqHT9f-0daD28Pufqyeu30jSc1oHA/viewform?usp=sharing&ouid=108883144436249446366" target="_blank" class="button primary" style="height:2.4em;line-height:2.4em;padding:0 1.5em;font-size:14px;">Application Form</a>
+						</div>
+						<div>
+							<p style="font-weight:bold;margin:0 0 0.6em;">Contacting Us</p>
+							<p style="margin:0;">For general inquiries about the ESC, or if you are part of a company interested in partnering with the ESC, please email our presidents at, <a href="mailto:president@esc.studentorg.berkeley.edu">president@esc.studentorg.berkeley.edu</a>.</p>
+						</div>
+					</div>
+
+					<ul class="copyright" style="padding-top:2.5em;text-align:center;">
+						<li style="display:block;">&copy; 2026. All rights reserved | <a href="https://esc.berkeley.edu">Engineering Student Council</a> takes responsibility for this website and its content.</li>
+					</ul>
+				</div>
+			</footer>
+
+
+		</div>
+	</body>
+</html>
