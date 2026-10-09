@@ -1,0 +1,18 @@
+{
+  "about.html": [
+    "/images/SemesterReport/Fall_2019_Semester_Report.jpg",
+    "/images/SemesterReport/Spring_2020_Semester_Report.jpg"
+  ],
+  "execs.html": [
+    "/TBD",
+    "/exec2023/",
+    "/exec2023/Ryan_Kuo.jpg",
+    "/images/exec2022/",
+    "/images/exec2022/.jpeg",
+    "/images/exec2022/Davita_Verma.jpg"
+  ],
+  "hear.html": [
+    "/TableFilter/dist/tablefilter/style/tablefilter.css",
+    "/TableFilter/dist/tablefilter/tablefilter.js"
+  ]
+}
