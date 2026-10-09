@@ -112,3 +112,12 @@ escInsertHere('\
 </nav>\
 </header>\
 ');
+
+// Site search (⌘K / Ctrl+K). Loaded as a module so it never blocks the page.
+(function () {
+	var here = document.currentScript;
+	var s = document.createElement('script');
+	s.type = 'module';
+	s.src = here ? new URL('search/ui.js', here.src).href : 'assets/js/search/ui.js';
+	document.head.appendChild(s);
+})();
