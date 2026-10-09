@@ -1,0 +1,23 @@
+# Prettier only checks code that has been brought up to the modern
+# tooling standard. Legacy pages and vendored libraries are left
+# untouched on purpose: reformatting them would create huge diffs
+# and merge conflicts with teammates' in-progress work.
+*.html
+*.php
+*.css
+assets/
+!assets/js/search/
+TableFilter/
+old_ESC/
+exec2022/
+exec2023/
+exec2025/
+images/
+node_modules/
+package-lock.json
+.lighthouseci/
+playwright-report/
+test-results/
+.claude/
+top-bar.js
+tests/e2e/baselines/
