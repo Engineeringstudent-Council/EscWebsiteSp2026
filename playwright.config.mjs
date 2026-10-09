@@ -13,8 +13,16 @@ export default defineConfig({
     trace: 'retain-on-failure',
   },
   projects: [
-    { name: 'desktop', use: { ...devices['Desktop Chrome'] } },
-    { name: 'mobile', use: { ...devices['Pixel 7'] } },
+    {
+      name: 'desktop',
+      testIgnore: /mobile\.spec\.mjs$/,
+      use: { ...devices['Desktop Chrome'] },
+    },
+    {
+      name: 'mobile',
+      testMatch: /mobile\.spec\.mjs$/,
+      use: { ...devices['Pixel 7'] },
+    },
   ],
   webServer: {
     command: 'node scripts/serve.mjs',

@@ -17,8 +17,7 @@ const observedErrors = {};
 test.describe.configure({ mode: 'parallel' });
 
 for (const page of pages) {
-  test(`${page} loads cleanly`, async ({ page: tab, baseURL }, info) => {
-    test.skip(info.project.name !== 'desktop', 'asset checks run once, on desktop');
+  test(`${page} loads cleanly`, async ({ page: tab, baseURL }) => {
     const errors = new Set();
     const missing = new Set();
     tab.on('pageerror', (err) => errors.add(err.message));

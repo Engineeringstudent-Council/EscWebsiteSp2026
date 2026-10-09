@@ -20,8 +20,7 @@ const toCounts = (entries = []) =>
   );
 
 for (const page of pages) {
-  test(`${page} has no new accessibility violations`, async ({ page: tab }, info) => {
-    test.skip(info.project.name !== 'desktop', 'audited once, on desktop');
+  test(`${page} has no new accessibility violations`, async ({ page: tab }) => {
     await tab.goto(page, { waitUntil: 'load' });
     const { violations } = await new AxeBuilder({ page: tab })
       .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])

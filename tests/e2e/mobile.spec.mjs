@@ -6,8 +6,7 @@ import { test, expect } from './fixtures.mjs';
 const PAGES = ['students.html', 'clubs.html', 'faqs.html', 'events.html'];
 
 for (const page of PAGES) {
-  test(`${page} has working phone navigation`, async ({ page: tab }, info) => {
-    test.skip(info.project.name !== 'mobile', 'phone layout only');
+  test(`${page} has working phone navigation`, async ({ page: tab }) => {
     await tab.goto(page);
     await expect(tab.locator('#nav')).toBeHidden();
     const toggle = tab.locator('#titleBar .toggle');
@@ -20,8 +19,7 @@ for (const page of PAGES) {
   });
 }
 
-test('pages do not scroll sideways on a phone', async ({ page: tab }, info) => {
-  test.skip(info.project.name !== 'mobile', 'phone layout only');
+test('pages do not scroll sideways on a phone', async ({ page: tab }) => {
   for (const page of ['index.html', ...PAGES]) {
     await tab.goto(page);
     const overflow = await tab.evaluate(
