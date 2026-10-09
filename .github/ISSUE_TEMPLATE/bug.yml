@@ -1,0 +1,22 @@
+name: Something's broken
+description: A page, link, image, or feature on the site isn't working.
+labels: [bug]
+body:
+  - type: input
+    id: page
+    attributes:
+      label: Which page?
+      placeholder: https://esc.studentorg.berkeley.edu/hear.html
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened, and what did you expect?
+    validations:
+      required: true
+  - type: dropdown
+    id: device
+    attributes:
+      label: Device
+      options: [Desktop, Phone, Tablet]
