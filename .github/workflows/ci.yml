@@ -41,6 +41,26 @@ jobs:
       - run: npm ci
       - run: npm test
 
+  search:
+    name: Search index, relevance & stress
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - name: Check the committed index is fresh
+        # A warning, not a failure: teammates editing HTML shouldn't need
+        # Node. search-index.yml rebuilds the index on main automatically.
+        run: |
+          if ! npm run --silent check:search; then
+            echo "::warning file=assets/search/index.json::The search index is out of date. It will be rebuilt automatically when this merges, or run npm run build:search."
+          fi
+      - run: npm run test:stress
+
   e2e:
     name: Pages, accessibility & mobile (Playwright)
     runs-on: ubuntu-latest
