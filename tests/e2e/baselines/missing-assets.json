@@ -3,6 +3,10 @@
     "/images/SemesterReport/Fall_2019_Semester_Report.jpg",
     "/images/SemesterReport/Spring_2020_Semester_Report.jpg"
   ],
+  "eweek_overview.html": [
+    "/images/GalleryPhotos/Copy of IMG_2120.jpg",
+    "/images/GalleryPhotos/DSC_03.jpg"
+  ],
   "execs.html": [
     "/TBD",
     "/exec2023/",
@@ -10,6 +14,9 @@
     "/images/exec2022/",
     "/images/exec2022/.jpeg",
     "/images/exec2022/Davita_Verma.jpg"
+  ],
+  "gallery.html": [
+    "/images/GalleryPhotos/DSC_03.jpg"
   ],
   "hear.html": [
     "/TableFilter/dist/tablefilter/style/tablefilter.css",
