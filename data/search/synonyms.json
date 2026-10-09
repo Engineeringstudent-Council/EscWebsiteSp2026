@@ -1,0 +1,13 @@
+[
+  ["funding", "money", "grant", "reimbursement", "budget", "fund"],
+  ["club", "clubs", "org", "orgs", "organization", "organizations", "rso", "society", "societies"],
+  ["blue", "gold", "b&g", "certification", "certified"],
+  ["eweek", "e-week", "engineers week"],
+  ["mental", "wellness", "counseling", "therapy", "hear", "caps"],
+  ["food", "hungry", "pantry", "meals", "calfresh"],
+  ["housing", "apartment", "rent", "lease", "dorm"],
+  ["exec", "officers", "president", "leadership", "board"],
+  ["decal", "decals", "course"],
+  ["makerspace", "makerspaces", "laser", "3d printing", "prototype"],
+  ["tutoring", "tutor", "academic", "study"]
+]
