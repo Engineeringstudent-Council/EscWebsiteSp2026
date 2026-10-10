@@ -7,3 +7,4 @@ blob-report/
 .wrangler/
 .claude/
 coverage/
+.dev.vars*
