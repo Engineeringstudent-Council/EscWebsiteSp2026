@@ -168,8 +168,10 @@ const telemetry = (() => {
         const key = query.toLowerCase();
         if (sent.has(key)) return;
         sent.add(key);
-        const body = JSON.stringify({ q: query, page: location.pathname });
-        navigator.sendBeacon(endpoint, new Blob([body], { type: 'application/json' }));
+        // A plain string is sent as text/plain, a CORS-safelisted type, so the
+        // beacon needs no preflight. Only the query is sent (see
+        // workers/search-telemetry/README.md for what is stored).
+        navigator.sendBeacon(endpoint, JSON.stringify({ q: query }));
       }, 1500);
     },
     cancel() {
