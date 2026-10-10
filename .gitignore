@@ -7,3 +7,6 @@ blob-report/
 .wrangler/
 .claude/
 coverage/
+
+# Temporary pages written by end-to-end tests
+*.tmp.html
