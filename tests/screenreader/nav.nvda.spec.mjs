@@ -23,13 +23,17 @@ test.describe('NVDA', () => {
     const before = stateOf(button);
     expect(before, button).not.toBeNull();
 
-    // Activating it flips the announced state.
-    const after = before === 'collapsed' ? 'expanded' : 'collapsed';
+    // Activating it toggles the menu. Opening also moves focus to the first
+    // item, so the reader announces "expanded", the item, or both.
     const mark = (await nvda.spokenPhraseLog()).length;
     await nvda.act();
-    await expect.poll(() => spokenSince(nvda, mark)).toMatch(new RegExp(after, 'i'));
-
-    // Once open, the menu's first item is reachable right after the button.
-    if (after === 'expanded') await moveUntil(nvda, next, /our team/i, 10);
+    if (before === 'collapsed') {
+      await expect.poll(() => spokenSince(nvda, mark)).toMatch(/expanded|our team/i);
+      await expect
+        .poll(() => page.evaluate(() => document.activeElement?.textContent.trim()))
+        .toBe('Our Team');
+    } else {
+      await expect.poll(() => spokenSince(nvda, mark)).toMatch(/collapsed/i);
+    }
   });
 });
