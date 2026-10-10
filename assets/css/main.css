@@ -5067,6 +5067,45 @@ input, select, textarea {
 	text-underline-offset: 0.4em;
 }
 
+/* Open menus: the opener used to turn template gold (#FBB03B) on white,
+   about 1.9:1 contrast, which fails WCAG for everyone. It now keeps its
+   navy text and sits on a soft gold wash, distinct from the current-section
+   underline above. Same look for mouse hover and keyboard. */
+#header nav > ul > li.active > a,
+#header nav > ul > li.active > span {
+	color: #000066;
+	background-color: rgb(253 181 21 / 0.24);
+	border-radius: 0.3em;
+	box-shadow: 0 0 0 0.3em rgb(253 181 21 / 0.24);
+}
+
+.dropotron > li.active > a,
+.dropotron > li.active > span {
+	color: #000066;
+	background-color: rgb(253 181 21 / 0.24);
+	border-radius: 3px;
+}
+
+/* The template turns every link gold on hover (a:hover, !important). In
+   the nav that meant gold-on-white again, so menu items hover with the
+   same wash instead. Links in page content keep their gold hover. */
+#header nav > ul > li > a:hover,
+.dropotron > li > a:hover {
+	color: #000066 !important;
+}
+
+.dropotron > li > a:hover {
+	background-color: rgb(253 181 21 / 0.24);
+	border-radius: 3px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	#header nav > ul > li > a,
+	.dropotron > li > a {
+		transition: background-color 0.15s ease, box-shadow 0.15s ease;
+	}
+}
+
 /* Current page inside menus and the phone panel. */
 .dropotron a[aria-current="page"] {
 	font-weight: bold;
