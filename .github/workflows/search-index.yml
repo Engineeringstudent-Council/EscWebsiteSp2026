@@ -1,7 +1,9 @@
-name: Rebuild search index
+name: Rebuild search index and link previews
 
-# Keeps assets/search/index.json in sync with the site's HTML so nobody has
-# to remember to run `npm run build:search` after editing a page.
+# Keeps assets/search/index.json and every page's link preview (the
+# <!-- link-preview --> block in its <head> plus its card in images/og/) in
+# sync with the site's HTML, so nobody has to remember to run
+# `npm run build:search` or `npm run build:og` after editing a page.
 on:
   push:
     branches: [main]
@@ -10,8 +12,13 @@ on:
       - 'assets/js/top-bar.js'
       - 'assets/js/bottom-bar.js'
       - 'data/search/**'
+      - 'images/main_nobckgnd.png'
       - 'scripts/build-search-index.mjs'
+      - 'scripts/build-og.mjs'
+      - 'scripts/og/**'
       - 'scripts/lib/**'
+      - 'scripts/site-pages.mjs'
+      - 'package-lock.json'
   workflow_dispatch:
 
 permissions:
@@ -24,7 +31,7 @@ concurrency:
 jobs:
   rebuild:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-node@v5
@@ -33,14 +40,25 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build:search
-      - name: Commit if the index changed
+      - name: Install Chromium for the card renderer
+        run: npx playwright install --with-deps chromium
+      # Only cards whose title, breadcrumb, or design changed are re-rendered
+      # (tracked in images/og/manifest.json), so this never churns images.
+      - run: npm run build:og
+      - name: Commit if anything changed
         run: |
-          if git diff --quiet -- assets/search/index.json; then
-            echo "Search index already up to date."
+          paths=(assets/search/index.json images/og '*.html')
+          if [ -z "$(git status --porcelain -- "${paths[@]}")" ]; then
+            echo "Search index and link previews already up to date."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add assets/search/index.json
-          git commit -m "Rebuild search index"
-          git push
+          git add --all -- "${paths[@]}"
+          git commit -m "Rebuild search index and link previews"
+          # main may have moved while this ran; replay on top rather than fail.
+          for attempt in 1 2 3; do
+            git pull --rebase origin main && git push && exit 0
+            sleep $((attempt * 5))
+          done
+          exit 1
