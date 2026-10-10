@@ -1,6 +1,6 @@
 // Keyboard and screen-reader access to the phone menu (#titleBar toggle and
 // #navPanel, built by main.js, enhanced by assets/js/site/nav-a11y.js).
-import { test, expect } from './fixtures.mjs';
+import { test, expect, pressTab } from './fixtures.mjs';
 import AxeBuilder from '@axe-core/playwright';
 
 async function open(page, path) {
@@ -40,7 +40,7 @@ test('keyboard opens the panel, traps focus inside, and Escape returns focus', a
   // Tab around a full lap: focus never escapes into the page behind.
   const stops = await panel.locator('a[href]').count();
   for (let i = 0; i < stops + 3; i++) {
-    await page.keyboard.press('Tab');
+    await pressTab(page);
     const where = await page.evaluate(() => {
       const el = document.activeElement;
       if (!el || el === document.body) return 'body';
@@ -92,7 +92,7 @@ test('group labels are text, not dead links, and the current page is marked', as
 
 test('the skip link works on a phone', async ({ page }) => {
   await open(page, 'about.html');
-  await page.keyboard.press('Tab');
+  await pressTab(page);
   const skip = page.locator('.esc-skip-link');
   await expect(skip).toBeFocused();
   await expect(skip).toBeInViewport();

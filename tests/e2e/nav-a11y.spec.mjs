@@ -1,7 +1,7 @@
 // Keyboard and screen-reader access to the desktop nav (assets/js/site/nav-a11y.js):
 // skip link, APG disclosure dropdowns driven through dropotron, and
 // aria-current. Mouse behaviour must stay exactly as it was.
-import { test, expect } from './fixtures.mjs';
+import { test, expect, pressTab } from './fixtures.mjs';
 import AxeBuilder from '@axe-core/playwright';
 import { readFileSync } from 'node:fs';
 
@@ -29,7 +29,7 @@ test.describe('skip link', () => {
     }) => {
       await open(page, path);
       const skip = page.locator('.esc-skip-link');
-      await page.keyboard.press('Tab');
+      await pressTab(page);
       await expect(skip).toBeFocused();
       await expect(skip).toHaveText('Skip to main content');
       await expect(skip).toBeInViewport();
@@ -48,11 +48,11 @@ test.describe('skip link', () => {
 test.describe('desktop dropdowns from the keyboard', () => {
   test('Tab reaches a disclosure button after each top-level link', async ({ page }) => {
     await open(page, 'students.html');
-    await page.keyboard.press('Tab'); // skip link
-    await page.keyboard.press('Tab'); // logo
-    await page.keyboard.press('Tab');
+    await pressTab(page); // skip link
+    await pressTab(page); // logo
+    await pressTab(page);
     await expect(focused(page)).toHaveText('About Us');
-    await page.keyboard.press('Tab');
+    await pressTab(page);
     const toggle = aboutToggle(page);
     await expect(toggle).toBeFocused();
     await expect(toggle).toHaveAttribute('aria-expanded', 'false');
@@ -158,18 +158,18 @@ test.describe('desktop dropdowns from the keyboard', () => {
     await expect(focused(page)).toHaveText('Our Team');
 
     // Shift+Tab from the first item goes back to the button, menu still open.
-    await page.keyboard.press('Shift+Tab');
+    await pressTab(page, { shift: true });
     await expect(toggle).toBeFocused();
     await expect(menu).toBeVisible();
     // Tab from the expanded button goes into the menu, as if it were in place.
-    await page.keyboard.press('Tab');
+    await pressTab(page);
     await expect(focused(page)).toHaveText('Our Team');
-    await page.keyboard.press('Tab');
+    await pressTab(page);
     await expect(focused(page)).toHaveText('Our Finances');
-    await page.keyboard.press('Tab');
+    await pressTab(page);
     await expect(focused(page)).toHaveText('ESC Internal');
     // Past the last item: on to the next top-level link, menu closed.
-    await page.keyboard.press('Tab');
+    await pressTab(page);
     await expect(focused(page)).toHaveText('Students');
     await expect(menu).toBeHidden();
     await expect(toggle).toHaveAttribute('aria-expanded', 'false');
