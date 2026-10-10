@@ -106,18 +106,20 @@ The worker only registers on the real site and Cloudflare previews, so local dev
 
 Every PR runs these checks in [`ci.yml`](.github/workflows/ci.yml):
 
-| Check                     | What it catches                                                                                                                     |
-| ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| **Lint**                  | ESLint + Prettier on modern code (scripts, tests, search). Legacy files are left alone on purpose.                                  |
-| **Unit tests**            | `node --test` over `tests/unit/`.                                                                                                   |
-| **Page smoke tests**      | Every live page loads with a 200, renders the header, and adds no new script errors or missing files.                               |
-| **Accessibility ratchet** | axe-core (WCAG 2.1 AA) on every live page. Known issues are recorded in a baseline, and a PR fails only if it makes a page _worse_. |
-| **Mobile**                | The e2e suite also runs on a Pixel 7 viewport.                                                                                      |
-| **Lighthouse**            | Performance, accessibility, SEO, and layout-shift budgets on key pages. Reports are uploaded as artifacts.                          |
-| **Image budget**          | Rejects newly added images over 1 MB.                                                                                               |
+| Check                     | What it catches                                                                                                                                          |
+| ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Lint**                  | ESLint + Prettier on modern code (scripts, tests, search). Legacy files are left alone on purpose.                                                       |
+| **Unit tests**            | `node --test` over `tests/unit/`.                                                                                                                        |
+| **Page smoke tests**      | Every live page loads with a 200, renders the header, and adds no new script errors or missing files.                                                    |
+| **Accessibility ratchet** | axe-core (WCAG 2.1 AA) on every live page. Known issues are recorded in a baseline, and a PR fails only if it makes a page _worse_.                      |
+| **Phones and tablets**    | Every live page on a Pixel 7 and a Galaxy Tab S4: fits the screen, and the menu and search work by touch.                                                |
+| **Firefox & Safari**      | Keyboard navigation and search in Firefox and Safari (WebKit), plus the touch suite on iPhone 14, iPhone SE, iPad Pro, iPad Mini, and iPad in landscape. |
+| **Lighthouse**            | Performance, accessibility, SEO, and layout-shift budgets on key pages. Reports are uploaded as artifacts.                                               |
+| **Image budget**          | Rejects newly added images over 1 MB.                                                                                                                    |
 
-There are also two scheduled or optional workflows:
+There are also scheduled or optional workflows:
 
+- **[Screen readers](.github/workflows/screen-readers.yml)** walk the nav with real VoiceOver (macOS) and NVDA (Windows) whenever the nav changes, every Monday, and on demand. They check what is actually spoken: the skip link, the current page, and menu buttons that announce their state and move focus into the menu.
 - **[Link check](.github/workflows/links.yml)** runs every Monday and keeps one "Broken links report" issue up to date.
 - **[Preview deploys](.github/workflows/preview.yml)** give every PR its own Cloudflare Pages URL once a repo admin adds the Cloudflare secrets.
 - **Dependabot** keeps dev tooling and Actions current.

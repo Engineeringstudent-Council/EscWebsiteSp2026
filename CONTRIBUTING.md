@@ -22,7 +22,7 @@ Welcome to the Tech Committee! Here's how to go from zero to your first merged c
    git switch main && git pull
    git switch -c exec-tab        # or opportunities-tab, fix-search-console, ...
    ```
-2. **Edit, then check it in the browser.** Look at desktop _and_ a narrow window, because many visitors are on phones.
+2. **Edit, then check it in the browser.** Look at desktop _and_ a narrow window, because many visitors are on phones and iPads. CI checks every page on phones and tablets too.
 3. **Commit in small steps** with messages that say what the commit does, in the imperative:
    - ✅ `Add committee descriptions to the exec tab`
    - ❌ `updates`, `fixed stuff`, `Add files via upload`
@@ -35,6 +35,7 @@ Welcome to the Tech Committee! Here's how to go from zero to your first merged c
 ```bash
 npm test                 # unit tests (fast)
 npm run test:e2e         # every page in a real browser, plus accessibility
+npm run test:cross-browser  # Firefox, Safari, iPhones, and iPads (first: npx playwright install firefox webkit)
 npm run lint             # code style for scripts and tests
 npm run format           # auto-fix code style
 ```
