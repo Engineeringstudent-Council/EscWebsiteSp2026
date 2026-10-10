@@ -15,6 +15,9 @@ export async function openPage(page, path = PAGE) {
  * `pattern`, and return that phrase. Fails with everything that was said.
  */
 export async function moveUntil(reader, step, pattern, max = 60) {
+  // The reader may already be on it (entering a page announces its first item).
+  const current = await reader.lastSpokenPhrase();
+  if (pattern.test(current)) return current;
   for (let i = 0; i < max; i++) {
     await step();
     const phrase = await reader.lastSpokenPhrase();
@@ -27,4 +30,10 @@ export async function moveUntil(reader, step, pattern, max = 60) {
 /** Everything said since `mark` (an index into the spoken phrase log). */
 export async function spokenSince(reader, mark) {
   return (await reader.spokenPhraseLog()).slice(mark).join(' | ');
+}
+
+/** The disclosure state a phrase announces: 'expanded', 'collapsed', or null. */
+export function stateOf(phrase) {
+  const match = /\b(expanded|collapsed)\b/i.exec(phrase);
+  return match ? match[1].toLowerCase() : null;
 }
