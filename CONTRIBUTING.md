@@ -42,7 +42,7 @@ npm run format           # auto-fix code style
 ## House rules
 
 - **Images:** keep each one under 1 MB (CI enforces this) and under about 2000px on the long edge. [Squoosh](https://squoosh.app) makes this easy.
-- **New pages:** copy an existing page so you get the shared header and footer, then link it from the nav (`assets/js/top-bar.js`) or another page so it counts as live.
+- **New pages:** copy an existing page so you get the shared header and footer, then link it from the nav (`assets/js/top-bar.js`) or another page so it counts as live. Then run `npm run build:og` to give it a link preview card and tags (CI checks for them), and add its title and breadcrumb to `data/search/pages.json` if the defaults read poorly.
 - **Don't reformat files you didn't otherwise change.** Teammates are probably editing them, and whitespace-only diffs cause merge conflicts.
 - **Accessibility:** give images real `alt` text, use headings in order, and make sure links say where they go. CI fails if a page gets worse.
 - **Never commit secrets** (API keys, passwords). Ask the tech lead about repo secrets.
