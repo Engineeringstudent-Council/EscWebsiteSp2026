@@ -1,0 +1,48 @@
+{
+  "version": 1,
+  "assets": {
+    "template": "067d98fc49e9afe8",
+    "logo": "370f7440088b5b0d",
+    "fonts": [
+      "@fontsource/source-serif-4@5.3.0",
+      "@fontsource/source-sans-3@5.3.0"
+    ]
+  },
+  "cards": {
+    "default": "1ee78986a9931861",
+    "about": "1441728ebaf28acf",
+    "academics": "316f3bbb6ffbfe41",
+    "applyfunding": "c8e2d3831c886156",
+    "blueandgold": "ed092c25fa0a0e9e",
+    "calendar": "4b28d90bff0c2c2d",
+    "clubs": "0a751b962f22f94c",
+    "engin_decals": "5933362e5a7efc4b",
+    "escaffiliation": "29782a7200a95ca1",
+    "events": "d0f44ceb415d71d6",
+    "eweek_overview": "339b131b744a8f78",
+    "faqs": "a627594db9d4bdb3",
+    "ficomm": "d86e2edc408b75b8",
+    "fin-decisions": "61e81159aa95b940",
+    "finance": "692c0c98c4a1119e",
+    "fmpi": "5d70fa6c66afd1a2",
+    "food": "5bf8e454a7f268ae",
+    "gallery": "e482bf94421d6ed7",
+    "hear": "e970e5ecd29f823f",
+    "housing": "c1f4b6a19d37974d",
+    "howtoguide": "64e2eb46bf1f82f5",
+    "index": "1ee78986a9931861",
+    "initallocate": "900c7aea298cd443",
+    "makerspaces": "528deacd7f777d29",
+    "mission": "6608c336f45fb8ab",
+    "organizations-home": "7dda4cfb6cdfc2e4",
+    "past-events": "1b47a11190926ef4",
+    "policies": "c1962aadb84cc6a8",
+    "positive_messages": "c2cb66f6d010f6ee",
+    "relevantfinance": "5960053f6dff81a6",
+    "report": "56b08856476de23b",
+    "sponsors": "203f15511de1079e",
+    "startups": "056a579464184e54",
+    "students": "adade09044db86ad",
+    "treasurertrain": "67a7ebdb1c6c14b4"
+  }
+}
