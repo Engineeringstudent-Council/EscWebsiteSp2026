@@ -5132,3 +5132,38 @@ input, select, textarea {
 }
 
 /* Accessible navigation END */
+
+
+/* Touch and tablet fixes START
+   Found by running every live page on phones and iPads (tests/e2e/touch.spec.mjs). */
+
+/* Fixed-width embeds (Google Calendar, Docs, Slides) shrink to fit tablets
+   instead of pushing the whole page sideways. */
+iframe {
+	max-width: 100%;
+}
+
+/* The footer's harassment-report button sits in a 20% column, about 150px
+   on an iPad, so its label must be allowed to wrap. */
+#footer .button {
+	white-space: normal;
+	height: auto;
+	line-height: 1.35;
+	padding-top: 0.8em;
+	padding-bottom: 0.8em;
+	max-width: 100%;
+}
+
+/* Small phones: keep the title bar logo between the menu button and the
+   search button so it never sits on top of either tap target. */
+#titleBar .toggle {
+	z-index: 2;
+	width: 60px; /* hugs the 54px orange tab; still a generous tap target */
+}
+
+#titleBar .title img {
+	max-width: calc(100vw - 136px);
+	object-fit: contain;
+}
+
+/* Touch and tablet fixes END */
