@@ -15,7 +15,8 @@
     "test": "node --test --test-reporter=spec \"tests/unit/**/*.test.mjs\"",
     "test:e2e": "playwright test",
     "lhci": "lhci autorun",
-    "baseline:update": "UPDATE_BASELINE=1 playwright test --project=desktop --workers=1"
+    "baseline:update": "UPDATE_BASELINE=1 playwright test --project=desktop --workers=1",
+    "build:sitemap": "node scripts/build-sitemap.mjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",
