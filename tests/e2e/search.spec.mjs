@@ -121,6 +121,37 @@ test('?search= links open the palette pre-filled', async ({ page }) => {
   await expect(options(page).first()).toContainText('Makerspaces');
 });
 
+test('the address-bar search URL opens the palette with results', async ({ page }) => {
+  // The exact shape opensearch.xml sends: site root + ?search={searchTerms}.
+  await page.goto('/?search=funding');
+  await expect(dialog(page)).toBeVisible();
+  await expect(input(page)).toHaveValue('funding');
+  await expect(options(page).first()).toContainText('Apply for Funding');
+  await page.goto('/?search=free%20food');
+  await expect(options(page).first()).toContainText('Food Security');
+});
+
+test('browsers can discover the OpenSearch description from any page', async ({
+  page,
+  request,
+}) => {
+  const res = await request.get('/opensearch.xml');
+  expect(res.status()).toBe(200);
+  expect(await res.text()).toContain('template="https://esc.studentorg.berkeley.edu/?search=');
+
+  await page.goto('index.html');
+  const homeLinks = page.locator('link[rel="search"]');
+  await expect(homeLinks).toHaveCount(1);
+  await expect(homeLinks).toHaveAttribute('href', 'opensearch.xml');
+
+  await page.goto('faqs.html');
+  const injected = page.locator('link[rel="search"]');
+  await expect(injected).toHaveCount(1);
+  await expect(injected).toHaveAttribute('type', 'application/opensearchdescription+xml');
+  const href = await injected.getAttribute('href');
+  expect(new URL(href).pathname).toBe('/opensearch.xml');
+});
+
 test('section results deep-link with a text fragment', async ({ page }) => {
   await page.goto('index.html');
   await page.keyboard.press('ControlOrMeta+k');
