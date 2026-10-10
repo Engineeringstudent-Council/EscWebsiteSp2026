@@ -9,6 +9,7 @@ assets/*
 !assets/js/
 assets/js/*
 !assets/js/search/
+!assets/js/site/
 !assets/css/
 assets/css/*
 !assets/css/search.css
