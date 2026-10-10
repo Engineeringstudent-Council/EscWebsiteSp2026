@@ -3,16 +3,19 @@
 // <li><a href="https://form.typeform.com/to/UTcmX9lD" data-mode="popup">Contact Us </a> <script> (function() { var qs,js,q,s,d=document, gi=d.getElementById, ce=d.createElement, gt=d.getElementsByTagName, id="typef_orm_share", b="https://embed.typeform.com/"; if(!gi.call(d,id)){ js=ce.call(d,"script"); js.id=id; js.src=b+"embed.js"; q=gt.call(d,"script")[0]; q.parentNode.insertBefore(js,q) } })() </script></li>\
 //h1 changed to h2 in line 8 by Ethan
 
-// Inserts the shared nav right where this <script> tag sits.
-// From inside <body> that is done with insertAdjacentHTML. Most pages load
-// this file from <head>, though, and only document.write can synchronously
-// place markup into <body> from there (main.js needs #nav to exist when it
-// runs). Moving those script tags into <body> lets every page use the
-// modern path.
+// Inserts the shared nav right where this <script> tag sits, so include it as
+// the first thing inside <body>. main.js needs #nav to exist when it runs,
+// which is why this stays a plain synchronous script.
+// A page that still loads this file from <head> can only be served by
+// document.write, so that path is kept as a fallback with a nudge to fix it.
 function escInsertHere(html) {
 	var here = document.currentScript;
-	if (here && here.parentNode && here.parentNode !== document.head) here.insertAdjacentHTML('beforebegin', html);
-	else document.write(html);
+	if (here && here.parentNode && here.parentNode !== document.head) {
+		here.insertAdjacentHTML('beforebegin', html);
+		return;
+	}
+	if (typeof console !== 'undefined') console.warn('[ESC] Move <script src="assets/js/top-bar.js"> from <head> to the top of <body>.');
+	document.write(html);
 }
 
 escInsertHere('\
