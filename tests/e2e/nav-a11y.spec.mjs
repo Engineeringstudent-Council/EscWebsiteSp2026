@@ -304,13 +304,7 @@ test.describe('axe with menus open', () => {
           .analyze();
         const out = [];
         for (const v of found) {
-          for (const node of v.nodes) {
-            const selector = node.target.join(' ');
-            const goldOpener =
-              v.id === 'color-contrast' &&
-              (await page.locator(selector).evaluate((el) => Boolean(el.closest('li.active'))));
-            if (!goldOpener) out.push(`${v.id} ${selector}`);
-          }
+          for (const node of v.nodes) out.push(`${v.id} ${node.target.join(' ')}`);
         }
         return out;
       };
@@ -326,13 +320,9 @@ test.describe('axe with menus open', () => {
       await page.keyboard.press('ArrowRight');
       await expect(await menuFor(page, nestedParent)).toBeVisible();
 
-      // Colour contrast is checked separately below: an open menu's opener
-      // turns template gold (#FBB03B) on white, a long-standing design choice
-      // that looks exactly the same when the menu is opened by hovering.
       const { violations } = await new AxeBuilder({ page })
         .withTags(tags)
         .exclude('iframe')
-        .disableRules(['color-contrast'])
         .analyze();
       const known = counts(BASELINE[path]);
       const worse = violations
@@ -340,7 +330,7 @@ test.describe('axe with menus open', () => {
         .map((v) => `${v.id}:${v.nodes.length} ${v.nodes[0]?.target}`);
       expect(worse).toEqual([]);
 
-      // The nav itself, menus included, gains nothing apart from that gold.
+      // The nav itself, menus included, gains nothing, colour contrast included.
       const openIssues = await navIssues();
       expect(openIssues.filter((issue) => !closedIssues.includes(issue))).toEqual([]);
     });
