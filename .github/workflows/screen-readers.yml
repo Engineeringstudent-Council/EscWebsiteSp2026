@@ -40,11 +40,13 @@ jobs:
         with:
           node-version-file: .nvmrc
           cache: npm
-      - run: npm ci
+      # The same two-step setup Guidepup's own CI uses: prepare the OS, then
+      # (after dependencies) install the VoiceOver automation support.
       - name: Prepare macOS for VoiceOver automation
-        uses: guidepup/setup-action@0.21.0
-        with:
-          record: true
+        run: npx -y @guidepup/setup@0.24.6 setup --ci --macos-record
+      - run: npm ci
+      - name: Install VoiceOver automation support
+        run: npx -y @guidepup/setup@0.24.6 install
       - run: npx playwright install webkit
       - run: npx playwright test -c playwright.screenreader.config.mjs --project=voiceover
       - uses: actions/upload-artifact@v4
@@ -67,11 +69,13 @@ jobs:
         with:
           node-version-file: .nvmrc
           cache: npm
-      - run: npm ci
+      # The same two-step setup Guidepup's own CI uses: prepare the OS, then
+      # (after dependencies) install the NVDA automation support.
       - name: Prepare Windows for NVDA automation
-        uses: guidepup/setup-action@0.21.0
-        with:
-          record: true
+        run: npx -y @guidepup/setup@0.24.6 setup --ci --macos-record
+      - run: npm ci
+      - name: Install NVDA automation support
+        run: npx -y @guidepup/setup@0.24.6 install
       - run: npx playwright install chromium
       - run: npx playwright test -c playwright.screenreader.config.mjs --project=nvda
       - uses: actions/upload-artifact@v4

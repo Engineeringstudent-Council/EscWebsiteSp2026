@@ -320,9 +320,14 @@ test.describe('axe with menus open', () => {
       await page.keyboard.press('ArrowRight');
       await expect(await menuFor(page, nestedParent)).toBeVisible();
 
+      // Page-wide, minus colour contrast: page content fades in on load, so
+      // its contrast is measured mid-fade and flickers between runs, and it
+      // is already covered by a11y.spec.mjs. The nav-only check below does
+      // include colour contrast, menus open.
       const { violations } = await new AxeBuilder({ page })
         .withTags(tags)
         .exclude('iframe')
+        .disableRules(['color-contrast'])
         .analyze();
       const known = counts(BASELINE[path]);
       const worse = violations
