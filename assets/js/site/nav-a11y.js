@@ -102,6 +102,14 @@ const focusEl = (el) => {
 /** The anchor that labels a list item (its direct child link). */
 const ownLink = (li) => li && li.querySelector(':scope > a');
 
+/**
+ * Shortcuts with modifiers belong to the browser, except Option/Alt+Tab:
+ * that is how Safari users move between links by default, so it must get
+ * the same Tab handling as a plain Tab.
+ */
+export const isBrowserShortcut = (event) =>
+  event.ctrlKey || event.metaKey || (event.altKey && event.key !== 'Tab');
+
 /** Focusable elements in document order that a Tab press could reach. */
 function tabbables(doc) {
   const selector =
@@ -340,7 +348,7 @@ export function enhanceDropdowns(doc = document, $ = globalThis.jQuery) {
 
   // Top-level bar: disclosure buttons and links.
   topList.addEventListener('keydown', (event) => {
-    if (event.altKey || event.ctrlKey || event.metaKey) return;
+    if (isBrowserShortcut(event)) return;
     const target = event.target;
     const li = target.closest('#nav > ul > li');
     const entry = menus.find((m) => m.li === li);
@@ -396,7 +404,7 @@ export function enhanceDropdowns(doc = document, $ = globalThis.jQuery) {
   // Inside an open menu.
   for (const entry of menus) {
     entry.ul.addEventListener('keydown', (event) => {
-      if (event.altKey || event.ctrlKey || event.metaKey) return;
+      if (isBrowserShortcut(event)) return;
       const link = event.target.closest('a');
       if (!link || !entry.ul.contains(link)) return;
       const level = link.closest('ul');

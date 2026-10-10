@@ -1,6 +1,11 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { isCurrentPage, nextIndex, normalizePath } from '../../assets/js/site/nav-a11y.js';
+import {
+  isBrowserShortcut,
+  isCurrentPage,
+  nextIndex,
+  normalizePath,
+} from '../../assets/js/site/nav-a11y.js';
 
 const at = (href) => ({ href });
 const SITE = 'https://esc.studentorg.berkeley.edu';
@@ -84,4 +89,19 @@ test('nextIndex starts from the ends when nothing is focused, and ignores other 
   assert.equal(nextIndex('Enter', 1, 4), -1);
   assert.equal(nextIndex('ArrowRight', 1, 4), -1);
   assert.equal(nextIndex('ArrowDown', 0, 0), -1);
+});
+
+test('Option/Alt+Tab is handled like Tab (Safari), other modified keys are left alone', () => {
+  const key = (k, mods = {}) => ({
+    key: k,
+    altKey: false,
+    ctrlKey: false,
+    metaKey: false,
+    ...mods,
+  });
+  assert.equal(isBrowserShortcut(key('Tab')), false);
+  assert.equal(isBrowserShortcut(key('Tab', { altKey: true })), false);
+  assert.equal(isBrowserShortcut(key('ArrowDown', { altKey: true })), true);
+  assert.equal(isBrowserShortcut(key('Tab', { ctrlKey: true })), true);
+  assert.equal(isBrowserShortcut(key('Enter', { metaKey: true })), true);
 });
