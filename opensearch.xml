@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  OpenSearch description: lets browsers add ESC as an address-bar search
+  engine (e.g. type "esc" then Tab in Chrome, or "Add ESC Berkeley" in
+  Firefox's search menu). Searches open the site's search palette through
+  its ?search= deep link. Discovered via <link rel="search"> on index.html.
+-->
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/"
+                       xmlns:moz="http://www.mozilla.org/2006/browser/search/">
+  <ShortName>ESC Berkeley</ShortName>
+  <Description>Search the UC Berkeley Engineering Student Council website: club funding, Blue &amp; Gold, Engineers' Week, and student resources.</Description>
+  <InputEncoding>UTF-8</InputEncoding>
+  <Image height="16" width="16" type="image/x-icon">https://esc.studentorg.berkeley.edu/favicon.ico</Image>
+  <Url type="text/html" method="get" template="https://esc.studentorg.berkeley.edu/?search={searchTerms}"/>
+  <Url type="application/opensearchdescription+xml" rel="self" template="https://esc.studentorg.berkeley.edu/opensearch.xml"/>
+  <moz:SearchForm>https://esc.studentorg.berkeley.edu/</moz:SearchForm>
+</OpenSearchDescription>
