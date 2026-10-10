@@ -486,6 +486,70 @@ export function enhanceDropdowns(doc = document, $ = globalThis.jQuery) {
   };
   menus.forEach(watchFocus);
 
+  // Touch at desktop width (iPad in landscape, touchscreen laptops) has no
+  // hover, so a tap on a link that also has a menu would leave the page
+  // before the menu could ever be used. There, the first tap opens the menu
+  // and a second tap follows the link. Whether the menu was already open is
+  // judged when the finger lands, so Safari's own "first tap acts as hover"
+  // emulation (which opens the menu mid-tap) can't turn it into a visit.
+  const realLinkParents = [
+    ...menus.filter((m) => m.link && m.link !== m.control).map((m) => [m.link, m.ul, m]),
+    ...nestedControls
+      .filter((a) => a.getAttribute('role') !== 'button')
+      .map((a) => [a, menuFor(a), null]),
+  ];
+  for (const [link, ul, entry] of realLinkParents) {
+    let openWhenTouched = null;
+    link.addEventListener('pointerdown', (event) => {
+      openWhenTouched = event.pointerType === 'touch' ? isOpen(ul) : null;
+    });
+    link.addEventListener('click', (event) => {
+      const firstTap = openWhenTouched === false;
+      openWhenTouched = null;
+      if (!firstTap) return;
+      event.preventDefault();
+      event.stopPropagation(); // dropotron would toggle the menu shut again
+      if (entry) for (const m of menus) if (m !== entry && isOpen(m.ul)) collapse(m.ul);
+      if (!isOpen(ul)) expand(ul);
+    });
+  }
+
+  // Taps on items that only open a menu ("Our Team", and "About Us" on pages
+  // with their own nav). dropotron listens for both touchend and click, so
+  // one tap toggled twice, and it ignored taps while a menu was still fading
+  // in. Handle the tap here instead: one tap, one toggle, at any speed.
+  const tapOpeners = [
+    ...menus.filter((m) => m.control === m.link).map((m) => [m.control, m.ul, m]),
+    ...nestedControls
+      .filter((a) => a.getAttribute('role') === 'button')
+      .map((a) => [a, menuFor(a), null]),
+  ];
+  for (const [opener, ul, entry] of tapOpeners) {
+    opener.addEventListener('touchend', (event) => {
+      event.preventDefault(); // no follow-up click, so no second toggle
+      event.stopPropagation();
+      if (isOpen(ul)) {
+        collapse(ul);
+        return;
+      }
+      const siblings = entry
+        ? menus.map((m) => m.ul)
+        : [...opener.closest('ul').querySelectorAll(':scope > li > ul')];
+      for (const other of siblings) if (other !== ul && isOpen(other)) collapse(other);
+      expand(ul);
+    });
+  }
+
+  // A tap anywhere outside the nav and its menus closes whatever is open.
+  doc.addEventListener(
+    'touchend',
+    (event) => {
+      if (event.target.closest && event.target.closest('#nav, ul.dropotron')) return;
+      for (const m of menus) if (isOpen(m.ul)) collapse(m.ul);
+    },
+    { passive: true },
+  );
+
   sync();
   return true;
 }
