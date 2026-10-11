@@ -1,0 +1,10 @@
+# Reviews are requested automatically from these owners.
+# Tech lead reviews everything by default.
+*                     @ShinyPotatoo
+
+# Tooling, CI, tests, and search.
+/.github/             @ShinyPotatoo @KarthikSubramanian07
+/scripts/             @KarthikSubramanian07
+/tests/               @KarthikSubramanian07
+/package.json         @KarthikSubramanian07
+/package-lock.json    @KarthikSubramanian07

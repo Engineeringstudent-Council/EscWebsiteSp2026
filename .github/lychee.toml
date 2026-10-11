@@ -1,0 +1,13 @@
+# https://lychee.cli.rs/usage/config/
+max_concurrency = 8
+timeout = 20
+max_retries = 2
+accept = ["100..=103", "200..=299", "403", "429"]
+# Social sites block crawlers; mail links can't be verified.
+exclude = [
+  "^https?://(www\\.)?(facebook|instagram|linkedin|twitter|x)\\.com",
+  "^mailto:",
+  "^tel:",
+]
+exclude_path = ["node_modules"]
+user_agent = "Mozilla/5.0 (compatible; ESC-link-checker; +https://esc.studentorg.berkeley.edu)"
