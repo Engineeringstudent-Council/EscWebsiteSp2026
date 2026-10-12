@@ -1,0 +1,587 @@
+/*
+  ESC site search: the command palette, nav trigger, mobile button, and the
+  homepage hero field. Everything is namespaced under .esc-search* so the
+  legacy template styles (which restyle every button, input and list) can't
+  leak in, and nothing here can leak out.
+*/
+
+:root {
+  --esc-blue: #002676;
+  --esc-blue-ink: #0b1533;
+  --esc-founders: #2d6a8c;
+  --esc-gold: #fdb515;
+  --esc-gold-soft: rgba(253, 181, 21, 0.38);
+  --esc-paper: #f5f7fb;
+  --esc-panel: #ffffff;
+  --esc-line: rgba(11, 21, 51, 0.1);
+  --esc-muted: #5b6480;
+  --esc-hover: #f2f5fb;
+  --esc-selected: #e8eef9;
+  --esc-ring: rgba(0, 38, 118, 0.55);
+  --esc-shadow: 0 30px 80px -20px rgba(0, 18, 64, 0.45), 0 0 0 1px rgba(0, 18, 64, 0.06);
+  --esc-font: 'Source Sans Pro', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --esc-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+}
+
+/* ---------- Shared resets ---------- */
+
+.esc-search,
+.esc-search *,
+.esc-search-trigger,
+.esc-search-trigger *,
+.esc-hero-search,
+.esc-hero-search * {
+  box-sizing: border-box;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+.esc-search button,
+.esc-search-trigger,
+.esc-hero-search {
+  -webkit-appearance: none;
+  appearance: none;
+  font: inherit;
+  margin: 0;
+  box-shadow: none;
+  cursor: pointer;
+  height: auto;
+  line-height: normal;
+  white-space: nowrap;
+}
+
+.esc-search kbd,
+.esc-search-trigger kbd,
+.esc-hero-search kbd {
+  font-family: var(--esc-mono);
+  font-size: 0.72em;
+  font-weight: 600;
+  line-height: 1;
+  padding: 0.3em 0.45em;
+  border-radius: 6px;
+  border: 1px solid var(--esc-line);
+  border-bottom-width: 2px;
+  background: var(--esc-paper);
+  color: var(--esc-muted);
+}
+
+/* ---------- Desktop nav trigger ---------- */
+
+#header nav ul li.esc-search-nav {
+  margin-left: 1em;
+  vertical-align: middle;
+}
+
+.esc-search-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55em;
+  padding: 0.5em 0.6em 0.5em 0.8em;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 102, 0.18);
+  background: #fff;
+  color: var(--esc-blue);
+  font-family: var(--esc-font);
+  font-size: 0.72em;
+  font-weight: 600;
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.esc-search-trigger:hover {
+  border-color: rgba(0, 38, 118, 0.4);
+  background: var(--esc-hover);
+}
+
+.esc-search-trigger:focus-visible {
+  outline: 2px solid var(--esc-ring);
+  outline-offset: 2px;
+}
+
+.esc-search-trigger svg {
+  width: 1.1em;
+  height: 1.1em;
+  flex: none;
+}
+
+/* ---------- Mobile title-bar button ---------- */
+
+.esc-search-trigger.esc-search-trigger--bar {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  justify-content: center;
+  border-radius: 12px;
+  font-size: 18px;
+  z-index: 2;
+}
+
+.esc-search-trigger--bar .esc-search-trigger-label,
+.esc-search-trigger--bar kbd {
+  display: none;
+}
+
+/* ---------- Homepage hero field ---------- */
+
+.esc-hero-search {
+  display: flex;
+  align-items: center;
+  gap: 0.8em;
+  width: min(36rem, 100%);
+  margin: 1.6em auto 0;
+  padding: 0.95em 1em 0.95em 1.25em;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  background: rgba(255, 255, 255, 0.96);
+  color: var(--esc-muted);
+  font-family: var(--esc-font);
+  font-size: 1.05rem;
+  text-align: left;
+  box-shadow: 0 18px 50px -18px rgba(0, 0, 0, 0.6);
+  transition:
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.esc-hero-search:hover {
+  background: #fff;
+  box-shadow: 0 22px 60px -18px rgba(0, 0, 0, 0.7);
+}
+
+.esc-hero-search:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+.esc-hero-search svg {
+  width: 1.25em;
+  height: 1.25em;
+  color: var(--esc-blue);
+  flex: none;
+}
+
+.esc-hero-search-text {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.esc-hero-search-text em {
+  font-style: normal;
+  color: var(--esc-blue);
+  font-weight: 600;
+}
+
+.esc-hero-search-text .esc-swap {
+  display: inline-block;
+  transition:
+    opacity 0.35s ease,
+    transform 0.35s ease;
+}
+
+.esc-hero-search-text .esc-swap.is-out {
+  opacity: 0;
+  transform: translateY(0.35em);
+}
+
+/* ---------- Dialog ---------- */
+
+html.esc-search-open {
+  overflow: hidden;
+}
+
+dialog.esc-search {
+  position: fixed;
+  inset: 0;
+  width: min(42rem, calc(100vw - 2rem));
+  max-width: none;
+  max-height: min(40rem, calc(100vh - 6rem));
+  margin: 9vh auto auto;
+  padding: 0;
+  border: 0;
+  border-radius: 20px;
+  background: var(--esc-panel);
+  color: var(--esc-blue-ink);
+  font-family: var(--esc-font);
+  font-size: 16px;
+  line-height: 1.45;
+  box-shadow: var(--esc-shadow);
+  overflow: hidden;
+}
+
+dialog.esc-search[open] {
+  display: flex;
+  flex-direction: column;
+  animation: esc-search-in 0.18s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+}
+
+dialog.esc-search::backdrop {
+  background: rgba(6, 14, 40, 0.52);
+  -webkit-backdrop-filter: blur(6px) saturate(120%);
+  backdrop-filter: blur(6px) saturate(120%);
+  animation: esc-fade-in 0.18s ease;
+}
+
+@keyframes esc-search-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.985);
+  }
+}
+
+@keyframes esc-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+.esc-search-head {
+  display: flex;
+  align-items: center;
+  gap: 0.75em;
+  padding: 1em 1.1em;
+  border-bottom: 1px solid var(--esc-line);
+}
+
+.esc-search-head > svg {
+  width: 1.35em;
+  height: 1.35em;
+  color: var(--esc-blue);
+  flex: none;
+}
+
+.esc-search input.esc-search-input {
+  flex: 1;
+  min-width: 0;
+  width: auto;
+  height: 2em;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  outline: none;
+  background: transparent;
+  box-shadow: none;
+  color: var(--esc-blue-ink);
+  font: 500 1.2em/1.2 var(--esc-font);
+}
+
+.esc-search input.esc-search-input::placeholder {
+  color: #8a91a8;
+  opacity: 1;
+}
+
+.esc-search input.esc-search-input::-webkit-search-cancel-button {
+  display: none;
+}
+
+.esc-search .esc-search-close {
+  border: 0;
+  background: none;
+  padding: 0;
+}
+
+.esc-search-body {
+  flex: 1;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0.5em 0.6em 0.8em;
+  scroll-padding: 0.6em;
+}
+
+.esc-search-greeting {
+  margin: 0.9em 0.7em 0.2em;
+  font-size: 1.2em;
+  font-weight: 700;
+  color: var(--esc-blue);
+}
+
+.esc-search-greeting + p {
+  margin: 0 0.85em 0.6em;
+  color: var(--esc-muted);
+  font-size: 0.95em;
+}
+
+.esc-search-group {
+  margin: 0.9em 0.7em 0.35em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.72em;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--esc-muted);
+}
+
+.esc-search .esc-search-group button {
+  border: 0;
+  background: none;
+  padding: 0.2em 0.3em;
+  border-radius: 6px;
+  color: var(--esc-founders);
+  font-size: 1em;
+  font-weight: 600;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+.esc-search .esc-search-group button:hover {
+  text-decoration: underline;
+}
+
+ul.esc-search-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+ul.esc-search-list > li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.esc-search a.esc-search-option {
+  display: grid;
+  grid-template-columns: 2.2em 1fr auto;
+  align-items: center;
+  gap: 0.15em 0.75em;
+  padding: 0.6em 0.75em;
+  border: 0;
+  border-radius: 12px;
+  color: inherit;
+  text-decoration: none;
+  outline: none;
+  scroll-margin: 0.4em;
+}
+
+/* main.css turns every hovered link orange with !important; inside the
+   palette that made highlighted titles unreadable, so links keep their ink. */
+.esc-search a.esc-search-option,
+.esc-search a.esc-search-option:hover,
+.esc-search a.esc-search-option:focus {
+  color: var(--esc-blue-ink) !important;
+}
+
+.esc-search .esc-search-empty a:hover {
+  color: var(--esc-blue) !important;
+}
+
+.esc-search a.esc-search-option:hover {
+  background: var(--esc-hover);
+}
+
+.esc-search a.esc-search-option[aria-selected='true'] {
+  background: var(--esc-selected);
+  box-shadow: inset 3px 0 0 var(--esc-blue);
+}
+
+.esc-search-icon {
+  grid-row: span 2;
+  width: 2.2em;
+  height: 2.2em;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  background: var(--esc-paper);
+  color: var(--esc-blue);
+}
+
+.esc-search-icon svg {
+  width: 1.1em;
+  height: 1.1em;
+}
+
+[aria-selected='true'] .esc-search-icon {
+  background: var(--esc-blue);
+  color: #fff;
+}
+
+.esc-search-title {
+  font-weight: 600;
+  font-size: 1em;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.esc-search-meta {
+  grid-column: 2;
+  min-width: 0;
+  font-size: 0.85em;
+  color: var(--esc-muted);
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.esc-search-trail {
+  color: var(--esc-founders);
+  font-weight: 600;
+}
+
+.esc-search-go {
+  grid-row: span 2;
+  grid-column: 3;
+  font-size: 0.8em;
+  color: var(--esc-muted);
+  opacity: 0;
+}
+
+[aria-selected='true'] .esc-search-go {
+  opacity: 1;
+  color: var(--esc-blue);
+}
+
+.esc-search mark {
+  background: linear-gradient(transparent 58%, var(--esc-gold-soft) 58%);
+  color: inherit;
+  padding: 0;
+  border-radius: 2px;
+}
+
+.esc-search-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45em;
+  margin: 0 0.6em;
+  padding: 0;
+  list-style: none;
+}
+
+.esc-search .esc-search-chips button {
+  border: 1px solid var(--esc-line);
+  background: var(--esc-paper);
+  color: var(--esc-blue);
+  border-radius: 999px;
+  padding: 0.4em 0.85em;
+  font-size: 0.9em;
+  font-weight: 600;
+}
+
+.esc-search .esc-search-chips button:hover {
+  border-color: rgba(0, 38, 118, 0.4);
+  background: var(--esc-selected);
+}
+
+.esc-search .esc-search-chips button:focus-visible {
+  outline: 2px solid var(--esc-ring);
+  outline-offset: 2px;
+}
+
+.esc-search-empty {
+  padding: 1.8em 1.2em 1.2em;
+  text-align: center;
+}
+
+.esc-search-empty .esc-search-oski {
+  font-size: 2.2em;
+  line-height: 1;
+}
+
+.esc-search-empty h2 {
+  margin: 0.5em 0 0.3em;
+  font-family: var(--esc-font);
+  font-weight: 700;
+  font-size: 1.2em;
+  color: var(--esc-blue);
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+.esc-search-empty p {
+  margin: 0 auto 1em;
+  max-width: 28em;
+  color: var(--esc-muted);
+}
+
+.esc-search-empty a {
+  color: var(--esc-blue);
+  font-weight: 600;
+  border-bottom: 2px solid var(--esc-gold);
+  text-decoration: none;
+}
+
+.esc-search-status {
+  padding: 1.4em;
+  text-align: center;
+  color: var(--esc-muted);
+}
+
+.esc-search-foot {
+  display: flex;
+  align-items: center;
+  gap: 1.1em;
+  padding: 0.65em 1.1em;
+  border-top: 1px solid var(--esc-line);
+  background: var(--esc-paper);
+  font-size: 0.78em;
+  color: var(--esc-muted);
+}
+
+.esc-search-foot span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+}
+
+.esc-search-foot .esc-search-credit {
+  margin-left: auto;
+}
+
+.esc-search-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ---------- Phones: full-height sheet ---------- */
+
+@media (max-width: 736px) {
+  dialog.esc-search {
+    width: 100vw;
+    max-height: none;
+    height: 100dvh;
+    margin: 0;
+    border-radius: 0;
+  }
+
+  .esc-search-foot .esc-search-keys,
+  .esc-search-go {
+    display: none;
+  }
+
+  .esc-search a.esc-search-option {
+    grid-template-columns: 2.2em 1fr;
+  }
+
+  .esc-search input.esc-search-input {
+    font-size: 1.1em;
+  }
+}
+
+/* The palette stays white in dark mode on purpose: the rest of the site is
+   light-only, and the brand palette is navy, gold, and white. */
+
+@media (prefers-reduced-motion: reduce) {
+  dialog.esc-search[open],
+  dialog.esc-search::backdrop,
+  .esc-hero-search,
+  .esc-hero-search-text .esc-swap,
+  .esc-search-trigger {
+    animation: none;
+    transition: none;
+  }
+}

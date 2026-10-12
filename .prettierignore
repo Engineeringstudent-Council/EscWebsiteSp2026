@@ -5,8 +5,13 @@
 *.html
 *.php
 *.css
-assets/
+assets/*
+!assets/js/
+assets/js/*
 !assets/js/search/
+!assets/css/
+assets/css/*
+!assets/css/search.css
 TableFilter/
 old_ESC/
 exec2022/

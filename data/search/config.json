@@ -1,0 +1,22 @@
+{
+  "site": "https://esc.studentorg.berkeley.edu",
+  "seeds": ["index.html"],
+  "menus": [
+    { "script": "assets/js/top-bar.js", "selector": "#nav > ul" },
+    { "script": "assets/js/bottom-bar.js" }
+  ],
+  "exclude": [
+    "old-home.html",
+    "og.html",
+    "google*.html",
+    "old_ESC/**",
+    "TableFilter/**",
+    "search.html"
+  ],
+  "ignoreHeadings": [
+    "Quick Links",
+    "Useful Resources",
+    "Contents in this report",
+    "Connect with us"
+  ]
+}
