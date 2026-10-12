@@ -141,7 +141,7 @@ Start with [CONTRIBUTING.md](CONTRIBUTING.md), which covers branches, commits, P
 
 ## Contacts
 
-- Tech Lead: Adriel Becerra · adbecerra@berkeley.edu
+- Tech Lead: Adriel Becerra · adbecerra@berkeley.edu || technical@esc.studentorg.berkeley.edu
 - Presidents: president@esc.studentorg.berkeley.edu
 
 <sub>Built and maintained by the ESC Tech Committee. Made with ☕ in Etcheverry.</sub>
