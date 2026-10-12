@@ -10,34 +10,34 @@ This file lists legacy pages and duplicate images that were removed from the liv
 
 ## Removed files
 
-| Path | Evidence |
-| --- | --- |
-| `Covid.html` | The link graph never reaches it, and no tracked file contains `Covid.html`. The only "Covid" match is plain text in `past-events.html`. |
-| `og.html` | The link graph never reaches it, and no tracked file contains `og.html`. It is an old copy of the students page and is titled "Engineering Student Council". |
-| `clubs2.html` | The link graph never reaches it, and the only file that mentions `clubs2` is the page itself. Its script, `assets/js/clubs2.js`, was kept (see below). |
-| `allocations.html` | The link graph never reaches it, and no tracked file contains `allocations.html`. It is an old copy of the committees page and is titled "Our Committees". |
-| `old_ESC/` (whole folder, 159 tracked files including LFS zips) | No file outside `old_ESC/` mentions `old_ESC`. It is a self-contained copy of the previous site. |
-| `Academics.jpg` | Identical to `images/Academics.jpg`. The only reference, in `old-home.html`, uses `images/Academics.jpg`. |
-| `HEARTool.jpg` | Identical to `images/HEARTool.jpg`. The only reference, in `old-home.html`, uses `images/HEARTool.jpg`. |
-| `image1.jpg` | Identical to `images/image1.jpg`. The only references are to `images/GalleryPhotos/image1.jpg`. |
-| `vegetables.jpg` | Identical to `images/vegetables.jpg`. The only reference, in `food.html`, uses `images/vegetables.jpg`. |
-| `finance.jpeg` | Identical to `images/finance.jpeg`. The only reference, in `finance.html`, uses `images/finance.jpeg`. |
-| `eweek2021.png` | Identical to `images/eweek2021.png`. Nothing references either copy. |
-| `mentorship.png` | Identical to `images/mentorship.png`. The only reference, in `old-home.html`, uses `images/mentorship.png`. |
+| Path                                                            | Evidence                                                                                                                                                     |
+| --------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `Covid.html`                                                    | The link graph never reaches it, and no tracked file contains `Covid.html`. The only "Covid" match is plain text in `past-events.html`.                      |
+| `og.html`                                                       | The link graph never reaches it, and no tracked file contains `og.html`. It is an old copy of the students page and is titled "Engineering Student Council". |
+| `clubs2.html`                                                   | The link graph never reaches it, and the only file that mentions `clubs2` is the page itself. Its script, `assets/js/clubs2.js`, was kept (see below).       |
+| `allocations.html`                                              | The link graph never reaches it, and no tracked file contains `allocations.html`. It is an old copy of the committees page and is titled "Our Committees".   |
+| `old_ESC/` (whole folder, 159 tracked files including LFS zips) | No file outside `old_ESC/` mentions `old_ESC`. It is a self-contained copy of the previous site.                                                             |
+| `Academics.jpg`                                                 | Identical to `images/Academics.jpg`. The only reference, in `old-home.html`, uses `images/Academics.jpg`.                                                    |
+| `HEARTool.jpg`                                                  | Identical to `images/HEARTool.jpg`. The only reference, in `old-home.html`, uses `images/HEARTool.jpg`.                                                      |
+| `image1.jpg`                                                    | Identical to `images/image1.jpg`. The only references are to `images/GalleryPhotos/image1.jpg`.                                                              |
+| `vegetables.jpg`                                                | Identical to `images/vegetables.jpg`. The only reference, in `food.html`, uses `images/vegetables.jpg`.                                                      |
+| `finance.jpeg`                                                  | Identical to `images/finance.jpeg`. The only reference, in `finance.html`, uses `images/finance.jpeg`.                                                       |
+| `eweek2021.png`                                                 | Identical to `images/eweek2021.png`. Nothing references either copy.                                                                                         |
+| `mentorship.png`                                                | Identical to `images/mentorship.png`. The only reference, in `old-home.html`, uses `images/mentorship.png`.                                                  |
 
 After the removal, a link check over every remaining page found no new broken local references.
 
 ## Deliberately kept
 
-| Path | Why it stays |
-| --- | --- |
-| `old-home.html` | The tech lead preserved it on purpose. |
-| `google079f87068bf8c92f.html` | Google Search Console uses it for site verification. |
-| `positive_vibes.html` | `positive_messages.html`, which is reachable, links to it through the absolute URL `https://esc.berkeley.edu/positive_vibes.html`. |
-| `resources.html` | `old-home.html` links to it, so removing it would break the kept page. |
-| `calfacilities.html`, `coefacilities.html`, `project.html` | Only links inside HTML comments point to them, in several live pages and the old nav. Someone may re-enable those links. |
-| `assets/js/clubs2.js` | Only the removed `clubs2.html` used it. It was kept because this cleanup only covers pages and duplicate images. |
-| `top-bar.js` (root), `assets/top-bar.js` | These are old copies of the nav script, and no page loads them. They were left alone because the nav is being reworked on another branch. |
+| Path                                                       | Why it stays                                                                                                                              |
+| ---------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `old-home.html`                                            | The tech lead preserved it on purpose.                                                                                                    |
+| `google079f87068bf8c92f.html`                              | Google Search Console uses it for site verification.                                                                                      |
+| `positive_vibes.html`                                      | `positive_messages.html`, which is reachable, links to it through the absolute URL `https://esc.berkeley.edu/positive_vibes.html`.        |
+| `resources.html`                                           | `old-home.html` links to it, so removing it would break the kept page.                                                                    |
+| `calfacilities.html`, `coefacilities.html`, `project.html` | Only links inside HTML comments point to them, in several live pages and the old nav. Someone may re-enable those links.                  |
+| `assets/js/clubs2.js`                                      | Only the removed `clubs2.html` used it. It was kept because this cleanup only covers pages and duplicate images.                          |
+| `top-bar.js` (root), `assets/top-bar.js`                   | These are old copies of the nav script, and no page loads them. They were left alone because the nav is being reworked on another branch. |
 
 ## Restoring a file
 
