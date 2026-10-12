@@ -36,8 +36,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-node@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
       - name: Bundle without deploying
@@ -55,7 +55,7 @@ jobs:
       - name: Skip when Cloudflare is not configured
         if: env.HAS_CLOUDFLARE != 'true'
         run: echo "::notice::Telemetry Worker deploys are off. Add CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID to enable them."
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
         if: env.HAS_CLOUDFLARE == 'true'
       - name: Check the D1 database is configured
         id: d1
