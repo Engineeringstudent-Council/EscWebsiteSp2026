@@ -35,8 +35,8 @@ jobs:
     runs-on: macos-15
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-node@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
           cache: npm
@@ -49,7 +49,7 @@ jobs:
         run: npx -y @guidepup/setup@0.24.6 install
       - run: npx playwright install webkit
       - run: npx playwright test -c playwright.screenreader.config.mjs --project=voiceover
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: ${{ !cancelled() }}
         with:
           name: voiceover-results
@@ -64,8 +64,8 @@ jobs:
     runs-on: windows-latest
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-node@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
           cache: npm
@@ -78,7 +78,7 @@ jobs:
         run: npx -y @guidepup/setup@0.24.6 install
       - run: npx playwright install chromium
       - run: npx playwright test -c playwright.screenreader.config.mjs --project=nvda
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: ${{ !cancelled() }}
         with:
           name: nvda-results
