@@ -1,0 +1,132 @@
+{
+  "index.html": {
+    "title": "Home",
+    "description": "The Engineering Student Council funds engineering student orgs, runs Blue & Gold certification, and hosts Engineers' Week.",
+    "keywords": "home esc engineering student council berkeley coe",
+    "boost": 0.5
+  },
+  "about.html": { "trail": ["About Us"], "keywords": "who we are mission reports semester" },
+  "academics.html": {
+    "title": "Academic Aid",
+    "keywords": "tutoring tutor study help classes advising grad school graduate phd masters",
+    "boost": 1.2
+  },
+  "applyfunding.html": {
+    "title": "Apply for Funding",
+    "trail": ["Organizations", "Finances"],
+    "description": "How engineering student orgs request money from ESC's FiComm.",
+    "keywords": "funding money grant reimbursement budget request ficomm finance clubs applications",
+    "boost": 1.5,
+    "featured": true
+  },
+  "blueandgold.html": {
+    "title": "Blue & Gold Certification",
+    "keywords": "blue gold b&g certification certify club requirements",
+    "boost": 1.4,
+    "featured": true
+  },
+  "calendar.html": {
+    "title": "Events Calendar",
+    "trail": ["Events"],
+    "keywords": "calendar schedule dates"
+  },
+  "clubs.html": {
+    "title": "Certified Organizations",
+    "keywords": "clubs orgs rso societies list directory join",
+    "boost": 1.3,
+    "featured": true
+  },
+  "committees.html": { "keywords": "committee join tech finance communications eweek" },
+  "engin_decals.html": { "keywords": "decal course units class student-run", "boost": 1.1 },
+  "escaffiliation.html": {
+    "trail": ["Organizations"],
+    "keywords": "affiliate affiliation validation register club"
+  },
+  "events.html": { "keywords": "events happening upcoming general meeting gm", "boost": 1.2 },
+  "eweek_overview.html": {
+    "title": "Engineers Week (E-Week)",
+    "keywords": "eweek e-week engineers week competition",
+    "boost": 1.3,
+    "featured": true
+  },
+  "execs.html": {
+    "keywords": "exec board officers president vice president leadership team contact",
+    "boost": 1.2
+  },
+  "faqs.html": { "keywords": "faq questions help", "boost": 1.1 },
+  "ficomm.html": {
+    "title": "FiComm Decisions",
+    "trail": ["Organizations", "Finances"],
+    "keywords": "ficomm finance committee decisions"
+  },
+  "fin-decisions.html": {
+    "title": "Finance Decisions & Initial Allocations",
+    "keywords": "ficomm allocations decisions funding results"
+  },
+  "finance.html": { "keywords": "financial aid scholarships money taxes budgeting" },
+  "fmpi.html": { "keywords": "menstrual period pads tampons free products health" },
+  "food.html": {
+    "title": "Food Security",
+    "keywords": "free food pantry calfresh hungry meals groceries basic needs",
+    "boost": 1.3,
+    "featured": true
+  },
+  "gallery.html": {
+    "title": "Photo Gallery",
+    "trail": ["About Us"],
+    "keywords": "photos pictures"
+  },
+  "hear.html": {
+    "keywords": "mental health wellness counseling therapy caps stress support resources",
+    "boost": 1.3,
+    "featured": true
+  },
+  "housing.html": {
+    "title": "Housing Help",
+    "keywords": "housing apartment rent lease roommate dorm",
+    "boost": 1.2
+  },
+  "howtoguide.html": {
+    "title": "How to Start a Student Organization",
+    "trail": ["Organizations"],
+    "keywords": "start club rso register new organization lead"
+  },
+  "initallocate.html": {
+    "title": "Initial Allocations",
+    "trail": ["Organizations", "Finances"],
+    "keywords": "allocations funding semester"
+  },
+  "makerspaces.html": {
+    "keywords": "makerspace laser cutting 3d printing jacobs build prototype",
+    "boost": 1.2
+  },
+  "mission.html": { "trail": ["About Us"], "keywords": "mission ethics values code" },
+  "organizations-home.html": {
+    "title": "For Student Organizations",
+    "trail": ["Organizations"],
+    "keywords": "clubs orgs blue gold certification process"
+  },
+  "policies.html": {
+    "trail": ["Organizations", "Finances"],
+    "keywords": "policy rules guidelines bylaws"
+  },
+  "positive_messages.html": {
+    "title": "Positive Messages Campaign",
+    "trail": ["About Us"],
+    "keywords": "positive messages campaign"
+  },
+  "relevantfinance.html": {
+    "title": "Relevant Finance Documents",
+    "trail": ["Organizations", "Finances"]
+  },
+  "report.html": { "trail": ["About Us"], "keywords": "report semester summary" },
+  "students.html": {
+    "title": "Student Resources",
+    "trail": ["Students"],
+    "keywords": "students resources help support"
+  },
+  "treasurertrain.html": {
+    "keywords": "treasurer training finance officer club money",
+    "boost": 1.1
+  }
+}

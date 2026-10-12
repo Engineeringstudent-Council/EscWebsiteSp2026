@@ -6,8 +6,10 @@ export default [
     // Legacy site scripts (jQuery template, document.write includes) and
     // vendored libraries are out of scope; only modern code is linted.
     ignores: [
-      'assets/**',
-      '!assets/js/search/**',
+      'assets/**/*',
+      '!assets/js/',
+      '!assets/js/search/',
+      '!assets/js/search/*.js',
       'assets/js/vendor/**',
       'TableFilter/**',
       '.claude/**',

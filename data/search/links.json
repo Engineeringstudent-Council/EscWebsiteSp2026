@@ -1,0 +1,40 @@
+[
+  {
+    "title": "Email the ESC Presidents",
+    "url": "mailto:president@esc.studentorg.berkeley.edu",
+    "category": "Contact",
+    "description": "General questions, partnerships, or anything you can't find here.",
+    "keywords": "contact email president help question partner sponsor company",
+    "boost": 1.2
+  },
+  {
+    "title": "Join the ESC Team",
+    "url": "https://forms.gle/Q2K6TZySHtWS65ex9",
+    "category": "Connect",
+    "description": "Application form to get involved with ESC.",
+    "keywords": "join apply application get involved volunteer member committee",
+    "boost": 1.2,
+    "featured": true
+  },
+  {
+    "title": "Report Harassment or Discrimination (OPHD)",
+    "url": "https://ophd.berkeley.edu/report",
+    "category": "Students",
+    "description": "Confidential reporting through UC Berkeley's Office for the Prevention of Harassment and Discrimination.",
+    "keywords": "report harassment discrimination sexual violence title ix ophd safety"
+  },
+  {
+    "title": "Blue & Gold Portal",
+    "url": "https://sites.google.com/berkeley.edu/blue-and-gold-portal/home",
+    "category": "Organizations",
+    "description": "Submit and track your organization's Blue & Gold certification.",
+    "keywords": "blue gold portal certification submit"
+  },
+  {
+    "title": "Join Our Mailing List",
+    "url": "https://docs.google.com/forms/d/e/1FAIpQLSfB53XBgch-4JIuCsDZWbMT5zfcz0iiMjOBYyA3ltDSQ-ow-g/viewform?usp=sf_link",
+    "category": "Connect",
+    "description": "Get ESC news and events in your inbox.",
+    "keywords": "newsletter mailing list email updates subscribe"
+  }
+]
