@@ -32,7 +32,7 @@ jobs:
       - name: Skip when Cloudflare is not configured
         if: env.HAS_TOKEN != 'true'
         run: echo "::notice::Preview deploys are off. Add CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID to enable them."
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
         if: env.HAS_TOKEN == 'true'
       - name: Stage the public site
         if: env.HAS_TOKEN == 'true'
@@ -46,7 +46,7 @@ jobs:
       - name: Deploy to Cloudflare Pages
         id: deploy
         if: env.HAS_TOKEN == 'true'
-        uses: cloudflare/wrangler-action@v3
+        uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
