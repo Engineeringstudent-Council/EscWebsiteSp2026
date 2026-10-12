@@ -1,5 +1,17 @@
 // custom code written by Niraj
-document.write('\
+// Inserts the shared footer right where this <script> tag sits.
+// From inside <body> that is done with insertAdjacentHTML. Most pages load
+// this file from <head>, though, and only document.write can synchronously
+// place markup into <body> from there (main.js needs #nav to exist when it
+// runs). Moving those script tags into <body> lets every page use the
+// modern path.
+function escInsertHere(html) {
+	var here = document.currentScript;
+	if (here && here.parentNode && here.parentNode !== document.head) here.insertAdjacentHTML('beforebegin', html);
+	else document.write(html);
+}
+
+escInsertHere('\
 <footer id="footer">\
 <div id="content-desktop">\
     <ul class="sectiontext" style="padding-bottom:5px;">\

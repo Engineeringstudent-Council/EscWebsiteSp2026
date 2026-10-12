@@ -16,7 +16,11 @@
     "test:e2e": "playwright test",
     "check:data": "node scripts/validate-data.mjs",
     "lhci": "lhci autorun",
-    "baseline:update": "UPDATE_BASELINE=1 playwright test --project=desktop --workers=1"
+    "baseline:update": "UPDATE_BASELINE=1 playwright test --project=desktop --workers=1",
+    "build:search": "node scripts/build-search-index.mjs",
+    "check:search": "node scripts/build-search-index.mjs --check",
+    "test:stress": "node --test --test-reporter=spec \"tests/stress/**/*.test.mjs\"",
+    "vendor:fuse": "cp node_modules/fuse.js/dist/fuse.min.mjs assets/js/vendor/fuse.esm.min.js"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",
@@ -25,7 +29,9 @@
     "@playwright/test": "^1.64.0",
     "ajv": "^8.20.0",
     "ajv-formats": "^3.0.1",
+    "cheerio": "^1.2.0",
     "eslint": "^10.12.0",
+    "fuse.js": "^7.5.0",
     "globals": "^17.13.0",
     "prettier": "^3.9.9"
   }
