@@ -145,6 +145,50 @@ test('the open palette has no accessibility violations', async ({ page }) => {
   expect(violations.map((v) => `${v.id}: ${v.help}`)).toEqual([]);
 });
 
+test('results stay readable on hover and in dark mode', async ({ page }) => {
+  await page.emulateMedia({ colorScheme: 'dark' });
+  await page.goto('about.html');
+  await page.locator('#nav .esc-search-trigger').click();
+  await input(page).fill('housing');
+  await expect(options(page).nth(1)).toBeVisible();
+  await options(page).nth(1).hover();
+  await page.keyboard.press('ArrowDown');
+
+  const look = await page.evaluate(() => {
+    const css = (el, prop) => getComputedStyle(el).getPropertyValue(prop);
+    const panel = document.querySelector('dialog.esc-search');
+    const hovered = document.querySelectorAll('dialog.esc-search [role="option"]')[1];
+    return {
+      panel: css(panel, 'background-color'),
+      title: css(hovered.querySelector('.esc-search-title'), 'color'),
+      font: css(panel.querySelector('.esc-search-title'), 'font-style'),
+    };
+  });
+  // White panel in every color scheme, navy ink (not the template's orange) on hover.
+  expect(look.panel).toBe('rgb(255, 255, 255)');
+  expect(look.title).toBe('rgb(11, 21, 51)');
+  expect(look.font).toBe('normal');
+
+  const { violations } = await new AxeBuilder({ page })
+    .include('dialog.esc-search')
+    .withRules(['color-contrast'])
+    .analyze();
+  expect(violations.flatMap((v) => v.nodes.map((n) => `${n.target} ${n.any[0]?.message}`))).toEqual(
+    [],
+  );
+});
+
+test('the greeting uses the site typeface, not italics', async ({ page }) => {
+  await page.goto('about.html');
+  await page.locator('#nav .esc-search-trigger').click();
+  const greeting = page.locator('.esc-search-greeting');
+  await expect(greeting).toBeVisible();
+  await expect(greeting).toHaveCSS('font-style', 'normal');
+  expect(await greeting.evaluate((el) => getComputedStyle(el).fontFamily)).toMatch(
+    /Source Sans Pro/,
+  );
+});
+
 test('shows a retry message if the index fails to load', async ({ page }) => {
   await page.route('**/assets/search/index.json', (route) => route.fulfill({ status: 500 }));
   await page.goto('index.html');
