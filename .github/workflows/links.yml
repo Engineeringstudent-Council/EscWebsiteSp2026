@@ -1,0 +1,59 @@
+name: Link check
+
+# Weekly crawl of every live page. Old Google Forms, Docs, and club links
+# rot quietly, so instead of failing builds this keeps one tracking issue
+# up to date with whatever is currently broken.
+on:
+  schedule:
+    - cron: '0 16 * * 1' # Mondays, 9am Pacific
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  lychee:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+      - name: List live pages
+        id: pages
+        run: |
+          node scripts/site-pages.mjs | node -e "let s='';process.stdin.on('data',d=>s+=d).on('end',()=>console.log(JSON.parse(s).pages.join(' ')))" > pages.txt
+          echo "files=$(cat pages.txt)" >> "$GITHUB_OUTPUT"
+      - name: Check links
+        id: lychee
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >-
+            --root-dir ${{ github.workspace }}
+            --config .github/lychee.toml
+            ${{ steps.pages.outputs.files }}
+            assets/js/top-bar.js assets/js/bottom-bar.js
+          output: lychee-report.md
+          fail: false
+      - name: Open or update the tracking issue
+        if: steps.lychee.outputs.exit_code != 0
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          title="Broken links report"
+          number=$(gh issue list --state open --search "in:title \"$title\"" --json number --jq '.[0].number')
+          if [ -n "$number" ]; then
+            gh issue edit "$number" --body-file lychee-report.md
+          else
+            gh label create broken-links --color d73a4a --force >/dev/null || true
+            gh issue create --title "$title" --label broken-links --body-file lychee-report.md
+          fi
+      - name: Close the tracking issue when everything passes
+        if: steps.lychee.outputs.exit_code == 0
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          number=$(gh issue list --state open --search 'in:title "Broken links report"' --json number --jq '.[0].number')
+          if [ -n "$number" ]; then gh issue close "$number" --comment "All links pass as of $(date -u +%F). 🎉"; fi
