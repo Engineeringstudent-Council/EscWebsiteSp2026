@@ -4,10 +4,10 @@
 # crawl sends many requests at once, that server drops some connections, and the
 # links were reported as timeouts even though they load fine in a browser. A
 # lower concurrency limit, a longer timeout, and patient retries avoid this.
-max_concurrency = 4
+max_concurrency = 2
 timeout = 30
 max_retries = 3
-retry_wait_time = 5
+retry_wait_time = 10
 
 # 401 means the page exists but needs a login. Council forms, Drive folders, and
 # the calendar are restricted to Berkeley accounts, so Google answers a
