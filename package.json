@@ -17,6 +17,7 @@
     "check:data": "node scripts/validate-data.mjs",
     "lhci": "lhci autorun",
     "baseline:update": "UPDATE_BASELINE=1 playwright test --project=desktop --workers=1",
+    "build:sitemap": "node scripts/build-sitemap.mjs",
     "build:search": "node scripts/build-search-index.mjs",
     "check:search": "node scripts/build-search-index.mjs --check",
     "test:stress": "node --test --test-reporter=spec \"tests/stress/**/*.test.mjs\"",

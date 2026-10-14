@@ -1,0 +1,11 @@
+# Engineering Student Council, UC Berkeley
+# Everything public is fair game. The folders below are repo tooling that
+# happens to be served alongside the site, not pages anyone should land on.
+
+User-agent: *
+Allow: /
+Disallow: /scripts/
+Disallow: /tests/
+Disallow: /.github/
+
+Sitemap: https://esc.studentorg.berkeley.edu/sitemap.xml
