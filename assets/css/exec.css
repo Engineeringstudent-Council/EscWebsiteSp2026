@@ -7,6 +7,18 @@
 }
 
 /*Execs */
+.exec-group-photo {
+	margin: 0 auto 2em;
+}
+
+.exec-group-photo img {
+	display: block;
+	width: 100%;
+	max-width: 1000px;
+	height: auto;
+	margin: 0 auto;
+}
+
 #grid {
 	width: 100%;
 	height: 100%;
