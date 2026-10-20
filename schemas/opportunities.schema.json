@@ -1,0 +1,131 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://esc.studentorg.berkeley.edu/schemas/opportunities.schema.json",
+  "title": "Opportunities for engineering students",
+  "description": "Internships, research, scholarships, events and jobs listed on the opportunities tab. Array order is the default display order.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["opportunities"],
+  "properties": {
+    "$schema": {
+      "description": "Optional pointer to this schema so editors like VS Code offer autocomplete, e.g. \"../schemas/opportunities.schema.json\".",
+      "type": "string"
+    },
+    "opportunities": {
+      "description": "The list of opportunities.",
+      "type": "array",
+      "items": { "$ref": "#/$defs/opportunity" }
+    }
+  },
+  "$defs": {
+    "date": {
+      "description": "A calendar date written as YYYY-MM-DD, e.g. \"2027-02-15\".",
+      "type": "string",
+      "format": "date"
+    },
+    "opportunity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "organization", "type", "url"],
+      "properties": {
+        "id": {
+          "description": "Stable unique lowercase slug, e.g. \"urap-spring-2027\". Letters, digits and single hyphens only.",
+          "type": "string",
+          "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+          "maxLength": 80
+        },
+        "title": {
+          "description": "Short headline, e.g. \"Undergraduate Research Apprentice Program (URAP)\".",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "organization": {
+          "description": "Who is offering it, e.g. \"UC Berkeley Office of Undergraduate Research\".",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "type": {
+          "description": "Category used for filtering.",
+          "enum": [
+            "internship",
+            "research",
+            "scholarship",
+            "fellowship",
+            "event",
+            "job",
+            "competition",
+            "other"
+          ]
+        },
+        "url": {
+          "description": "Full https link where students learn more or apply.",
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https://"
+        },
+        "description": {
+          "description": "Plain-text summary (no HTML), a few sentences at most.",
+          "type": "string",
+          "maxLength": 1000
+        },
+        "deadline": {
+          "$ref": "#/$defs/date",
+          "description": "Last day to apply or register, as YYYY-MM-DD. Leave out for rolling or no-deadline opportunities."
+        },
+        "eventDate": {
+          "$ref": "#/$defs/date",
+          "description": "For events: the day it happens, as YYYY-MM-DD."
+        },
+        "postedDate": {
+          "$ref": "#/$defs/date",
+          "description": "Day this entry was added, as YYYY-MM-DD. Used to show \"new\" badges and sort by recency."
+        },
+        "location": {
+          "description": "Where it happens, e.g. \"Remote\", \"Berkeley, CA\" or \"MLK Jr. Student Union, Pauley Ballroom\".",
+          "type": "string",
+          "maxLength": 120
+        },
+        "eligibility": {
+          "description": "Who can apply, in plain words, e.g. \"Undergraduates in any major; no prior research experience needed.\"",
+          "type": "string",
+          "maxLength": 300
+        },
+        "paid": {
+          "description": "true if the position is paid or the award includes money, false if unpaid. Leave out if unknown or not applicable.",
+          "type": "boolean"
+        },
+        "tags": {
+          "description": "Lowercase keywords for filtering, e.g. [\"eecs\", \"summer\", \"first-years\"].",
+          "type": "array",
+          "uniqueItems": true,
+          "maxItems": 10,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+            "maxLength": 30
+          }
+        },
+        "contact": {
+          "description": "Optional person or mailbox to ask questions.",
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["email"],
+          "properties": {
+            "name": {
+              "description": "Contact name or team, e.g. \"ESC Technical Committee\".",
+              "type": "string",
+              "maxLength": 80
+            },
+            "email": {
+              "description": "Contact email address.",
+              "type": "string",
+              "format": "email"
+            }
+          }
+        }
+      }
+    }
+  }
+}
