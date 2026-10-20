@@ -61,9 +61,9 @@ test('slugFor makes file-safe card names', () => {
   assert.equal(imageUrl('about'), `${SITE}/images/og/about.png`);
 });
 
-test('the pages teammates are editing are skipped', () => {
-  assert.ok(SKIP.has('execs.html'));
-  assert.ok(SKIP.has('committees.html'));
+test('the exec and committee pages get cards now that their rewrite has merged', () => {
+  assert.ok(!SKIP.has('execs.html'));
+  assert.ok(!SKIP.has('committees.html'));
   assert.ok(!SKIP.has('index.html'));
 });
 

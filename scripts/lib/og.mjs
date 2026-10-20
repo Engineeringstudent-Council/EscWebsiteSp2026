@@ -24,12 +24,10 @@ const NOTE =
  * Pages the build leaves alone. Their <head> is not touched and no card is
  * rendered, so the build can never cause a merge conflict on them.
  */
-export const SKIP = new Map([
-  // Reem is actively rewriting these two pages on her own branch. Remove them
-  // from this list once her work has merged, then run `npm run build:og`.
-  ['execs.html', 'being rewritten on another branch'],
-  ['committees.html', 'being rewritten on another branch'],
-]);
+// Pages to leave without a card while someone is mid-rewrite on another branch:
+// ['page.html', 'reason']. Remove the entry once that work merges, then run
+// `npm run build:og`.
+export const SKIP = new Map([]);
 
 /** The generic card, for anything that doesn't have its own. */
 export const DEFAULT_CARD = { slug: 'default', title: 'Engineering Student Council', trail: [] };
