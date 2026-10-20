@@ -9,9 +9,11 @@ assets/*
 !assets/js/
 assets/js/*
 !assets/js/search/
+!assets/js/theme/
 !assets/css/
 assets/css/*
 !assets/css/search.css
+!assets/css/theme.css
 TableFilter/
 old_ESC/
 exec2022/

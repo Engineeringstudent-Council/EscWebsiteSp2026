@@ -1,0 +1,557 @@
+/*
+  ESC light/dark theme.
+
+  The site is light by default and only goes dark when someone presses the
+  bear in the nav (assets/js/theme/theme.js sets <html data-theme="dark">).
+  Light mode is the original design, untouched; everything below the toggle
+  section only applies in dark mode.
+
+  Dark mode is "Berkeley at night": deep navy surfaces instead of black, soft
+  white ink, periwinkle links, and the same California Gold accents. Every
+  pairing below passes WCAG AA (4.5:1 for text).
+
+  The legacy template (main.css) hard-codes colours, and a few pages set them
+  inline, so the dark rules are prefixed with html[data-theme='dark'] to win
+  on specificity, and inline colours are matched by attribute selectors.
+*/
+
+:root {
+  --esc-blue: #002676;
+  --esc-gold: #fdb515;
+}
+
+html[data-theme='dark'] {
+  --theme-bg: #0c1124;
+  --theme-surface: #131a33;
+  --theme-surface-2: #1a2342;
+  --theme-surface-3: #232d52;
+  --theme-line: rgba(214, 224, 255, 0.13);
+  --theme-text: #dde2f1;
+  --theme-text-strong: #f4f6fc;
+  --theme-muted: #a6afca;
+  --theme-heading: #eef1fb;
+  --theme-link: #a9c1ff;
+  --theme-shadow: 0 18px 50px -20px rgba(0, 0, 0, 0.75);
+  color-scheme: dark;
+}
+
+/* ------------------------------------------------------------ the toggle */
+
+.esc-theme-toggle {
+  --esc-toggle-bg: #fff;
+  -webkit-appearance: none;
+  appearance: none;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5em;
+  height: 2.5em;
+  margin: 0;
+  padding: 0;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 102, 0.18);
+  background: var(--esc-toggle-bg);
+  color: var(--esc-blue);
+  box-shadow: none;
+  font: inherit;
+  font-size: 0.72em;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  vertical-align: middle;
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease,
+    color 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.esc-theme-toggle:hover {
+  --esc-toggle-bg: #f2f5fb;
+  border-color: rgba(0, 38, 118, 0.4);
+}
+
+.esc-theme-toggle:focus-visible {
+  outline: 2px solid rgba(0, 38, 118, 0.55);
+  outline-offset: 2px;
+}
+
+/* Baseline on the item + middle on the button centres it on the search pill. */
+#header nav ul li.esc-theme-nav {
+  margin-left: 0.45em;
+  vertical-align: baseline;
+}
+
+/* Phones: next to the search button in main.js's title bar. */
+.esc-theme-toggle.esc-theme-toggle--bar {
+  position: absolute;
+  top: 10px;
+  right: 66px;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  font-size: 18px;
+  z-index: 2;
+}
+
+/* The title bar's logo is centred; with two buttons on the right it would
+   collide on narrow phones, so it sits next to the menu button instead. (The html
+   prefix wins regardless of whether main.css loads before or after this file.) */
+html #titleBar .title {
+  box-sizing: border-box;
+  padding: 0 118px 0 64px;
+  text-align: left;
+}
+
+html #titleBar .title img {
+  max-width: 100%;
+}
+
+/* Pages with a logo-only header (the homepage): pinned in the header's corner,
+   and still there on phones, where the template hides that header. */
+.esc-theme-toggle.esc-theme-toggle--corner {
+  position: fixed;
+  top: 26px;
+  right: 1.5em;
+  z-index: 10002;
+  font-size: 16px;
+}
+
+@media screen and (max-width: 736px) {
+  .esc-theme-toggle.esc-theme-toggle--corner {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    font-size: 18px;
+  }
+}
+
+/* Oski: awake in light mode, asleep in dark mode. */
+.esc-bear {
+  width: 1.6em;
+  height: 1.6em;
+  overflow: visible;
+}
+
+.esc-bear-head {
+  transform-box: view-box;
+  transform-origin: 12px 14px;
+  transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.esc-bear-ear,
+.esc-bear-face {
+  fill: var(--esc-toggle-bg);
+  stroke: currentColor;
+  stroke-width: 1.6;
+  transition: fill 0.15s ease;
+}
+
+.esc-bear-muzzle {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.3;
+}
+
+.esc-bear-nose,
+.esc-bear-eyes-open {
+  fill: currentColor;
+}
+
+.esc-bear-eyes-open {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition:
+    transform 0.25s ease,
+    opacity 0.2s ease;
+}
+
+.esc-bear-eyes-shut,
+.esc-bear-z {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0;
+  transition:
+    opacity 0.25s ease,
+    transform 0.45s ease;
+}
+
+.esc-bear-eyes-shut {
+  stroke: currentColor;
+  stroke-width: 1.4;
+}
+
+.esc-bear-z {
+  stroke: var(--esc-gold);
+  stroke-width: 1.5;
+  transform: translate(-2px, 2px) scale(0.6);
+  transform-box: fill-box;
+  transform-origin: left bottom;
+}
+
+.esc-theme-toggle:hover .esc-bear-head {
+  transform: rotate(-9deg);
+}
+
+html[data-theme='dark'] .esc-bear-head {
+  transform: rotate(-12deg) translateY(0.6px);
+}
+
+html[data-theme='dark'] .esc-theme-toggle:hover .esc-bear-head {
+  transform: rotate(-4deg);
+}
+
+html[data-theme='dark'] .esc-bear-eyes-open {
+  opacity: 0;
+  transform: scaleY(0.1);
+}
+
+html[data-theme='dark'] .esc-bear-eyes-shut,
+html[data-theme='dark'] .esc-bear-z {
+  opacity: 1;
+}
+
+html[data-theme='dark'] .esc-bear-z {
+  transform: none;
+}
+
+html[data-theme='dark'] .esc-theme-toggle {
+  --esc-toggle-bg: var(--theme-surface-2);
+  border-color: var(--theme-line);
+  color: var(--theme-heading);
+}
+
+html[data-theme='dark'] .esc-theme-toggle:hover {
+  --esc-toggle-bg: var(--theme-surface-3);
+  border-color: rgba(214, 224, 255, 0.3);
+}
+
+html[data-theme='dark'] .esc-theme-toggle:focus-visible {
+  outline-color: var(--esc-gold);
+}
+
+/* The theme change grows out of the bear as a circle. */
+html.esc-theme-switching::view-transition-old(root),
+html.esc-theme-switching::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+html.esc-theme-switching::view-transition-new(root) {
+  animation: esc-theme-reveal 0.6s cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+
+@keyframes esc-theme-reveal {
+  from {
+    clip-path: circle(0 at var(--esc-theme-x) var(--esc-theme-y));
+  }
+  to {
+    clip-path: circle(var(--esc-theme-r) at var(--esc-theme-x) var(--esc-theme-y));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .esc-theme-toggle,
+  .esc-bear-head,
+  .esc-bear-eyes-open,
+  .esc-bear-eyes-shut,
+  .esc-bear-z {
+    transition: none;
+  }
+}
+
+/* ------------------------------------------------------------ base */
+
+html[data-theme='dark'],
+html[data-theme='dark'] body {
+  background: var(--theme-bg);
+}
+
+html[data-theme='dark'] body,
+html[data-theme='dark'] input,
+html[data-theme='dark'] select,
+html[data-theme='dark'] textarea {
+  color: var(--theme-text);
+}
+
+html[data-theme='dark'] h1,
+html[data-theme='dark'] h2,
+html[data-theme='dark'] h3,
+html[data-theme='dark'] h4,
+html[data-theme='dark'] h5,
+html[data-theme='dark'] h6,
+html[data-theme='dark'] strong,
+html[data-theme='dark'] b,
+html[data-theme='dark'] label,
+html[data-theme='dark'] header p,
+html[data-theme='dark'] table th {
+  color: var(--theme-heading);
+}
+
+html[data-theme='dark'] a,
+html[data-theme='dark'] a.banner {
+  color: var(--theme-link);
+}
+
+html[data-theme='dark'] hr {
+  border-bottom-color: var(--theme-line);
+}
+
+html[data-theme='dark'] blockquote {
+  border-left-color: var(--theme-link);
+}
+
+html[data-theme='dark'] ::selection {
+  background: rgba(253, 181, 21, 0.35);
+  color: var(--theme-text-strong);
+}
+
+html[data-theme='dark'] table tbody tr,
+html[data-theme='dark'] table thead,
+html[data-theme='dark'] table tfoot,
+html[data-theme='dark'] table.alt tbody tr td,
+html[data-theme='dark'] ul.alt li {
+  border-color: var(--theme-line);
+}
+
+html[data-theme='dark'] table tbody tr:nth-child(2n + 1) {
+  background-color: rgba(214, 224, 255, 0.04);
+}
+
+/* ------------------------------------------------------------ header & menus */
+
+html[data-theme='dark'] #header {
+  background: rgba(19, 26, 51, 0.96);
+  box-shadow:
+    0 1px 0 var(--theme-line),
+    0 10px 30px -18px rgba(0, 0, 0, 0.9);
+}
+
+html[data-theme='dark'] #header nav ul li {
+  color: var(--theme-heading);
+}
+
+html[data-theme='dark'] .dropotron {
+  background: var(--theme-surface-2);
+  box-shadow:
+    0 0 0 1px var(--theme-line),
+    var(--theme-shadow);
+}
+
+html[data-theme='dark'] .dropotron.level-0:before {
+  background: var(--theme-surface-2);
+  box-shadow: -1px -1px 0 var(--theme-line);
+}
+
+html[data-theme='dark'] .dropotron > li a,
+html[data-theme='dark'] .dropotron > li span {
+  color: var(--theme-text);
+}
+
+html[data-theme='dark'] #titleBar {
+  background: var(--theme-surface);
+  box-shadow: 0 1px 0 var(--theme-line);
+}
+
+html[data-theme='dark'] #navPanel {
+  background: var(--theme-surface);
+}
+
+/* ------------------------------------------------------------ footer */
+
+html[data-theme='dark'] #footer {
+  background: var(--theme-surface) !important;
+  box-shadow: 0 -1px 0 var(--theme-line);
+  color: var(--theme-text);
+}
+
+html[data-theme='dark'] #footer .copyright,
+html[data-theme='dark'] #footer .copyright li {
+  color: var(--theme-muted);
+  border-color: var(--theme-line);
+}
+
+html[data-theme='dark'] .icon.alt:before,
+html[data-theme='dark'] .icon.major.alt:before,
+html[data-theme='dark'] #footer .icons .icon.alt:before {
+  color: var(--theme-heading) !important;
+  text-shadow: none;
+}
+
+html[data-theme='dark'] .icon.major {
+  background: var(--theme-surface-3);
+}
+
+/* ------------------------------------------------------------ components */
+
+html[data-theme='dark'] .button:not(.primary),
+html[data-theme='dark'] input[type='submit']:not(.primary),
+html[data-theme='dark'] input[type='reset']:not(.primary),
+html[data-theme='dark'] input[type='button']:not(.primary) {
+  color: var(--theme-heading) !important;
+  box-shadow: inset 0 0 0 1px var(--theme-line);
+}
+
+/* Gold buttons get navy ink in the dark: white on gold is too faint. */
+html[data-theme='dark'] .button.primary,
+html[data-theme='dark'] input[type='submit'].primary,
+html[data-theme='dark'] input[type='reset'].primary,
+html[data-theme='dark'] input[type='button'].primary {
+  background-color: var(--esc-gold);
+  color: #0c1124 !important;
+}
+
+html[data-theme='dark'] .button.primary:hover,
+html[data-theme='dark'] input[type='submit'].primary:hover,
+html[data-theme='dark'] input[type='reset'].primary:hover,
+html[data-theme='dark'] input[type='button'].primary:hover {
+  background-color: #ffc94a;
+  color: #0c1124 !important;
+}
+
+html[data-theme='dark'] .accordion {
+  background-color: var(--theme-surface-2);
+  color: var(--theme-heading);
+  border-color: var(--theme-line);
+  box-shadow: none;
+}
+
+html[data-theme='dark'] .accordion.active,
+html[data-theme='dark'] .accordion:hover {
+  background-color: var(--theme-surface-3);
+}
+
+html[data-theme='dark'] .accordion:after {
+  color: var(--theme-muted);
+}
+
+html[data-theme='dark'] .panel {
+  background-color: var(--theme-surface);
+  color: var(--theme-text);
+}
+
+html[data-theme='dark'] .spotlight .content {
+  background: var(--theme-surface);
+}
+
+html[data-theme='dark'] .card-horizontal {
+  background: var(--theme-surface);
+  box-shadow: var(--theme-shadow);
+}
+
+html[data-theme='dark'] .author-name-prefix,
+html[data-theme='dark'] .description {
+  color: var(--theme-muted);
+}
+
+html[data-theme='dark'] .containimg {
+  border-color: var(--theme-line);
+  box-shadow: 0.75em 0.75em 0 var(--theme-surface-3);
+}
+
+html[data-theme='dark'] .middle p:hover {
+  box-shadow: 0.05em 0.1em 0.05em 0 var(--theme-link);
+}
+
+html[data-theme='dark'] .hitem,
+html[data-theme='dark'] #hitem a:hover {
+  color: var(--theme-heading);
+}
+
+/* Executive board (exec.css) */
+html[data-theme='dark'] .committee-roster h3 {
+  color: var(--theme-heading);
+}
+
+html[data-theme='dark'] .officer:hover {
+  color: var(--esc-gold);
+  box-shadow: 0 0 0 1px var(--theme-line);
+}
+
+/* Gold bands keep navy ink: light text on gold fails contrast. */
+html[data-theme='dark'] .wrapper.style2,
+html[data-theme='dark'] .wrapper.style2 h2,
+html[data-theme='dark'] .wrapper.style2 h3,
+html[data-theme='dark'] .wrapper.style2 p,
+html[data-theme='dark'] .wrapper.style2 strong {
+  color: #000066;
+}
+
+/* Organization and E-Week lists (clubs.css) */
+html[data-theme='dark'] .title,
+html[data-theme='dark'] #categoryUL li {
+  color: var(--theme-heading);
+}
+
+html[data-theme='dark'] .category ul a {
+  color: var(--theme-link);
+}
+
+html[data-theme='dark'] .category li:hover {
+  background-color: var(--theme-surface-2);
+}
+
+html[data-theme='dark'] .category li:hover > a {
+  color: var(--theme-heading);
+}
+
+html[data-theme='dark'] #categoryUL li:hover {
+  background-color: var(--theme-link);
+  color: #0c1124;
+}
+
+/* Committees */
+html[data-theme='dark'] .committee-item {
+  border-color: var(--theme-line);
+  color: var(--theme-text);
+}
+
+/* HEAR tool table (tool.css) */
+html[data-theme='dark'] table {
+  color: var(--theme-text);
+}
+
+/* Partner logos can't be recoloured, so in the dark they sit on a light plate.
+   Add class="esc-on-light" to any transparent logo that vanishes on navy. */
+html[data-theme='dark'] .esc-on-light {
+  box-sizing: border-box;
+  padding: 0.6em 0.9em;
+  border-radius: 14px;
+  background: #f4f6fc;
+}
+
+/* ------------------------------------------------------------ inline styles */
+
+/* Navy text set with style="color:#000066" (students, E-Week, homepage, ...). */
+html[data-theme='dark'] [style*='color:#000066' i],
+html[data-theme='dark'] [style*='color: #000066' i] {
+  color: var(--theme-heading) !important;
+}
+
+html[data-theme='dark'] [style*='color:#2f4f4f' i],
+html[data-theme='dark'] [style*='color: #2f4f4f' i],
+html[data-theme='dark'] [style*='color:#444' i],
+html[data-theme='dark'] [style*='color: #444' i] {
+  color: var(--theme-muted) !important;
+}
+
+/* Pale grey panels (homepage footer, sponsor and resource boxes). */
+html[data-theme='dark'] [style*='background:#f' i],
+html[data-theme='dark'] [style*='background: #f' i],
+html[data-theme='dark'] [style*='background-color:#f' i],
+html[data-theme='dark'] [style*='background-color: #f' i],
+html[data-theme='dark'] [style*='background:\9#f' i] {
+  background: var(--theme-surface) !important;
+}
+
+/* Soft drop shadows read as grey smudges on navy; outline the box instead. */
+html[data-theme='dark'] [style*='box-shadow: 0 0.075em 1em' i] {
+  background: var(--theme-surface);
+  box-shadow: 0 0 0 1px var(--theme-line) !important;
+}
