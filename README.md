@@ -91,6 +91,10 @@ The golden relevance tests in `tests/unit/search-relevance.test.mjs` pin queries
 
 The site is light by default, exactly as designed. The bear button at the end of the nav (Oski, awake) turns the lights out: Oski falls asleep, and the page goes to a deep Berkeley-navy dark theme with the same gold accents. It's a toggle on purpose, not the computer's brightness setting, so nobody gets dark mode by surprise. The choice is remembered on that device and syncs across open tabs.
 
+![The about page in light and dark mode](docs/images/theme-desktop.jpg)
+
+![Phone title bar and homepage in both themes](docs/images/theme-phone.jpg)
+
 ```
 <head>: theme.css + theme.js ──► reads localStorage('esc-theme') ──► <html data-theme="dark">
          (first script, blocking)                                     before <body> is parsed: no white flash
