@@ -1,0 +1,114 @@
+{
+  "$schema": "../schemas/execs.schema.json",
+  "term": "2025-2026",
+  "members": [
+    {
+      "id": "laura-viera",
+      "name": "Laura Viera",
+      "role": "Co-President",
+      "email": "president@esc.studentorg.berkeley.edu",
+      "headshot": "exec2025/Laura.png"
+    },
+    {
+      "id": "evan-wong",
+      "name": "Evan Wong",
+      "role": "Co-President",
+      "email": "president@esc.studentorg.berkeley.edu",
+      "headshot": "exec2025/Evan.JPG"
+    },
+    {
+      "id": "kalyan-toussaint",
+      "name": "Kalyan Toussaint",
+      "role": "External Vice President",
+      "email": "evp@esc.studentorg.berkeley.edu",
+      "committee": "evp",
+      "headshot": "exec2025/Kalyan.jpeg"
+    },
+    {
+      "id": "daniel-apolinar",
+      "name": "Daniel Apolinar",
+      "role": "Internal Vice President",
+      "email": "ivp@esc.studentorg.berkeley.edu",
+      "committee": "ivp"
+    },
+    {
+      "id": "anand-ashar",
+      "name": "Anand Ashar",
+      "role": "Internal Vice President",
+      "email": "ivp@esc.studentorg.berkeley.edu",
+      "committee": "ivp"
+    },
+    {
+      "id": "martha-martinez",
+      "name": "Martha Martinez",
+      "role": "Communications Director",
+      "email": "communications@esc.studentorg.berkeley.edu",
+      "committee": "communications"
+    },
+    {
+      "id": "taeyoung-kang",
+      "name": "Taeyoung Kang",
+      "role": "Senior Treasurer",
+      "email": "treasurer@esc.studentorg.berkeley.edu",
+      "committee": "finance"
+    },
+    {
+      "id": "josemit-hernandez",
+      "name": "Josemit Hernandez",
+      "role": "Junior Treasurer",
+      "email": "treasurer@esc.studentorg.berkeley.edu",
+      "committee": "finance",
+      "headshot": "exec2025/Josemit.jpeg"
+    },
+    {
+      "id": "ethan-hu",
+      "name": "Ethan Hu",
+      "role": "Technical Director",
+      "email": "technical@esc.studentorg.berkeley.edu",
+      "committee": "technical"
+    },
+    {
+      "id": "ryan-kuo",
+      "name": "Ryan Kuo",
+      "role": "EWeek Coordinator",
+      "email": "eweek@esc.studentorg.berkeley.edu",
+      "committee": "eweek",
+      "headshot": "exec2025/Ryan_Kuo.jpg"
+    }
+  ],
+  "committees": [
+    {
+      "id": "evp",
+      "name": "External Vice President Committee (EVP)",
+      "description": "Focuses on projects that involve affiliates of the College of Engineering, including clubs, administrative groups, and external organizations. Projects include FMPI (the Free Menstrual Product Initiative), the Blue and Gold Certification Program, and expanding ethics education for faculty and students.",
+      "url": "blueandgold.html"
+    },
+    {
+      "id": "technical",
+      "name": "Technical Committee",
+      "description": "Creates, manages, updates, and optimizes the ESC suite of applications and technology, including Google Drive, the internal website, the ESC website, and the ESC email and web servers hosted by the OCF."
+    },
+    {
+      "id": "finance",
+      "name": "Finance Committee (FiComm)",
+      "description": "Disburses funds to Blue and Gold organizations through the annual Initial Allocations process and year-round FiComm meetings, where organizations can request additional funds. FiComm also runs finance workshops and related events.",
+      "url": "ficomm.html"
+    },
+    {
+      "id": "ivp",
+      "name": "Internal Vice President Committee (IVP)",
+      "description": "Advocates for and supports student organizations and the student body, and works to improve relationships between departments and students, with a focus on equity, diversity, and inclusion."
+    },
+    {
+      "id": "communications",
+      "name": "Communications Committee",
+      "description": "Handles social media and relations with the ESS, the College of Engineering, and Blue and Gold certified clubs, plus photography, videography, and graphic design for events. Projects include the weekly newsletter, the universal Google Calendar, and the \"Day in the Life of a Berkeley Engineer\" Instagram series."
+    },
+    {
+      "id": "eweek",
+      "name": "Engineers' Week Committee (EWeek)",
+      "description": "Plans one of the biggest events in the College of Engineering, working with ESC's corporate sponsors, Blue and Gold certified organizations, and the administration to host a weeklong celebration including Engineers Ball and Engineering 4 Kids Day.",
+      "url": "eweek_overview.html"
+    }
+  ]
+}
