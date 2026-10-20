@@ -41,6 +41,20 @@ jobs:
       - run: npm ci
       - run: npm test
 
+  data:
+    name: Data contracts
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - name: Validate data/*.json against schemas/
+        run: npm run check:data
+
   search:
     name: Search index, relevance & stress
     runs-on: ubuntu-latest
