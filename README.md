@@ -39,6 +39,7 @@ To edit a page, open the `.html` file, change it, and refresh the browser. That'
 ├── scripts/                   Dev tooling, never served to visitors
 │   ├── serve.mjs              Local static server that mirrors production
 │   ├── site-pages.mjs         Finds every live page by crawling from the nav
+│   ├── build-sitemap.mjs      Writes sitemap.xml from the live pages
 │   └── check-image-budget.mjs Blocks oversized images in PRs
 ├── tests/
 │   ├── unit/                  node:test unit tests (`npm test`)
@@ -49,6 +50,8 @@ To edit a page, open the `.html` file, change it, and refresh the browser. That'
 **Shared header and footer.** Every page includes `assets/js/top-bar.js` near the top of `<body>` and `assets/js/bottom-bar.js` at the bottom. To change the nav, edit `top-bar.js` once and every page picks it up.
 
 **What counts as "live".** `scripts/site-pages.mjs` crawls links from `index.html`, the nav, and the footer. Any page it can reach is live: it gets tested, audited, and link-checked. Orphaned pages drop out automatically. Run `node scripts/site-pages.mjs` to see the list.
+
+**Sitemap and robots.txt.** `sitemap.xml` lists exactly the live pages, minus anything marked `<meta name="robots" content="noindex">` and Google's verification file. When you add or remove a page, run `npm run build:sitemap` and commit the result; a unit test fails if you forget. `robots.txt` points crawlers at the sitemap.
 
 **Hosting.** Production is plain nginx on the [Open Computing Facility](https://www.ocf.berkeley.edu/). Files are served exactly as committed, so whatever works under `npm run serve` works live.
 

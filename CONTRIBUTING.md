@@ -37,13 +37,15 @@ npm test                 # unit tests (fast)
 npm run test:e2e         # every page in a real browser, plus accessibility
 npm run test:cross-browser  # Firefox, Safari, iPhones, and iPads (first: npx playwright install firefox webkit)
 npm run lint             # code style for scripts and tests
+npm run check:data       # validate data/*.json (execs, opportunities)
 npm run format           # auto-fix code style
 ```
 
 ## House rules
 
 - **Images:** keep each one under 1 MB (CI enforces this) and under about 2000px on the long edge. [Squoosh](https://squoosh.app) makes this easy.
-- **New pages:** copy an existing page so you get the shared header and footer, then link it from the nav (`assets/js/top-bar.js`) or another page so it counts as live.
+- **Execs and opportunities:** these live in `data/*.json`, not in the HTML. See [docs/DATA.md](docs/DATA.md) for how to add an entry and render it on a page.
+- **New pages:** copy an existing page so you get the shared header and footer, then link it from the nav (`assets/js/top-bar.js`) or another page so it counts as live. Run `npm run build:sitemap` so Google hears about it.
 - **Don't reformat files you didn't otherwise change.** Teammates are probably editing them, and whitespace-only diffs cause merge conflicts.
 - **Accessibility:** give images real `alt` text, use headings in order, and make sure links say where they go. CI fails if a page gets worse.
 - **Never commit secrets** (API keys, passwords). Ask the tech lead about repo secrets.

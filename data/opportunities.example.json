@@ -1,0 +1,60 @@
+{
+  "$schema": "../schemas/opportunities.schema.json",
+  "opportunities": [
+    {
+      "id": "urap-spring-2027",
+      "title": "Undergraduate Research Apprentice Program (URAP)",
+      "organization": "UC Berkeley Office of Undergraduate Research & Scholarships",
+      "type": "research",
+      "url": "https://urap.berkeley.edu/",
+      "description": "Work on a faculty research project for academic credit. Browse hundreds of projects across engineering and the sciences and apply directly to the ones that interest you.",
+      "deadline": "2027-01-20",
+      "postedDate": "2026-10-01",
+      "eligibility": "Undergraduates in any major; no prior research experience needed.",
+      "paid": false,
+      "tags": ["research", "for-credit", "first-years"]
+    },
+    {
+      "id": "big-ideas-2027",
+      "title": "Big Ideas Contest",
+      "organization": "Blum Center for Developing Economies",
+      "type": "competition",
+      "url": "https://bigideas.berkeley.edu/",
+      "description": "Pitch an idea for social impact and compete for seed funding, with mentorship and workshops along the way. Teams may include students from any discipline.",
+      "deadline": "2026-12-01",
+      "postedDate": "2026-10-01",
+      "eligibility": "Teams led by a current UC Berkeley student.",
+      "paid": true,
+      "tags": ["entrepreneurship", "social-impact", "funding"]
+    },
+    {
+      "id": "handshake-summer-2027-internships",
+      "title": "Summer 2027 engineering internships",
+      "organization": "Berkeley Career Engagement",
+      "type": "internship",
+      "url": "https://berkeley.joinhandshake.com/",
+      "description": "Hundreds of employers post summer internships for Berkeley engineers on Handshake. Filter by major and graduation year, and book a resume review with Career Engagement before applying.",
+      "postedDate": "2026-09-15",
+      "eligibility": "Current UC Berkeley students.",
+      "paid": true,
+      "tags": ["internship", "summer", "handshake"]
+    },
+    {
+      "id": "eweek-2027",
+      "title": "Engineers' Week 2027",
+      "organization": "Engineering Student Council",
+      "type": "event",
+      "url": "https://esc.studentorg.berkeley.edu/eweek_overview.html",
+      "description": "A week of events celebrating engineering at Berkeley, with sponsor booths, club showcases, Engineers Ball, and Engineering 4 Kids Day.",
+      "eventDate": "2027-02-22",
+      "postedDate": "2026-10-01",
+      "location": "UC Berkeley campus",
+      "eligibility": "Open to all students.",
+      "tags": ["eweek", "community"],
+      "contact": {
+        "name": "ESC EWeek Committee",
+        "email": "eweek@esc.studentorg.berkeley.edu"
+      }
+    }
+  ]
+}
