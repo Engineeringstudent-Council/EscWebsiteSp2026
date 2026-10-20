@@ -21,6 +21,7 @@
     "build:search": "node scripts/build-search-index.mjs",
     "check:search": "node scripts/build-search-index.mjs --check",
     "test:stress": "node --test --test-reporter=spec \"tests/stress/**/*.test.mjs\"",
+    "build:logos": "node scripts/build-dark-logos.mjs",
     "vendor:fuse": "cp node_modules/fuse.js/dist/fuse.min.mjs assets/js/vendor/fuse.esm.min.js"
   },
   "devDependencies": {
