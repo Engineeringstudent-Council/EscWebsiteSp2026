@@ -32,14 +32,18 @@ To edit a page, open the `.html` file, change it, and refresh the browser. That'
 ├── *.html                     One file per page, all at the root
 ├── assets/
 │   ├── css/main.css           Site-wide styles (HTML5 UP "Landed" base)
+│   ├── css/theme.css          Dark mode and the bear toggle
+│   ├── js/theme/theme.js      Applies the saved theme before first paint, mounts the toggle
 │   ├── js/top-bar.js          Shared nav, injected into every page
 │   ├── js/bottom-bar.js       Shared footer
 │   └── js/main.js             Dropdowns, mobile nav panel, parallax
 ├── images/                    Photos and logos (keep each under 1 MB)
+│   └── dark/                  Light-on-dark logo twins (`npm run build:logos`)
 ├── scripts/                   Dev tooling, never served to visitors
 │   ├── serve.mjs              Local static server that mirrors production
 │   ├── site-pages.mjs         Finds every live page by crawling from the nav
 │   ├── build-sitemap.mjs      Writes sitemap.xml from the live pages
+│   ├── build-dark-logos.mjs   Recolours the navy logos for dark mode
 │   └── check-image-budget.mjs Blocks oversized images in PRs
 ├── tests/
 │   ├── unit/                  node:test unit tests (`npm test`)
@@ -71,7 +75,7 @@ HTML pages ──► scripts/build-search-index.mjs ──► assets/search/inde
   - `links.json` holds external destinations (forms, portals, email) in the `{ title, url, description, keywords }` format.
   - `synonyms.json` holds groups like `money ↔ funding ↔ grant` and `rso ↔ club ↔ org`.
 - **Ranking** (`assets/js/search/core.js`): [Fuse.js](https://www.fusejs.io/) fuzzy-matches titles, keywords, and descriptions, so typos like "fnding" still work. Body text uses a fast exact-word pass, which is about 10× faster than fuzzy-matching long text. Long natural phrases ("money for my club") fall back to Fuse token search. Pages beat their own sections, and weak matches past the top three are dropped.
-- **Accessibility.** The palette is a native `<dialog>` and follows the [WAI-ARIA combobox pattern](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/). It respects reduced motion and dark mode.
+- **Accessibility.** The palette is a native `<dialog>` and follows the [WAI-ARIA combobox pattern](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/). It respects reduced motion and follows the site's light/dark toggle.
 - **You don't need to rebuild the index by hand.** [`search-index.yml`](.github/workflows/search-index.yml) rebuilds and commits it whenever HTML changes on `main`. PRs get a warning if the index is stale.
 
 | Command                | What it does                                                                  |
@@ -83,19 +87,35 @@ HTML pages ──► scripts/build-search-index.mjs ──► assets/search/inde
 
 The golden relevance tests in `tests/unit/search-relevance.test.mjs` pin queries real students type ("free food", "b&g", "mental health") to the page they need. If one fails, fix the ranking or the data, not the test.
 
+## Light and dark mode
+
+The site is light by default, exactly as designed. The bear button at the end of the nav (Oski, awake) turns the lights out: Oski falls asleep, and the page goes to a deep Berkeley-navy dark theme with the same gold accents. It's a toggle on purpose, not the computer's brightness setting, so nobody gets dark mode by surprise. The choice is remembered on that device and syncs across open tabs.
+
+```
+<head>: theme.css + theme.js ──► reads localStorage('esc-theme') ──► <html data-theme="dark">
+         (first script, blocking)                                     before <body> is parsed: no white flash
+DOMContentLoaded ──► bear button into the nav (or phone title bar, or homepage corner) + logo swap
+click ──► View Transition: the new theme grows out of the bear as a circle (instant with reduced motion)
+```
+
+- **Where the styles live.** `assets/css/theme.css` holds the dark palette as `--theme-*` tokens and overrides the legacy template's hard-coded colours, including common inline `style="color:#000066"`. The search palette's dark variant lives in `assets/css/search.css`.
+- **Logos.** Navy logos vanish on navy, so each one has a twin in `images/dark/` (navy turned soft white, gold kept). Run `npm run build:logos` after changing a logo. Partner logos that can't be recoloured get `class="esc-on-light"`, which puts them on a light plate in dark mode.
+- **Contrast is tested.** Every live page is checked with axe-core in dark mode and must have zero contrast failures. If you add a page and the check fails, add an override to `theme.css`.
+
 ## Quality gates
 
 Every PR runs these checks in [`ci.yml`](.github/workflows/ci.yml):
 
-| Check                     | What it catches                                                                                                                     |
-| ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| **Lint**                  | ESLint + Prettier on modern code (scripts, tests, search). Legacy files are left alone on purpose.                                  |
-| **Unit tests**            | `node --test` over `tests/unit/`.                                                                                                   |
-| **Page smoke tests**      | Every live page loads with a 200, renders the header, and adds no new script errors or missing files.                               |
-| **Accessibility ratchet** | axe-core (WCAG 2.1 AA) on every live page. Known issues are recorded in a baseline, and a PR fails only if it makes a page _worse_. |
-| **Mobile**                | The e2e suite also runs on a Pixel 7 viewport.                                                                                      |
-| **Lighthouse**            | Performance, accessibility, SEO, and layout-shift budgets on key pages. Reports are uploaded as artifacts.                          |
-| **Image budget**          | Rejects newly added images over 1 MB.                                                                                               |
+| Check                     | What it catches                                                                                                                             |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Lint**                  | ESLint + Prettier on modern code (scripts, tests, search). Legacy files are left alone on purpose.                                          |
+| **Unit tests**            | `node --test` over `tests/unit/`.                                                                                                           |
+| **Page smoke tests**      | Every live page loads with a 200, renders the header, and adds no new script errors or missing files.                                       |
+| **Accessibility ratchet** | axe-core (WCAG 2.1 AA) on every live page. Known issues are recorded in a baseline, and a PR fails only if it makes a page _worse_.         |
+| **Dark mode**             | The theme loads before first paint on every page, the toggle works by mouse, keyboard, and touch, and dark mode has zero contrast failures. |
+| **Mobile**                | The e2e suite also runs on a Pixel 7 viewport.                                                                                              |
+| **Lighthouse**            | Performance, accessibility, SEO, and layout-shift budgets on key pages. Reports are uploaded as artifacts.                                  |
+| **Image budget**          | Rejects newly added images over 1 MB.                                                                                                       |
 
 There are also two scheduled or optional workflows:
 
