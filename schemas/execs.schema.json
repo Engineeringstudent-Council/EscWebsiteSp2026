@@ -1,0 +1,137 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://esc.studentorg.berkeley.edu/schemas/execs.schema.json",
+  "title": "ESC executive board and committees",
+  "description": "One academic year of the Engineering Student Council executive board, plus the committees they lead. Rendered by the exec/committee tab. Array order is display order.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["term", "members"],
+  "properties": {
+    "$schema": {
+      "description": "Optional pointer to this schema so editors like VS Code offer autocomplete, e.g. \"../schemas/execs.schema.json\".",
+      "type": "string"
+    },
+    "term": {
+      "description": "Academic year this board serves, written as two consecutive years like \"2025-2026\".",
+      "type": "string",
+      "pattern": "^20[0-9]{2}-20[0-9]{2}$"
+    },
+    "members": {
+      "description": "Executive board members, in the order they should appear on the page (presidents first).",
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/member" }
+    },
+    "committees": {
+      "description": "Committees for this term. A member's \"committee\" field must match one of these ids.",
+      "type": "array",
+      "items": { "$ref": "#/$defs/committee" }
+    }
+  },
+  "$defs": {
+    "id": {
+      "description": "Stable lowercase slug used for anchors and cross-references, e.g. \"evan-wong\" or \"eweek\". Letters, digits and single hyphens only.",
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "maxLength": 60
+    },
+    "berkeleyEmail": {
+      "description": "A berkeley.edu address (role mailboxes like president@esc.studentorg.berkeley.edu are preferred over personal ones).",
+      "type": "string",
+      "format": "email",
+      "pattern": "@([a-z0-9-]+\\.)*berkeley\\.edu$"
+    },
+    "member": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "role", "email"],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id",
+          "description": "Unique slug for this person, usually first-last, e.g. \"laura-viera\"."
+        },
+        "name": {
+          "description": "Full name as the person wants it displayed.",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "pronouns": {
+          "description": "Optional pronouns, shown next to the name, e.g. \"she/her\".",
+          "type": "string",
+          "maxLength": 30
+        },
+        "role": {
+          "description": "Position title exactly as it should appear, e.g. \"Co-President\" or \"Technical Director\".",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "email": {
+          "$ref": "#/$defs/berkeleyEmail",
+          "description": "Contact address for this role. Co-holders of a role may share one mailbox (e.g. both Co-Presidents use president@esc.studentorg.berkeley.edu)."
+        },
+        "committee": {
+          "$ref": "#/$defs/id",
+          "description": "Id of the committee this member leads, matching an entry in \"committees\". Leave out for roles without a committee."
+        },
+        "major": {
+          "description": "Major(s), e.g. \"EECS\" or \"Bioengineering & MSE\".",
+          "type": "string",
+          "maxLength": 100
+        },
+        "graduationYear": {
+          "description": "Expected graduation year as a number, e.g. 2027. Preferred over \"3rd year\" because it does not go stale each semester.",
+          "type": "integer",
+          "minimum": 2000,
+          "maximum": 2100
+        },
+        "bio": {
+          "description": "Short plain-text bio (no HTML), up to about three sentences.",
+          "type": "string",
+          "maxLength": 600
+        },
+        "headshot": {
+          "description": "Path to the photo relative to the site root, with the exact same capitalization as the file, e.g. \"exec2025/Evan.JPG\". No leading slash, \"./\" or http(s). The file must exist in the repo.",
+          "type": "string",
+          "siteFile": true,
+          "pattern": "^(?!.*/\\.\\.(/|$))[A-Za-z0-9_-][A-Za-z0-9_.-]*(/[A-Za-z0-9_.-]+)*\\.([jJ][pP][eE]?[gG]|[pP][nN][gG]|[wW][eE][bB][pP]|[aA][vV][iI][fF])$"
+        },
+        "linkedin": {
+          "description": "Full LinkedIn profile URL, e.g. \"https://www.linkedin.com/in/username\".",
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https://([a-z]{2,3}\\.)?linkedin\\.com/in/[^/?#\\s]+/?$"
+        }
+      }
+    },
+    "committee": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "description"],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id",
+          "description": "Unique slug for the committee, e.g. \"finance\" or \"eweek\"."
+        },
+        "name": {
+          "description": "Display name, e.g. \"Finance Committee (FiComm)\".",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "description": {
+          "description": "Plain-text description of what the committee does (no HTML).",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1500
+        },
+        "url": {
+          "description": "Optional link to a page with more detail. Either a site-relative page like \"ficomm.html\" or a full https URL.",
+          "type": "string",
+          "pattern": "^(https://[^\\s]+|(?![./])[A-Za-z0-9_./-]+\\.html(#[A-Za-z0-9_-]+)?)$"
+        }
+      }
+    }
+  }
+}
