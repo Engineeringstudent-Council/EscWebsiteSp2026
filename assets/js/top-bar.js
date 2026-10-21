@@ -20,8 +20,8 @@ function escInsertHere(html) {
 
 escInsertHere('\
 <header id="header">\
-<h2 id="logo"><a href="index.html">\
-	<span class="image"><img src="images/main_nobckgnd.png" alt="Engineering Student Council Logo"  height="95" width="285" style="vertical-align: top; width:auto;"/></span></a></h1>\
+<div id="logo"><a href="index.html">\
+	<span class="image"><img src="images/main_nobckgnd.png" alt="Engineering Student Council home"  height="95" width="285" style="vertical-align: top; width:auto;"/></span></a></div>\
 <nav id="nav">\
 	<ul>\
 		 <li>\
