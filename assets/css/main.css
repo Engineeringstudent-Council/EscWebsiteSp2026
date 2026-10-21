@@ -5167,3 +5167,318 @@ iframe {
 }
 
 /* Touch and tablet fixes END */
+
+
+/* Accessibility START
+   Site-wide fixes from the WCAG 2.2 AA sweep. tests/e2e/a11y.spec.mjs and
+   tests/e2e/a11y-features.spec.mjs hold every page to these, so a change
+   that undoes one fails CI. Colours: Berkeley Blue #002676, California Gold
+   #FDB515, template navy #000066, template gold #FBB03B. */
+
+/* Read by screen readers, invisible on screen. The template's icon links
+   (Facebook, Instagram, email) keep their names in .label, which the
+   template hid with display:none, leaving the links nameless. */
+.visually-hidden,
+.icon > .label {
+	position: absolute !important;
+	display: block;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	clip-path: inset(50%);
+	white-space: nowrap;
+	border: 0;
+}
+
+/* One focus ring for every link, button, and field a keyboard reaches:
+   a gold halo inside a navy ring, so it shows on white and on navy. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+summary:focus-visible,
+[tabindex]:focus-visible,
+iframe:focus {
+	outline: 3px solid #002676;
+	outline-offset: 2px;
+	box-shadow: 0 0 0 2px #FDB515;
+	border-radius: 2px;
+}
+
+/* The header is fixed, so anything scrolled or tabbed to would land
+   underneath it (WCAG 2.4.11). Keep a header's height of room above. */
+html {
+	scroll-padding-top: 140px;
+}
+
+@media screen and (max-width: 736px) {
+	html {
+		scroll-padding-top: 110px;
+	}
+}
+
+/* Gold buttons: white on gold was 1.9:1, so the label is navy (10:1) and
+   turns white on the navy hover (15:1). */
+input[type="submit"].primary,
+input[type="reset"].primary,
+input[type="button"].primary,
+.button.primary {
+	color: #000066 !important;
+}
+
+input[type="submit"].primary:hover,
+input[type="reset"].primary:hover,
+input[type="button"].primary:hover,
+.button.primary:hover,
+input[type="submit"].primary:focus-visible,
+input[type="reset"].primary:focus-visible,
+input[type="button"].primary:focus-visible,
+.button.primary:focus-visible {
+	color: #FFFFFF !important;
+}
+
+/* Page titles are <h1> for screen readers but keep the template's <h2>
+   size, and headings demoted or promoted to fix the outline keep the size
+   they had: <h2 class="as-h3"> looks like the old <h3>. */
+header.major h1,
+.as-h2 {
+	font-size: 3em;
+	line-height: 1em;
+	letter-spacing: -0.025em;
+}
+
+.as-h3 {
+	font-size: 2em;
+	line-height: 1.5em;
+	letter-spacing: normal;
+}
+
+.as-h4 {
+	font-size: 1.1em;
+	line-height: 1.5em;
+	letter-spacing: normal;
+}
+
+.as-h5 {
+	font-size: 0.9em;
+	line-height: 1.5em;
+	letter-spacing: normal;
+}
+
+.as-h6 {
+	font-size: 0.7em;
+	line-height: 1.5em;
+	letter-spacing: normal;
+}
+
+@media screen and (max-width: 736px) {
+	header.major h1,
+	.as-h2 {
+		font-size: 1.5em;
+	}
+
+	.as-h3 {
+		font-size: 1.2em;
+	}
+
+	.as-h4 {
+		font-size: 1em;
+	}
+}
+
+/* The header logo was an <h2> on every page; it is a home link, not a
+   heading. These keep the box it had. */
+#header #logo {
+	font-size: 3em;
+	line-height: 1em;
+	letter-spacing: -0.025em;
+	margin: 0 0 1em 0;
+}
+
+/* Anyone who asks their device for less motion gets none: no fades,
+   slides, or smooth scrolling anywhere on the site. */
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		transition-delay: 0s !important;
+		scroll-behavior: auto !important;
+	}
+}
+
+/* Windows High Contrast and other forced-colour modes drop backgrounds and
+   box shadows, which is all that marked buttons and the current page. */
+@media (forced-colors: active) {
+	.button,
+	input[type="submit"],
+	input[type="reset"],
+	input[type="button"] {
+		border: 1px solid ButtonText;
+	}
+
+	a:focus-visible,
+	button:focus-visible,
+	input:focus-visible,
+	select:focus-visible,
+	textarea:focus-visible,
+	summary:focus-visible,
+	[tabindex]:focus-visible {
+		outline: 3px solid Highlight;
+	}
+
+	#nav a[aria-current="page"],
+	.dropotron a[aria-current="page"],
+	#navPanel a[aria-current="page"] {
+		text-decoration: underline;
+		text-underline-offset: 0.25em;
+	}
+}
+
+/* Accessible footer: the markup lives in assets/js/bottom-bar.js. Four
+   columns on desktop, two on tablets, one on phones. */
+#footer.esc-footer {
+	padding: 4em 0 2.5em;
+	line-height: 1.75em;
+}
+
+.esc-footer__grid {
+	display: grid;
+	grid-template-columns: 3fr 2fr 3fr 2fr;
+	gap: 2em 2.5em;
+	margin: 0 auto;
+	padding: 0 2em;
+}
+
+.esc-footer__col > :last-child {
+	margin-bottom: 0;
+}
+
+.esc-footer .esc-footer__heading {
+	color: inherit;
+	font-size: 1em;
+	font-weight: bold;
+	letter-spacing: normal;
+	line-height: 1.5em;
+	margin: 0 0 0.4em 0;
+}
+
+.esc-footer .esc-footer__heading:not(:first-child) {
+	margin-top: 1.5em;
+}
+
+.esc-footer p {
+	margin: 0 0 1em 0;
+}
+
+.esc-footer__logo {
+	display: inline-block;
+	margin-bottom: 1.5em;
+	border-bottom: 0;
+}
+
+.esc-footer__logo img {
+	display: block;
+	width: 210px;
+	max-width: 100%;
+	height: auto;
+	object-fit: contain;
+	object-position: left center;
+}
+
+.esc-footer__links {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.esc-footer__links li {
+	margin: 0;
+	padding: 0;
+}
+
+/* At least 24px tall so each link is easy to hit (WCAG 2.5.8). */
+.esc-footer__links a {
+	display: inline-block;
+	min-height: 24px;
+	padding: 0.1em 0;
+}
+
+#footer .esc-footer__social {
+	margin: 0.5em 0 0 -10px;
+	padding: 0;
+}
+
+#footer .esc-footer__social li {
+	padding: 0;
+}
+
+/* 44px icon targets, the size Apple and Google recommend for touch. */
+#footer .esc-footer__social a {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 44px;
+	height: 44px;
+	font-size: 1.25em;
+	border-bottom: 0;
+}
+
+.esc-footer address {
+	font-style: normal;
+	margin: 0 0 1.25em 0;
+}
+
+.esc-footer__ocf {
+	display: inline-block;
+	border-bottom: 0;
+}
+
+.esc-footer__ocf img {
+	display: block;
+}
+
+#footer .esc-footer__report {
+	font-size: 12px;
+	width: 100%;
+}
+
+#footer .esc-footer__copyright {
+	margin: 3em 2em 0;
+	line-height: 1.5;
+	text-align: right;
+}
+
+@media screen and (max-width: 980px) {
+	.esc-footer__grid {
+		grid-template-columns: 1fr 1fr;
+	}
+}
+
+@media screen and (max-width: 480px) {
+	#footer.esc-footer {
+		padding: 2.5em 0 2em;
+	}
+
+	.esc-footer__grid {
+		grid-template-columns: 1fr;
+		padding: 0 1.25em;
+	}
+
+	#footer .esc-footer__report {
+		width: auto;
+	}
+
+	#footer .esc-footer__copyright {
+		margin: 2em 1.25em 0;
+		text-align: center;
+	}
+}
+
+/* Accessibility END */
