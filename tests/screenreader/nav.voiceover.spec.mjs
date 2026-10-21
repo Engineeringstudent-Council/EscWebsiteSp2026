@@ -34,6 +34,12 @@ test.describe('VoiceOver', () => {
       page.evaluate(() =>
         document.querySelector('[aria-label="About Us submenu"]').getAttribute('aria-expanded'),
       );
+    // Safari moves keyboard focus to the reader's cursor a moment after it
+    // lands. Until then the button is still its 1px focus-only self, and a
+    // press can miss it, so wait for focus first.
+    await expect
+      .poll(() => page.evaluate(() => document.activeElement?.getAttribute('aria-label')))
+      .toBe('About Us submenu');
     const wasOpen = (await expanded()) === 'true';
     const mark = (await voiceOver.spokenPhraseLog()).length;
     await voiceOver.act();
