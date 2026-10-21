@@ -42,8 +42,17 @@ jobs:
           cache: npm
       # The same two-step setup Guidepup's own CI uses: prepare the OS, then
       # (after dependencies) install the VoiceOver automation support.
+      # Turning on Do Not Disturb fails now and then on the hosted Mac
+      # runners (and Guidepup's error handler then crashes on Node 22, hiding
+      # the message), so try up to three times before giving up.
       - name: Prepare macOS for VoiceOver automation
-        run: npx -y @guidepup/setup@0.24.6 setup --ci --macos-record
+        run: |
+          for attempt in 1 2 3; do
+            npx -y @guidepup/setup@0.24.6 setup --ci --macos-record && exit 0
+            echo "::warning::Guidepup setup failed (attempt $attempt of 3), retrying"
+            sleep 10
+          done
+          exit 1
       - run: npm ci
       - name: Install VoiceOver automation support
         run: npx -y @guidepup/setup@0.24.6 install
