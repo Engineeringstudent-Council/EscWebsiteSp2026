@@ -47,12 +47,13 @@
 
 	// Nav.
 
-		// Title Bar.
+		// Title Bar. A <header>, so on phones (where #header is hidden) it is
+		// the page's banner landmark rather than loose content.
 			$(
-				'<div id="titleBar">' +
+				'<header id="titleBar">' +
 					'<a href="#navPanel" class="toggle"></a>' +
 					'<span class="title">' + $('#logo').html() + '</span>' +
-				'</div>'
+				'</header>'
 			)
 				.appendTo($body);
 
