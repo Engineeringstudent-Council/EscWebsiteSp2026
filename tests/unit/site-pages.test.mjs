@@ -29,6 +29,13 @@ test('extractLocalLinks keeps local .html links and drops everything else', () =
   ]);
 });
 
+test('extractLocalLinks follows unquoted hrefs the way browsers do', () => {
+  assert.deepEqual(extractLocalLinks('<h2><b><a href=ficomm.html>Finance</a></b></h2>'), [
+    'ficomm.html',
+  ]);
+  assert.deepEqual(extractLocalLinks('<a href=https://example.com/x.html>ext</a>'), []);
+});
+
 test('extractLocalLinks resolves relative to the linking page directory', () => {
   assert.deepEqual(extractLocalLinks('<a href="../b.html"></a><a href="c.html"></a>', 'sub'), [
     'b.html',

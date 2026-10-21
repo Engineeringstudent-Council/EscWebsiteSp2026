@@ -11,7 +11,8 @@ export const ROOT = resolve(fileURLToPath(new URL('..', import.meta.url)));
 /** Files whose links seed the crawl, relative to the site root. */
 export const SEEDS = ['index.html', 'assets/js/top-bar.js', 'assets/js/bottom-bar.js'];
 
-const HREF = /\bhref\s*=\s*(?:"([^"]*)"|'([^']*)')/gi;
+// Quoted or unquoted: browsers follow <a href=ficomm.html> just the same.
+const HREF = /\bhref\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'<>`=]+))/gi;
 const COMMENT = /<!--[\s\S]*?-->/g;
 
 /**
@@ -24,7 +25,7 @@ export function extractLocalLinks(markup, fromDir = '') {
   const out = new Set();
   const source = markup.replace(COMMENT, '');
   for (const match of source.matchAll(HREF)) {
-    const raw = (match[1] ?? match[2] ?? '').trim();
+    const raw = (match[1] ?? match[2] ?? match[3] ?? '').trim();
     if (!raw || raw.startsWith('#') || raw.startsWith('//') || /^[a-z][a-z0-9+.-]*:/i.test(raw)) {
       continue;
     }
