@@ -5412,6 +5412,13 @@ iframe.esc-frame-focus {
 	margin: 0 0 1em 0;
 }
 
+/* Some page stylesheets colour every <p> (tool.css on hear.html); the
+   footer reads the same on every page, light or dark. */
+.esc-footer p,
+.esc-footer address {
+	color: inherit;
+}
+
 .esc-footer__logo {
 	display: inline-block;
 	margin-bottom: 1.5em;
@@ -5521,6 +5528,20 @@ iframe.esc-frame-focus {
 .esc-statement > header p,
 .esc-statement > p {
 	max-width: 46em;
+}
+
+/* Text that keeps a heading's navy look without being a heading (set in
+   the page's own <style>). The light/dark theme in assets/css/theme.css
+   recolours real headings for dark mode; these follow it. Until that theme
+   is on the page, nothing sets data-theme and these rules do nothing. */
+html[data-theme='dark'] .esc-h3-text,
+html[data-theme='dark'] .hear-q-text,
+html[data-theme='dark'] .eweek-tagline {
+	color: var(--theme-heading) !important;
+}
+
+html[data-theme='dark'] .category .no-link {
+	color: var(--theme-text) !important;
 }
 
 /* Accessibility END */
