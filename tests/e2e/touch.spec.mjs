@@ -11,6 +11,29 @@ async function layoutOf(page) {
   return (await page.locator('#titleBar .toggle').isVisible()) ? 'phone' : 'desktop';
 }
 
+/**
+ * Tap the middle of an element where it is now. locator.tap() first scrolls
+ * the element into view, and in WebKit that nudges the page about 12px even
+ * for links in the fixed header. dropotron closes every menu on scroll, so
+ * the nudge would shut a menu between two taps, which no real finger does.
+ */
+async function tapInPlace(page, locator) {
+  await expect(locator).toBeVisible();
+  // Right after load the header can still be settling, so wait until a
+  // finger at the link's centre would actually land on the link.
+  await expect
+    .poll(() =>
+      locator.evaluate((el) => {
+        const r = el.getBoundingClientRect();
+        const hit = document.elementFromPoint(r.x + r.width / 2, r.y + r.height / 2);
+        return !!hit && (hit === el || el.contains(hit));
+      }),
+    )
+    .toBe(true);
+  const box = await locator.boundingBox();
+  await page.touchscreen.tap(box.x + box.width / 2, box.y + box.height / 2);
+}
+
 async function ready(page, path) {
   await page.goto(path, { waitUntil: 'load' });
   await page.waitForFunction(() => document.documentElement.dataset.escNavA11y === 'ready');
@@ -35,6 +58,7 @@ test('every live page fits the screen and offers navigation', async ({ page }) =
 });
 
 test('the menu works by touch', async ({ page }) => {
+  test.slow(); // three page loads and a dozen taps
   await ready(page, 'students.html');
   if ((await layoutOf(page)) === 'phone') {
     const toggle = page.locator('#titleBar .toggle');
@@ -55,25 +79,25 @@ test('the menu works by touch', async ({ page }) => {
       .locator('#nav [aria-label="About Us submenu"]')
       .getAttribute('aria-controls')}"]`,
   );
-  await about.tap();
+  await tapInPlace(page, about);
   await expect(menu).toBeVisible();
   await expect(page).toHaveURL(/students\.html$/);
-  await menu.getByRole('button', { name: 'Our Team' }).tap();
+  await tapInPlace(page, menu.getByRole('button', { name: 'Our Team' }));
   const execs = menu.locator('a', { hasText: 'Executive Board' });
   await expect(execs).toBeVisible();
   // Tapping elsewhere closes it.
   await page.touchscreen.tap(20, (page.viewportSize().height * 3) / 4);
   await expect(menu).toBeHidden();
   // Open again and follow a link inside.
-  await about.tap();
-  await menu.getByRole('button', { name: 'Our Team' }).tap();
-  await execs.tap();
+  await tapInPlace(page, about);
+  await tapInPlace(page, menu.getByRole('button', { name: 'Our Team' }));
+  await tapInPlace(page, execs);
   await expect(page).toHaveURL(/execs\.html$/);
   // A second tap on an open top-level item follows its own link.
   await ready(page, 'students.html');
-  await about.tap();
+  await tapInPlace(page, about);
   await expect(menu).toBeVisible();
-  await about.tap();
+  await tapInPlace(page, about);
   await expect(page).toHaveURL(/about\.html$/);
 });
 
