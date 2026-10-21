@@ -7,6 +7,10 @@
 //     add later, such as the exec roster.
 //   - Those links also get rel="noopener", so the new page can't navigate
 //     this one.
+//   - An embed (Google Calendar, Docs, Drive) holding keyboard focus gets
+//     the site's focus ring. Browsers stop matching :focus on a cross-origin
+//     <iframe> once focus moves inside it, so a class marks it instead
+//     (WCAG 2.4.7).
 //
 // Nothing here changes what the page looks like.
 
@@ -49,12 +53,56 @@ export function announceNewTabs(root) {
   return changed;
 }
 
+export const FRAME_FOCUS_CLASS = 'esc-frame-focus';
+
+/**
+ * Keep FRAME_FOCUS_CLASS on whichever <iframe> holds focus. The page gets
+ * no event when focus moves from one frame straight into the next, so
+ * while a frame has focus it is re-checked every 100ms.
+ */
+export function trackFrameFocus(doc = document) {
+  const win = doc.defaultView;
+  if (!win) return () => {};
+  let current = null;
+  let timer = null;
+  const mark = () => {
+    const el = doc.activeElement;
+    const frame = el && el.tagName === 'IFRAME' ? el : null;
+    if (frame === current) return;
+    current?.classList.remove(FRAME_FOCUS_CLASS);
+    current = frame;
+    frame?.classList.add(FRAME_FOCUS_CLASS);
+  };
+  const onBlur = () => {
+    mark();
+    win.clearInterval(timer);
+    timer = win.setInterval(() => {
+      mark();
+      if (!current) win.clearInterval(timer);
+    }, 100);
+  };
+  const onFocus = () => {
+    win.clearInterval(timer);
+    mark();
+  };
+  win.addEventListener('blur', onBlur);
+  win.addEventListener('focus', onFocus);
+  doc.addEventListener('focusin', mark);
+  return () => {
+    win.removeEventListener('blur', onBlur);
+    win.removeEventListener('focus', onFocus);
+    doc.removeEventListener('focusin', mark);
+    win.clearInterval(timer);
+  };
+}
+
 /**
  * Install the helpers on a document, and keep them applied to content that
  * scripts add later. Returns the observer so tests can disconnect it.
  */
 export function installA11y(doc = document) {
   announceNewTabs(doc);
+  trackFrameFocus(doc);
   const View = doc.defaultView;
   if (!View?.MutationObserver) return null;
   const observer = new View.MutationObserver((records) => {

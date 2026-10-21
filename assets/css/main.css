@@ -5238,6 +5238,7 @@ input[type="submit"].primary:focus-visible,
 input[type="reset"].primary:focus-visible,
 input[type="button"].primary:focus-visible,
 .button.primary:focus-visible {
+	background-color: #000066;
 	color: #FFFFFF !important;
 }
 
@@ -5290,6 +5291,30 @@ header.major h1,
 	}
 }
 
+/* Page titles became <h1>, so the template's intro-paragraph sizing for
+   "header h2 + p" follows them. */
+header.major h1 + p {
+	font-size: 2em;
+	margin-top: -1em;
+	line-height: 1.75em;
+}
+
+@media screen and (max-width: 736px) {
+	header.major h1 + p {
+		font-size: 1em;
+	}
+}
+
+/* An embed holding keyboard focus. Browsers stop matching :focus on a
+   cross-origin <iframe> once focus is inside it, so assets/js/site/a11y.js
+   adds this class instead. */
+iframe.esc-frame-focus {
+	outline: 3px solid #002676;
+	outline-offset: 2px;
+	box-shadow: 0 0 0 2px #FDB515;
+	border-radius: 2px;
+}
+
 /* The header logo was an <h2> on every page; it is a home link, not a
    heading. These keep the box it had. */
 #header #logo {
@@ -5297,6 +5322,14 @@ header.major h1,
 	line-height: 1em;
 	letter-spacing: -0.025em;
 	margin: 0 0 1em 0;
+}
+
+/* Phone menu: the template's hover rule sets links to "inherit", which
+   became ESC's black body text, so a hovered item turned black on the
+   near-black panel. On phones hover sticks to whatever lands under the
+   finger after the panel slides in. Hovered items brighten to white. */
+#navPanel .link:hover {
+	color: #FFFFFF !important;
 }
 
 /* Anyone who asks their device for less motion gets none: no fades,
@@ -5329,7 +5362,9 @@ header.major h1,
 	select:focus-visible,
 	textarea:focus-visible,
 	summary:focus-visible,
-	[tabindex]:focus-visible {
+	[tabindex]:focus-visible,
+	iframe:focus,
+	iframe.esc-frame-focus {
 		outline: 3px solid Highlight;
 	}
 
@@ -5479,6 +5514,13 @@ header.major h1,
 		margin: 2em 1.25em 0;
 		text-align: center;
 	}
+}
+
+/* The accessibility statement (accessibility.html): a readable line length. */
+.esc-statement > section,
+.esc-statement > header p,
+.esc-statement > p {
+	max-width: 46em;
 }
 
 /* Accessibility END */
