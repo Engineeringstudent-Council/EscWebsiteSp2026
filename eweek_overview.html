@@ -11,8 +11,18 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<style>@media (prefers-reduced-motion: no-preference) { @view-transition { navigation: auto; } }</style>
-		<script src="assets/js/eweek.js"></script>
-		<link rel="stylesheet" href="assets/css/clubs.css" />		
+		<link rel="stylesheet" href="assets/css/clubs.css" />
+		<style>
+			/* Event titles are headings now; keep the old div.title look. */
+			.category h3.title { margin: 0; line-height: inherit; }
+			/* "Go to..." items are real links now; keep the old list look. */
+			#categoryUL a { display: block; color: inherit; text-decoration: none; border-bottom: 0; }
+			/* The tagline was an <h3>; it is not a heading, so it is a <p> with the old look. */
+			header.major p.eweek-tagline { font-style: italic; font-weight: 300; font-size: 2em; line-height: 1.5em; color: #000066; margin: 0 0 1em 0; }
+			@media screen and (max-width: 736px) {
+				header.major p.eweek-tagline { font-size: 1.2em; }
+			}
+		</style>
 		<link rel='icon' href='favicon.ico'/ >
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 	</head>
@@ -21,18 +31,28 @@
 		<div id="page-wrapper">
 
 			<!-- Main -->
-			<div id="main" class="wrapper style1">
+			<main id="main" class="wrapper style1">
 				<div class="container">
 					<header class="major">
 						<br>
-						<h2 style="font-weight:bold;">Engineers Week</h2>
-						<a href="#" class="image fit"><img src="images/eweek2022/flyer.png" alt="EWeek Flyer" /></a>
+						<h1 style="font-weight:bold;">Engineers Week</h1>
+						<span class="image fit"><img src="images/eweek2022/flyer.png" alt="E-Week 2022 schedule, Monday February 14 to Friday February 18" aria-describedby="eweek-schedule" /></span>
+							<div id="eweek-schedule" class="visually-hidden">
+								<p>E-Week 2022 schedule:</p>
+								<ul>
+									<li>Monday 2/14: Carnival Extravaganza, 11 am to 6 pm, Hearst Memorial Mining Circle. Valentines Event, 12 to 2 pm, Bechtel Patio.</li>
+									<li>Tuesday 2/15: Popsicle Bridge Shake Table Competition, 12 to 3 pm, Hearst Memorial Mining 290. LinkedIn Connections and Internship Tutorial, 5 to 7 pm, Hearst Memorial Mining 290.</li>
+									<li>Wednesday 2/16: Top Dog, Public University, 12 to 2 pm, Hearst Memorial Mining Circle. Faculty Panel, 5 to 6 pm, Hearst Memorial Mining 290.</li>
+									<li>Thursday 2/17: Squid Game (Dalgona), 12 to 2 pm, Bechtel Patio. Movie Night: The Greatest Showman, 7:30 to 9:30 pm, Hearst Memorial Mining 290.</li>
+									<li>Friday 2/18: Tie Dye Shirts, 1 to 3 pm, Bechtel Patio. E-Ball, Bearjack, 7 pm, Hearst Memorial Mining Building.</li>
+								</ul>
+							</div>
 						<!-- Please email us at <a href="mailto:eweek@esc.berkeley.edu?subject=Engineers%20Week%20Inquiry">eweek@esc.berkeley.edu </a> -->
-						<h3 style="font-style:italic;">Get ready to celebrate!!! </h3>
+						<p class="eweek-tagline">Get ready to celebrate!!! </p>
 						<hr>
 					</header>
 					<div>
-						<h3 style = "font-weight: bold;">What is Engineers Week?</h3>
+						<h2 class="as-h3" style="font-weight: bold;">What is Engineers Week?</h2>
 						<p> Engineers Week (EWeek) is a weeklong event comprising of various professional, social, and design-build activities.
 						Though primarily catered towards the 3,600+ undergraduate engineers on campus, each year EWeek reaches over 8,000 
 						students from a variety of majors and degree programs, and that reach continues to grow. Our theme for 
@@ -50,21 +70,21 @@
 
 								<div class="row gtr-150 category">
 									<div class="col-6 col-12-medium">
-										<div class="title">Pre-EWeek</div>
+										<h3 class="title" id="eweek-pre">Pre-EWeek</h3>
 										<p>Want to know more about this year's “World Carnival at Berkeley” Engineer’s Week celebration? From 12-2pm on Monday, 
 											Wednesday, and Friday of the week before Engineer’s Week, the chairs of the Engineer’s Week planning committee will 
 											be outside Bechtel providing information and answering questions. Many different goodies will be handed out so make 
 											sure to stop by!</p>
 									</div>
 									<div class="col-6 col-12-medium">
-										<a href="#"><img src="images/eweek2022/pre_eweek.png" alt="Pre-EWeek Flyer" width="400" /></a>
+										<img src="images/eweek2022/pre_eweek.png" alt="Flyer: Pre-EWeek, February 7 to 11, 12 to 2 pm, free ice cream, Cal shirts and more outside Bechtel" width="400" />
 									</div>
 								</div>
 
 
 								<div class="row gtr-150 category">
 									<div class="col-6 col-12-medium">
-										<div class="title">Monday: Carnival Extravaganza</div>
+										<h3 class="title" id="eweek-carnival">Monday: Carnival Extravaganza</h3>
 										<!--<img src="images/eweek2022/pre_eweek.png" align="right" width="200" height="600"> -->
 											<p> It wouldn’t be the “World Carnival at Berkeley” Engineer’s Week if there was not a carnival at Berkeley. To kick off 
 												an exciting week, we will have a Carnival Extravaganza with several classic carnival games to play from 11am-6pm on 
@@ -72,14 +92,14 @@
 												getting one of our exciting end of the EWeek giveaways. </p>
 									</div>
 									<div class="col-6 col-12-medium">
-										<a href="#"><img src="images/eweek2022/carnival.png" alt="Carnival Extravaganza" width="400" /></a>
+										<img src="images/eweek2022/carnival.png" alt="Flyer: Carnival Extravaganza, carnival games for raffle tickets, Monday February 14, 11 am to 6 pm" width="400" />
 									</div>
 								</div>
 
 
 								<div class="row gtr-150 category">
 									<div class="col-6 col-12-medium">
-										<div class="title">Tuesday: Design-Build Challenge</div>
+										<h3 class="title" id="eweek-design-build">Tuesday: Design-Build Challenge</h3>
 					<!--<img src="images/eweek2022/pre_eweek.png" align="right" width="200" height="600"> -->
 						<p> In the spirit of both engineering and difficult carnival games, we are putting together a Popsicle Bridge Shake Table 
 							challenge where students will build a bridge with popsicle sticks and hot glue. Once completed, the bridge will have 
@@ -87,26 +107,26 @@
 							Mining 290 from 12-3pm on Tuesday, February 15th. Both statics and dynamics to deal with on this bridge! </p>
 									</div>
 									<div class="col-6 col-12-medium">
-										<a href="#"><img src="images/eweek2022/design_build.png" alt="Design-Build Challenge" width="400" /></a>
+										<img src="images/eweek2022/design_build.png" alt="Flyer: Design-Build Challenge, popsicle bridge shake table competition, Tuesday February 15, 12 to 3 pm" width="400" />
 									</div>
 								</div>
 
 								<div class="row gtr-150 category">
 									<div class="col-6 col-12-medium">
-										<div class="title">Wednesday: Top Dog</div>
+										<h3 class="title" id="eweek-top-dog">Wednesday: Top Dog</h3>
 										<!--<img src="images/eweek2022/pre_eweek.png" align="right" width="200" height="600"> -->
 											<p> From the outset of freshman year, golden bears come to know Top Dog as a staple of the city and a necessity on late nights. 
 												On February 16th, at the Hearst Memorial Mining Circle, from 12-2pm delectable Top Dog hot dogs will be available for FREE. 
 												Come enjoy an easy, accessible free lunch for the day!  </p>
 									</div>
 									<div class="col-6 col-12-medium">
-										<a href="#"><img src="images/eweek2022/top_dog.png" alt="Top Dog" width="400" /></a>
+										<img src="images/eweek2022/top_dog.png" alt="Flyer: Top Dog, free hot dog, chips and a drink, Wednesday February 16, 12 to 2 pm" width="400" />
 									</div>
 								</div>
 
 								<div class="row gtr-150 category">
 									<div class="col-6 col-12-medium">
-										<div class="title">Wednesday: Faculty Panel</div>
+										<h3 class="title" id="eweek-faculty-panel">Wednesday: Faculty Panel</h3>
 										<!--<img src="images/eweek2022/pre_eweek.png" align="right" width="200" height="600"> -->
 											<p> There are many unique, diverse opportunities on our campus ranging from designing a formula race car to participating in a 
 												competitive dance competition. It is hard to pursue all these activities and even harder to pursue them while obtaining the 
@@ -115,21 +135,42 @@
 												the workload of courses with the demand of extracurricular activities. Insightful tips will be shared!  </p>
 									</div>
 									<div class="col-6 col-12-medium">
-										<a href="#"><img src="images/eweek2022/faculty_panel.png" alt="Faculty Panel" width="400" /></a>
+										<img src="images/eweek2022/faculty_panel.png" alt="Faculty panel lineup: fifteen professors and their departments" width="400" aria-describedby="eweek-panelists" />
+										<table id="eweek-panelists" class="visually-hidden">
+											<caption>Faculty panelists</caption>
+											<thead><tr><th scope="col">Name</th><th scope="col">Department</th></tr></thead>
+											<tbody>
+												<tr><th scope="row">Robert Birgeneau</th><td>Physics</td></tr>
+												<tr><th scope="row">Lane Martin</th><td>Material Science Engineering</td></tr>
+												<tr><th scope="row">David Attwood</th><td>Engineering Science</td></tr>
+												<tr><th scope="row">Hany Farid</th><td>Computer Science</td></tr>
+												<tr><th scope="row">Armando Fox</th><td>Computer Science</td></tr>
+												<tr><th scope="row">Ashok Gadgil</th><td>Civil Engineering</td></tr>
+												<tr><th scope="row">Adam Arkin</th><td>Bioengineering</td></tr>
+												<tr><th scope="row">Phillip Messersmith</th><td>Bioengineering</td></tr>
+												<tr><th scope="row">Terry Johnson</th><td>Bioengineering</td></tr>
+												<tr><th scope="row">Karl Bibber</th><td>Nuclear Engineering</td></tr>
+												<tr><th scope="row">Enrique Iglesia</th><td>Chemical Engineering</td></tr>
+												<tr><th scope="row">Clayton Radke</th><td>Chemical Engineering</td></tr>
+												<tr><th scope="row">Dorian Liepmann</th><td>Bioengineering</td></tr>
+												<tr><th scope="row">Daniel M Kammen</th><td>Nuclear Engineering</td></tr>
+												<tr><th scope="row">Babak Ayazifar</th><td>EECS</td></tr>
+											</tbody>
+										</table>
 									</div>
 								</div>
 
 
 								<div class="row gtr-150 category">
 									<div class="col-6 col-12-medium">
-										<div class="title">Thursday: Movie Night</div>
+										<h3 class="title" id="eweek-movie-night">Thursday: Movie Night</h3>
 					<!--<img src="images/eweek2022/pre_eweek.png" align="right" width="200" height="600"> -->
 						<p> Come unwind with the musical prowess of Hugh Jackman and the inspiring story of P.T. Barnum, the founder of the circus 
 							which is often a key component of Carnivals. The movie will be starting at 7:30pm in Hearst Memorial Mining 290 on 
 							Thursday, February 17th. Engineering coursework can be demanding so treat yourself to a fun night off! </p>
 									</div>
 									<div class="col-6 col-12-medium">
-										<a href="#"><img src="images/eweek2022/movie_night.png" alt="Movie Night" width="400" /></a>
+										<img src="images/eweek2022/movie_night.png" alt="Flyer: Movie Night, The Greatest Showman with free popcorn, February 17, 7:30 pm" width="400" />
 									</div>
 								</div>
 
@@ -137,7 +178,7 @@
 
 								<div class="row gtr-150 category">
 									<div class="col-6 col-12-medium">
-										<div class="title">Friday: E-Ball</div>
+										<h3 class="title" id="eweek-eball">Friday: E-Ball</h3>
 					<!--<img src="images/eweek2022/pre_eweek.png" align="right" width="200" height="600"> -->
 						<p> The most exciting part of Engineer’s Week is back in person and going full throttle! Come down to Moore Lobby in Hearst 
 							Memorial Mining Building at 7pm on February 18th to enjoy lively music, dancing, and participate in our series of blackjack 
@@ -145,196 +186,214 @@
 							options. To finish off EBall, we will be raffling off our End of EWeek prizes so don’t miss out!   </p>
 									</div>
 									<div class="col-6 col-12-medium">
-										<a href="#"><img src="images/eweek2022/eball.png" alt="E-Ball" width="400" /></a>
+										<img src="images/eweek2022/eball.png" alt="Flyer: E-Ball engineer party, semi-formal dance, Friday February 18, 7 pm, Hearst Mining 290" width="400" />
 									</div>
 								</div>
 
 								
-							<div class="col-4 col-12-medium">
-							<div>
-						<div>
-
-			</div>
-				</div>
-					</div>
-					
-					
-						</div>
-							
-						<div class="col-4">
-						<!-- Sidebar (if editting, also edit eweek.js) -->
-						<section id="sidebar">
-							<section>
-								<div id="search">
-									<div class="title" style="font-weight:bold;position:sticky;">Go to...</div>
-									<ul id="categoryUL">
-										<li onclick="filterCategory(0)">Pre-EWeek</li>
-										<li onclick="filterCategory(1)">Monday: Carnival Extravaganza</li>
-										<li onclick="filterCategory(2)">Tuesday: Design-Build Challenge</li>
-										<li onclick="filterCategory(3)">Wednesday: Top Dog</li>
-										<li onclick="filterCategory(4)">Wednesday: Faculty Panel</li>
-										<li onclick="filterCategory(5)">Thursday: Movie Night</li>
-										<li onclick="filterCategory(6)">Friday: E-Ball</li>
-										</ul>
-								</div>
-
-						</section>	
-						</div>
-						
 							</div>
-							
+
+							<div class="col-4">
+								<!-- Sidebar -->
+								<section id="sidebar">
+									<section>
+										<nav id="search" aria-labelledby="eweek-goto">
+											<div class="title" id="eweek-goto" style="font-weight:bold;position:sticky;">Go to...</div>
+											<ul id="categoryUL">
+												<li><a href="#eweek-pre">Pre-EWeek</a></li>
+												<li><a href="#eweek-carnival">Monday: Carnival Extravaganza</a></li>
+												<li><a href="#eweek-design-build">Tuesday: Design-Build Challenge</a></li>
+												<li><a href="#eweek-top-dog">Wednesday: Top Dog</a></li>
+												<li><a href="#eweek-faculty-panel">Wednesday: Faculty Panel</a></li>
+												<li><a href="#eweek-movie-night">Thursday: Movie Night</a></li>
+												<li><a href="#eweek-eball">Friday: E-Ball</a></li>
+											</ul>
+										</nav>
+									</section>
+								</section>
+							</div>
+						</div>
 
 
-					<h3 style = "font-weight: bold;"> Photos from ESC's EWeek Archives </h3>
+					<h2 class="as-h3" style="font-weight: bold;"> Photos from ESC's EWeek Archives </h2>
 					<div class="photo-grid">
 						<div
 							class="card card-tall card-wide"
+							role="img" aria-label="Student spinning blue cotton candy for laughing students at an outdoor table"
 							style="background-image:url('images/Cotton_candy.jpg')"
 						>
 						</div>
 						<div
 							class="card card-tall"
+							role="img" aria-label="Dressed-up students mingling under a blue and white balloon arch at E-Ball"
 							style="background-image:url('images/GalleryPhotos/DSC_0085.jpg')"
 						>
 						</div>
 						<div
 							class="card"
+							role="img" aria-label="Four students in yellow E-Week shirts smiling under a blue tent"
 							style="background-image:url('images/GalleryPhotos/DSC_0465.JPG')"
 						>
 						</div>
 						<div
 							class="card"
+							role="img" aria-label="Students building with colorful LEGO bricks at an outdoor table"
 							style="background-image:url('images/GalleryPhotos/Copy of D7707A01-6D45-4C9F-A8A3-D701F24DE99D.jpeg')"
 						>
 						</div>
 						<div
 							class="card"
+							role="img" aria-label="Two students holding up light blue Sather Tower T-shirts at an outdoor booth"
 							style="background-image:url('images/GalleryPhotos/Copy of IMG_3989.HEIC')"
 						>
 						</div>
 						<div
 							class="card card-tall"
+							role="img" aria-label="Student in a Berkeley Engineering polo holding a Sather Tower water bottle"
 							style="background-image:url('images/GalleryPhotos/Copy of IMG_4093.HEIC')"
 						>
 						</div>
 						<div
 							class="card card-tall card-wide"
+							role="img" aria-label="Gold balloon letters spelling E-Ball on a sparkly black backdrop"
 							style="background-image:url('images/GalleryPhotos/DSC_0063.jpg')"
 						>
 						</div>
 						<div
 							class="card"
+							role="img" aria-label="Students gathering at red and white striped carnival tents on a campus lawn"
 							style="background-image:url('images/GalleryPhotos/Copy of IMG_2093.JPG')"
 						>
 						</div>
 						<div
 							class="card"
+							role="img" aria-label="ESC members posing on a brick path near Sather Tower among bare trees"
 							style="background-image:url('images/GalleryPhotos/IMG_4129.JPG')"
 						>
 						</div>
 						<div
 							class="card card-tall card-wide"
-							style="background-image:url('images/GalleryPhotos/DSC_03.jpg'); background-position:top;"
+							role="img" aria-label="Two laughing students on campus with a yellow E-Week T-shirt and coffee"
+							style="background-image:url('images/GalleryPhotos/DSC_03.JPG'); background-position:top;"
 						>
 						</div>
 						<div
 							class="card card-tall"
+							role="img" aria-label="Student in a Berkeley Engineering shirt holding blue cotton candy on a lawn"
 							style="background-image:url('images/GalleryPhotos/FF77BBCE-D49C-4ABE-8ACF-A1FBE27B1F01.JPG')"
 						>
 						</div>
 						
 						<div
 							class="card"
+							role="img" aria-label="Four students smiling with bowls of food inside a campus building"
 							style="background-image:url('images/GalleryPhotos/Copy of DSC_0631.JPG')"
 						>
 						</div>
 						<div
 							class="card"
+							role="img" aria-label="ESC members in navy shirts posing on the bear statues below Sather Tower"
 							style="background-image:url('images/GalleryPhotos/image2.jpg')"
 						>
 						</div>
 
 						<div
 							class="card card-wide"
+							role="img" aria-label="Two professors and a student moderator on stage at a faculty panel"
 							style="background-image:url('images/GalleryPhotos/Copy of IMG_1301.JPG')"
 						>
 						</div>
 						<div
 							class="card"
+							role="img" aria-label="Two E-Week committee members beside an Engineer's Week whiteboard outside Hearst Mining"
 							style="background-image:url('images/GalleryPhotos/Copy of IMG_2099.JPG')"
 						>
 						</div>
 						<div
 							class="card card-tall"
+							role="img" aria-label="Cheering student in a bow tie at E-Ball under string lights"
 							style="background-image:url('images/GalleryPhotos/DSC_0091.jpg')"
 						>
 						</div>
 						<div
 							class="card"
+							role="img" aria-label="Students serving themselves from a catered buffet in a wood-paneled hall"
 							style="background-image:url('images/GalleryPhotos/image1.jpg')"
 						>
 						</div>
 						<div
 							class="card card-wide"
+							role="img" aria-label="Engineers Week banner below event photos clipped to a brick wall"
 							style="background-image:url('images/GalleryPhotos/IMG_0859.jpg')"
 						>
 						</div>
 						<div
 							class="card"
+							role="img" aria-label="E-Week volunteers and Micron representatives behind a Micron table outdoors"
 							style="background-image:url('images/GalleryPhotos/Copy of IMG_2107.JPG')"
 						>
 						</div>
 						<div
 							class="card"
-							style="background-image:url('images/GalleryPhotos/Copy of IMG_2120.jpg')"
+							role="img" aria-label="Three students handing out coffee from urns outside Engineering Student Services"
+							style="background-image:url('images/GalleryPhotos/Copy of IMG_2120.JPG')"
 						>
 						</div>
 
 						<div
 							class="card"
+							role="img" aria-label="Students posing in front of the gold balloon E-Ball backdrop"
 							style="background-image:url('images/GalleryPhotos/Copy of IMG_6939.JPG')"
 						>
 						</div>
 
 						<div
 							class="card"
+							role="img" aria-label="Students dancing beside the DJ table at E-Ball in a brick hall"
 							style="background-image:url('images/GalleryPhotos/Copy of IMG_7217.JPG')"
 						>
 						</div>
 						<div
 							class="card card-wide"
+							role="img" aria-label="Dressed-up ESC members posing on a balcony under a large arched window"
 							style="background-image:url('images/GalleryPhotos/Copy of E5FF6B6D-E05A-442E-9B00-CBFC004D39CA.JPG')"
 						>
 						</div>
 						<div
 							class="card"
+							role="img" aria-label="Students bending wire into small sculptures at an outdoor craft table"
 							style="background-image:url('images/GalleryPhotos/DSC_0294.JPG')"
 						>
 						</div>
 						<div
 							class="card card-tall"
+							role="img" aria-label="Guitarist and singer performing live at E-Ball in a brick hall"
 							style="background-image:url('images/GalleryPhotos/DSC_0107.jpg')"
 						>
 						</div>
 						<div
 							class="card"
+							role="img" aria-label="Student kneeling on the grass taking a bite of pink cotton candy"
 							style="background-image:url('images/GalleryPhotos/Copy of IMG_4013.HEIC')"
 						>
 						</div>
 
 						<!-- <div
 							class="card card-wide"
+							role="img" aria-label="Overhead view of a large group in Berkeley Engineering shirts waving up"
 							style="background-image:url('images/GalleryPhotos/IMG_1917.JPG')"
 						>
 						</div> --> <!-- REMOVED FOR FORMATTING REASONS -->
 						<div
 							class="card"
+							role="img" aria-label="Students lining up at a blue Engineering Student Services tent on a plaza"
 							style="background-image:url('images/GalleryPhotos/DSC_0371.JPG')"
 						>
 						</div>
 						
 						<div
 							class="card card-tall card-wide"
+							role="img" aria-label="Crowd dancing below gold 2020 balloons at E-Ball in a lit brick hall"
 							style="background-image:url('images/GalleryPhotos/DSC_0111.jpg')"
 						>
 						</div>
@@ -342,12 +401,13 @@
 						
 						<div
 							class="card card-wide"
+							role="img" aria-label="Students and faculty panelists posing together on an auditorium stage"
 							style="background-image:url('images/GalleryPhotos/Copy of F8D1997D-738B-445A-91D7-4891B1D00BB5.jpg')"
 						>
 						</div>
 					</div>
 				</div>
-			</div>
+			</main>
 			<!-- Footer -->
 			<script src="assets/js/bottom-bar.js"></script>
 		</div>
