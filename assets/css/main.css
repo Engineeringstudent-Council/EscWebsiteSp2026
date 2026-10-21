@@ -5014,33 +5014,33 @@ input, select, textarea {
 	position: absolute;
 	left: 50%;
 	bottom: -0.25em;
-	width: 1px;
-	height: 1px;
+	/* Same size and place whether or not it has focus, only invisible and
+	   unclickable by mouse until then. It used to be a 1px clipped box that
+	   grew on focus, and VoiceOver could press it using the old 1px frame
+	   and miss. */
+	width: 1.9em;
+	height: 1.15em;
+	font-size: 0.75em;
+	transform: translateX(-50%);
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	margin: 0;
 	padding: 0;
 	border: 0;
-	overflow: hidden;
-	clip: rect(0 0 0 0);
-	clip-path: inset(50%);
+	border-radius: 999px;
 	white-space: nowrap;
 	background: #002676;
 	color: #FDB515;
 	cursor: pointer;
 	line-height: 1;
+	opacity: 0;
+	pointer-events: none;
 }
 
 #nav .esc-nav-toggle:focus {
-	width: 1.9em;
-	height: 1.15em;
-	font-size: 0.75em;
-	clip: auto;
-	clip-path: none;
-	overflow: visible;
-	border-radius: 999px;
-	transform: translateX(-50%);
-	display: flex;
-	align-items: center;
-	justify-content: center;
+	opacity: 1;
+	pointer-events: auto;
 }
 
 #nav .esc-nav-toggle svg {

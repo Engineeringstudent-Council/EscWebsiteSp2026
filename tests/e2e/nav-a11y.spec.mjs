@@ -228,9 +228,10 @@ test.describe('mouse behaviour is unchanged', () => {
     await page.hover('#nav > ul > li:nth-child(1) > a');
     await expect(menu).toBeVisible();
     await expect(toggle).toHaveAttribute('aria-expanded', 'true');
-    // The disclosure button stays invisible to mouse users.
-    const box = await toggle.boundingBox();
-    expect(box.width).toBeLessThanOrEqual(1);
+    // The disclosure button stays invisible to mouse users, and the mouse
+    // goes straight through it.
+    await expect(toggle).toHaveCSS('opacity', '0');
+    await expect(toggle).toHaveCSS('pointer-events', 'none');
     // dropotron ignores hovers while a menu is still fading in (its own
     // long-standing behaviour), so let the fade finish like a person would.
     await expect(menu).toHaveCSS('opacity', '1');
