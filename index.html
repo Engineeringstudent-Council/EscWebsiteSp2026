@@ -44,6 +44,54 @@
 				transition: opacity 0.6s ease;
 			}
 			.banner-bg-fade.is-loaded { opacity: 1; }
+
+			/* Pause control for the rotating search examples. */
+			.esc-hero-pause-row { text-align: center; margin-top: 0.9em; }
+			#banner .esc-hero-pause {
+				display: inline-flex;
+				align-items: center;
+				gap: 0.45em;
+				height: auto;
+				min-height: 32px;
+				margin: 0;
+				padding: 0.3em 0.95em;
+				border: 1px solid rgba(255, 255, 255, 0.75);
+				border-radius: 999px;
+				background: rgba(0, 0, 38, 0.6);
+				box-shadow: none;
+				color: #FFFFFF;
+				font-size: 13px;
+				font-weight: 600;
+				letter-spacing: normal;
+				line-height: 1.4;
+				text-transform: none;
+				cursor: pointer;
+			}
+			#banner .esc-hero-pause:hover { background: rgba(0, 0, 38, 0.85); }
+			#banner .esc-hero-pause[hidden],
+			#banner .esc-hero-pause svg[hidden] { display: none; }
+			#banner .esc-hero-pause svg { width: 14px; height: 14px; flex: none; }
+
+			/* Footer columns: three across, stacked on phones so nothing
+			   runs off the side of the screen (WCAG 1.4.10). */
+			.esc-home-footer-grid { display: grid; grid-template-columns: 1.9fr 1fr 1fr; gap: 2.5em; align-items: start; }
+			@media screen and (max-width: 736px) {
+				.esc-home-footer-grid { grid-template-columns: 1fr; gap: 2em; }
+			}
+
+			/* Footer column titles are headings for screen readers but keep the
+			   small bold look they had as paragraphs. */
+			#footer .esc-home-footer-heading {
+				color: inherit;
+				font-size: 1em;
+				font-weight: bold;
+				letter-spacing: normal;
+				line-height: inherit;
+				margin: 0 0 0.6em;
+			}
+			/* The header logo was an <h1>; it is a home link, not a heading.
+			   This keeps the place the template gave "#header h1". */
+			#header #logo { height: inherit; left: 1.25em; line-height: inherit; margin: 0; position: absolute; top: 0; }
 		</style>
 	</head>
 	<body class="is-preload">
@@ -51,10 +99,11 @@
 
 			<!-- Header: logo only, no nav/tabs -->
 			<header id="header">
-				<h1 id="logo"><a href="index.html">
-					<span class="image"><img src="images/MAIN_long_nobackground.png" alt="Engineering Student Council" height="90" width="244" style="width:auto;"/></span></a></h1>
+				<div id="logo"><a href="index.html">
+					<span class="image"><img src="images/MAIN_long_nobackground.png" alt="Engineering Student Council home" height="90" width="244" style="width:auto;"/></span></a></div>
 			</header>
 
+			<main id="main">
 			<!-- Hero (same pattern as index.html's #banner) -->
 			<section id="banner">
 				<div class="banner-bg-fade" aria-hidden="true"></div>
@@ -62,8 +111,8 @@
 					<header>
 						<center>
 						<h1 style="color:#FFFFFF;font-weight:bold;">Engineering Student Council</h1>
-						<h3 style="color:#FFFFFF;font-style:italic;"> For over 30 years, ESC has been responsible for handling and disbursing ASUC funds to engineering student organizations. We also help run the College of Engineering's Blue &amp; Gold certification program as
-							well as one of the largest engineering themed events on campus: Engineers' Week (E-Week). </h3>
+						<p class="as-h3" style="color:#FFFFFF;font-style:italic;font-weight:300;margin:0 0 1em 0;"> For over 30 years, ESC has been responsible for handling and disbursing ASUC funds to engineering student organizations. We also help run the College of Engineering's Blue &amp; Gold certification program as
+							well as one of the largest engineering themed events on campus: Engineers' Week (E-Week). </p>
 						</center>
 					</header>
 					<!-- Site search: opens the ⌘K palette (assets/js/search/ui.js) -->
@@ -74,28 +123,38 @@
 						<kbd aria-hidden="true">/</kbd>
 						<span class="esc-search-sr">Search the ESC website</span>
 					</button>
+					<!-- The example in the search field changes every few seconds;
+					     WCAG 2.2.2 asks for a way to stop it. -->
+					<div class="esc-hero-pause-row">
+						<button type="button" class="esc-hero-pause" hidden>
+							<svg class="esc-hero-pause-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>
+							<svg class="esc-hero-play-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" hidden><path fill="currentColor" d="M8 5v14l11-7z"/></svg>
+							<span class="esc-hero-pause-label">Pause search examples</span>
+						</button>
+					</div>
 				</div>
 			</section>
 
 			<!-- Mission: the real boxed treatment from index.html's own homepage blurb -->
-			<div id="main" class="container" style="padding:2.75em 0 2.25em;">
+			<div class="container" style="padding:2.75em 0 2.25em;">
 				<div style="box-shadow: 0 0.075em 1em 0 rgba(0,0,0,0.2); padding:2.5em 2em; margin: 0 0 1em 0;">
-					<center><h2 style="font-size:30px;color:#000066;font-style:italic;">Our mission is to represent the engineering student body,
+					<center><p style="font-size:30px;line-height:1em;letter-spacing:-0.025em;font-weight:300;margin:0 0 1em 0;color:#000066;font-style:italic;">Our mission is to represent the engineering student body,
 					support engineering groups in reaching their full potential,
 					and promote a diverse community through successful collaboration
-					between students, faculty, groups, and the College of Engineering.</h2></center>
+					between students, faculty, groups, and the College of Engineering.</p></center>
 				</div>
 			</div>
+			</main>
 
 			<!-- Footer: real structure from bottom-bar.js — logo embedded alongside About Us, like the live site -->
 			<footer id="footer" style="margin-top:2em;background:#f4f4f4;">
 				<div style="max-width:1100px;margin:0 auto;padding:3.5em 1.5em 1.5em;">
 
-					<div style="display:grid;grid-template-columns:1.9fr 1fr 1fr;gap:2.5em;align-items:start;">
+					<div class="esc-home-footer-grid">
 						<div style="display:flex;gap:1.3em;align-items:flex-start;">
-							<span class="image" style="flex:0 0 auto;margin-top:0.15em;"><img src="images/MAIN_nobackground.png" alt="Engineering Student Council Logo" height="120" style="width:auto;"/></span>
+							<span class="image" style="flex:0 0 auto;margin-top:0.15em;"><img src="images/MAIN_nobackground.png" alt="Engineering Student Council" height="120" style="width:auto;"/></span>
 							<div>
-								<p style="font-weight:bold;margin:0 0 0.6em;">About Us</p>
+								<h2 class="esc-home-footer-heading">About Us</h2>
 								<p style="margin:0 0 1em;">Our mission is to represent the engineering student body; support engineering societies in reaching their full potential; and promote a diverse community through successful collaboration between students, faculty, societies, and the College of Engineering.</p>
 								<ul class="icons" style="margin:0;">
 									<li><a href="https://www.facebook.com/ESC.Berkeley" class="icon brands alt fa-facebook-f" target="_blank"><span class="label">Facebook</span></a></li>
@@ -104,13 +163,14 @@
 							</div>
 						</div>
 						<div>
-							<p style="font-weight:bold;margin:0 0 0.6em;">Join the Team</p>
+							<h2 class="esc-home-footer-heading">Join the Team</h2>
 							<p style="margin:0 0 1em;">Interested in getting involved with ESC? Fill out the application form to get started.</p>
 							<a href="https://docs.google.com/forms/d/e/1FAIpQLSekmRMjn2weQUrBLl4xukqHT9f-0daD28Pufqyeu30jSc1oHA/viewform?usp=sharing&ouid=108883144436249446366" target="_blank" class="button primary" style="height:2.4em;line-height:2.4em;padding:0 1.5em;font-size:14px;">Application Form</a>
 						</div>
 						<div>
-							<p style="font-weight:bold;margin:0 0 0.6em;">Contacting Us</p>
-							<p style="margin:0;">For general inquiries about the ESC, or if you are part of a company interested in partnering with the ESC, please email our presidents at, <a href="mailto:president@esc.studentorg.berkeley.edu">president@esc.studentorg.berkeley.edu</a>.</p>
+							<h2 class="esc-home-footer-heading">Contacting Us</h2>
+							<p style="margin:0 0 1em;">For general inquiries about the ESC, or if you are part of a company interested in partnering with the ESC, please email our presidents at, <a href="mailto:president@esc.studentorg.berkeley.edu">president@esc.studentorg.berkeley.edu</a>.</p>
+							<p style="margin:0;"><a href="accessibility.html">Accessibility</a>: tell us about any barrier you hit on this site.</p>
 						</div>
 					</div>
 
@@ -133,6 +193,37 @@
 				// If it's already cached and loads instantly/synchronously in some
 				// browsers, make sure we still end up in the loaded state.
 				if (img.complete) { bg.classList.add('is-loaded'); }
+			})();
+		</script>
+		<script>
+			// Pause and resume the rotating examples in the hero search field.
+			// search/ui.js keeps changing the element it found at start-up, so
+			// pausing swaps in a still copy and resuming puts the live one back.
+			(function () {
+				var toggle = document.querySelector('.esc-hero-pause');
+				if (!toggle || matchMedia('(prefers-reduced-motion: reduce)').matches) { return; }
+				var label = toggle.querySelector('.esc-hero-pause-label');
+				var pauseIcon = toggle.querySelector('.esc-hero-pause-icon');
+				var playIcon = toggle.querySelector('.esc-hero-play-icon');
+				var live = null;
+				var still = null;
+				toggle.hidden = false;
+				toggle.addEventListener('click', function () {
+					if (!still) {
+						live = document.querySelector('.esc-hero-search .esc-swap');
+						if (!live) { return; }
+						still = live.cloneNode(true);
+						still.classList.remove('is-out');
+						live.replaceWith(still);
+						label.textContent = 'Play search examples';
+					} else {
+						still.replaceWith(live);
+						still = null;
+						label.textContent = 'Pause search examples';
+					}
+					pauseIcon.hidden = !!still;
+					playIcon.hidden = !still;
+				});
 			})();
 		</script>
 		<script type="module" src="assets/js/search/ui.js"></script>
