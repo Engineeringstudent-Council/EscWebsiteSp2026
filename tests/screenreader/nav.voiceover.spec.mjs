@@ -23,14 +23,22 @@ test.describe('VoiceOver', () => {
     // the starting state may be either.)
     const button = await moveUntil(voiceOver, () => voiceOver.previous(), /about us submenu/i);
     expect(button).toMatch(/button/i);
-    const before = stateOf(button);
-    expect(before, button).not.toBeNull();
+    expect(stateOf(button), button).not.toBeNull();
 
-    // Activating it toggles the menu. Opening also moves focus to the first
+    // Activating it toggles the menu. Read the state from the page right
+    // before pressing: the reader's mouse can hover the nav and open the
+    // menu between hearing the button and pressing it, so the announced
+    // state can already be stale. Opening also moves focus to the first
     // item, so the reader announces "expanded", the item, or both.
+    const expanded = () =>
+      page.evaluate(() =>
+        document.querySelector('[aria-label="About Us submenu"]').getAttribute('aria-expanded'),
+      );
+    const wasOpen = (await expanded()) === 'true';
     const mark = (await voiceOver.spokenPhraseLog()).length;
     await voiceOver.act();
-    if (before === 'collapsed') {
+    await expect.poll(expanded).toBe(String(!wasOpen));
+    if (!wasOpen) {
       await expect.poll(() => spokenSince(voiceOver, mark)).toMatch(/expanded|our team/i);
       await expect
         .poll(() => page.evaluate(() => document.activeElement?.textContent.trim()))
