@@ -13,17 +13,32 @@
 		<style>@media (prefers-reduced-motion: no-preference) { @view-transition { navigation: auto; } }</style>
 		<link rel='icon' href='favicon.ico'/ >
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<style>
+			/* "Why" labels on the requirement cards: #7a7a8c was 4.2:1 on white. */
+			.card-list .author-name-prefix { color: #5f5f73; }
+			/* The cards overlap and only spread apart on hover. Keyboard users
+			   tab to the card list, so spread them out while it has focus. */
+			.card-list:focus-visible .card-horizontal:not(:first-child) { margin-left: 1rem; }
+			/* Card titles are <h4 class="as-h2"> now; keep main.css's hover gradient for the old <h2>. */
+			.card-horizontal-header h4:hover {
+				background: linear-gradient(90deg,#00b0da,#FBB03B);
+				text-shadow: none;
+				-webkit-text-fill-color: transparent;
+				-webkit-background-clip: text;
+				background-clip: text;
+			}
+		</style>
 	</head>
 	<body class="is-preload">
 		<script src="assets/js/top-bar.js"></script>
 		<div id="page-wrapper">
 
 			<!-- Main -->
-			<div id="main" class="wrapper style1">
+			<main id="main" class="wrapper style1">
 				<div class="container">
 					<header class="major">
 						<br>
-						<h2 style="font-weight:bold;">Student Organizations</h2>
+						<h1 style="font-weight:bold;">Student Organizations</h1>
 						<p></p>
 					</header>
 
@@ -44,25 +59,25 @@
 					<h3>  <a href="https://sites.google.com/berkeley.edu/blue-and-gold-portal/home">The Process</a> </h3>
 					<p> All certified organizations have gone through an involved process to assure they are meeting the standards of the program. Some key requirements are listed below, but you can also check out <a href="https://sites.google.com/berkeley.edu/blue-and-gold-portal/home"> this portal</a> for more information about the process. Applications for the 2021-2022 school year have closed, but if your organization is still interested in becoming certified, we encourage you to check out our <a href="https://sites.google.com/berkeley.edu/blue-and-gold-portal/requirements/development-program"> Development Program</a>.</p>
 				</section>
-					<section class="card-list">
+					<section class="card-list" tabindex="0" role="region" aria-label="Blue and Gold certification requirements">
 						<article class='card-horizontal'>
 						<header class='card-horizontal-header'>
 
-							<h2> Sexual Violence & Harassment Training<h2>
+							<h4 class="as-h2"> Sexual Violence &amp; Harassment Training</h4>
 						</header>
 						<div class="author-name">
 							<div class = "author-name-prefix">Why </div>This training enables student leaders to effectively prevent and respond to instances of sexual violence and harassement.
 							</div>
 
 						<div class="card-horizonatal-author">
-							<a class="author-avatar" href="#">
-							<img src="images/esc_newton.png" />
-							</a>
+							<span class="author-avatar">
+							<img src="images/esc_newton.png" alt="" />
+							</span>
 						</div>
 						</article>
 												<article class='card-horizontal'>
 						<header class='card-horizontal-header'>
-							<h2> Equitable Strategies Training</h2>
+							<h4 class="as-h2"> Equitable Strategies Training</h4>
 						</header>
 						<div class="author-name">
 							<div class = "author-name-prefix">Why </div>
@@ -70,14 +85,14 @@
 							</div>
 
 						<div class="card-horizonatal-author">
-							<a class="author-avatar" href="#">
-							<img src="images/esc_newton.png" />
-							</a>
+							<span class="author-avatar">
+							<img src="images/esc_newton.png" alt="" />
+							</span>
 						</div>
 						</article>
 						<article class='card-horizontal'>
 						<header class='card-horizontal-header'>
-							<h2> No GPA minimums / transcripts / resumes</h2>
+							<h4 class="as-h2"> No GPA minimums / transcripts / resumes</h4>
 						</header>
 						<div class="author-name">
 							<div class = "author-name-prefix">Why </div>
@@ -85,14 +100,14 @@
 							</div>
 
 						<div class="card-horizonatal-author">
-							<a class="author-avatar" href="#">
-							<img src="images/esc_newton.png" />
-							</a>
+							<span class="author-avatar">
+							<img src="images/esc_newton.png" alt="" />
+							</span>
 						</div>
 						</article>
 						<article class='card-horizontal'>
 						<header class='card-horizontal-header'>
-							<h2> Demographic Survey</h2>
+							<h4 class="as-h2"> Demographic Survey</h4>
 						</header>
 						<div class="author-name">
 							<div class = "author-name-prefix">Why </div>
@@ -100,9 +115,9 @@
 							</div>
 
 						<div class="card-horizonatal-author">
-							<a class="author-avatar" href="#">
-							<img src="images/esc_newton.png" />
-							</a>
+							<span class="author-avatar">
+							<img src="images/esc_newton.png" alt="" />
+							</span>
 						</div>
 						</article>
 						<!-- <article class='card-horizontal'>
@@ -116,9 +131,9 @@
 							</div>
 
 						<div class="card-horizonatal-author">
-							<a class="author-avatar" href="#">
-							<img src="images/esc_newton.png" />
-							</a>
+							<span class="author-avatar">
+							<img src="images/esc_newton.png" alt="" />
+							</span>
 						</div>
 						</article>
 						<article class='card-horizontal'>
@@ -132,9 +147,9 @@
 							</div>
 
 						<div class="card-horizonatal-author">
-							<a class="author-avatar" href="#">
-							<img src="images/esc_newton.png" />
-							</a>
+							<span class="author-avatar">
+							<img src="images/esc_newton.png" alt="" />
+							</span>
 						</div> -->
 <!-- 						</article> -->
 					</section>
@@ -148,7 +163,7 @@
 										<p>ESC awards funding to certified organizations through Initial Allocations (spring) and Ficomm funding (periodically throughout the year). We generally have around $70,000 to award annually, so we encourage all eligible groups to apply!
 										</p></div>
 										<div class="col-6 col-12-xsmall">
-										<a href="#" class="image fit"><img src="images/financeOrg.jpg" alt="picture" /></a>
+										<span class="image fit"><img src="images/financeOrg.jpg" alt="Hand dropping a coin into a black piggy bank beside a spill of coins" /></span>
 									</div>
 								</div>
 
@@ -157,7 +172,7 @@
 								<br> </br>
 								<div class="row gtr-uniform">
 										<div class="col-6 col-12-xsmall">
-											<a href="#" class="image fit"><img src="images/treasurer.jpg" alt="picture" /></a>
+											<span class="image fit"><img src="images/treasurer.jpg" alt="Calculator and pen resting on a printed financial statement" /></span>
 										</div>
 										<div class="col-6 col-12-xsmall">
 											<h2><b><a href=treasurertrain.html>Treasurer Training</a></b></h2>
@@ -179,8 +194,7 @@
 							</div>
 						</div>
 					</div>
-				</div>
-			</div>
+			</main>
 			<!-- Footer -->
 			<script src="assets/js/bottom-bar.js"></script>
 		</div>
