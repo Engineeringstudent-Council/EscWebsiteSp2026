@@ -5,7 +5,7 @@
 [![CI](https://github.com/Engineeringstudent-Council/EscWebsiteSp2026/actions/workflows/ci.yml/badge.svg)](https://github.com/Engineeringstudent-Council/EscWebsiteSp2026/actions/workflows/ci.yml)
 ![static site](https://img.shields.io/badge/stack-plain%20HTML%20%2B%20CSS%20%2B%20JS-002676)
 ![hosted on OCF](https://img.shields.io/badge/hosted%20on-OCF-FDB515)
-![a11y ratchet](https://img.shields.io/badge/a11y-axe%20ratchet-3b7a57)
+![WCAG 2.2 AA](https://img.shields.io/badge/WCAG%202.2%20AA-0%20violations-3b7a57)
 
 **Live:** <https://esc.studentorg.berkeley.edu> (`esc.berkeley.edu` redirects there)
 
@@ -29,12 +29,15 @@ To edit a page, open the `.html` file, change it, and refresh the browser. That'
 ```
 .
 ├── index.html                 Homepage (2026–27 redesign)
+├── accessibility.html         Accessibility statement and how to report a barrier
 ├── *.html                     One file per page, all at the root
 ├── assets/
 │   ├── css/main.css           Site-wide styles (HTML5 UP "Landed" base)
 │   ├── js/top-bar.js          Shared nav, injected into every page
 │   ├── js/bottom-bar.js       Shared footer
+│   ├── js/site/a11y.js        Announces new-tab links (nav-a11y.js does the menus)
 │   └── js/main.js             Dropdowns, mobile nav panel, parallax
+├── docs/ACCESSIBILITY.md      What the accessibility tests check, and a page checklist
 ├── images/                    Photos and logos (keep each under 1 MB)
 ├── scripts/                   Dev tooling, never served to visitors
 │   ├── serve.mjs              Local static server that mirrors production
@@ -109,16 +112,16 @@ The worker only registers on the real site and Cloudflare previews, so local dev
 
 Every PR runs these checks in [`ci.yml`](.github/workflows/ci.yml):
 
-| Check                     | What it catches                                                                                                                                          |
-| ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Lint**                  | ESLint + Prettier on modern code (scripts, tests, search). Legacy files are left alone on purpose.                                                       |
-| **Unit tests**            | `node --test` over `tests/unit/`.                                                                                                                        |
-| **Page smoke tests**      | Every live page loads with a 200, renders the header, and adds no new script errors or missing files.                                                    |
-| **Accessibility ratchet** | axe-core (WCAG 2.1 AA) on every live page. Known issues are recorded in a baseline, and a PR fails only if it makes a page _worse_.                      |
-| **Phones and tablets**    | Every live page on a Pixel 7 and a Galaxy Tab S4: fits the screen, and the menu and search work by touch.                                                |
-| **Firefox & Safari**      | Keyboard navigation and search in Firefox and Safari (WebKit), plus the touch suite on iPhone 14, iPhone SE, iPad Pro, iPad Mini, and iPad in landscape. |
-| **Lighthouse**            | Performance, accessibility, SEO, and layout-shift budgets on key pages. Reports are uploaded as artifacts.                                               |
-| **Image budget**          | Rejects newly added images over 1 MB.                                                                                                                    |
+| Check                  | What it catches                                                                                                                                                                                             |
+| ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Lint**               | ESLint + Prettier on modern code (scripts, tests, search). Legacy files are left alone on purpose.                                                                                                          |
+| **Unit tests**         | `node --test` over `tests/unit/`.                                                                                                                                                                           |
+| **Page smoke tests**   | Every live page loads with a 200, renders the header, and adds no new script errors or missing files.                                                                                                       |
+| **Accessibility**      | Zero axe-core violations (WCAG 2.2 AA plus best practices) on every live page at desktop and phone sizes, plus focus, zoom, spacing, and motion checks. See [docs/ACCESSIBILITY.md](docs/ACCESSIBILITY.md). |
+| **Phones and tablets** | Every live page on a Pixel 7 and a Galaxy Tab S4: fits the screen, and the menu and search work by touch.                                                                                                   |
+| **Firefox & Safari**   | Keyboard navigation and search in Firefox and Safari (WebKit), plus the touch suite on iPhone 14, iPhone SE, iPad Pro, iPad Mini, and iPad in landscape.                                                    |
+| **Lighthouse**         | Performance, accessibility, SEO, and layout-shift budgets on key pages. Reports are uploaded as artifacts.                                                                                                  |
+| **Image budget**       | Rejects newly added images over 1 MB.                                                                                                                                                                       |
 
 There are also scheduled or optional workflows:
 
@@ -129,14 +132,14 @@ There are also scheduled or optional workflows:
 
 ### The ratchet, explained
 
-The site is years old and has a backlog of accessibility issues and broken assets. Blocking every PR on that backlog would stall everyone, and ignoring it lets it grow. So `tests/e2e/baselines/` records the current state, and CI only fails on regressions. After you fix something, lock in the win:
+The site is years old and has a backlog of broken assets and script errors. Blocking every PR on that backlog would stall everyone, and ignoring it lets it grow. So `tests/e2e/baselines/` records the current state of those two, and CI only fails on regressions. After you fix something, lock in the win:
 
 ```bash
 npm run baseline:update
-git add tests/e2e/baselines && git commit -m "Lower accessibility baseline"
+git add tests/e2e/baselines && git commit -m "Lower the error baseline"
 ```
 
-The baseline should only ever shrink.
+The baseline should only ever shrink. Accessibility used to work this way too, with about 1,240 known problems. In October 2026 they were all fixed, so accessibility has no baseline: every page must pass outright.
 
 ## Contributing
 
