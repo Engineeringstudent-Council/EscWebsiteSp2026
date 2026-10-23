@@ -6,17 +6,33 @@
 	overflow: hidden;
 }
 
-/*Execs */
-.exec-group-photo {
-	margin: 0 auto 2em;
+.board-year {
+	margin: 0.35em 0 0;
+	color: #000066;
+	font-size: 1.2em;
 }
 
-.exec-group-photo img {
-	display: block;
-	width: 100%;
-	max-width: 1000px;
-	height: auto;
-	margin: 0 auto;
+#main .container > header.major {
+	margin-bottom: 1.25em;
+}
+
+.committee-roster h3 {
+	color: #000066;
+	font-size: 1.35em;
+	margin: 0 0 0.25em;
+}
+
+.committee-roster {
+	clear: both;
+	margin: 1em 0;
+}
+
+.committee-description {
+	max-width: 52em;
+	margin: 0 auto 0.5em;
+	color: #555;
+	font-size: 0.95em;
+	line-height: 1.5;
 }
 
 .committee-roster h3 {
@@ -32,11 +48,11 @@
 
 #grid {
 	width: 100%;
-	height: 100%;
+	height: auto;
 
 	font-family: "Helvetica Neue", sans-serif;
-    font-weight: 100;
-    text-align: center;
+	font-weight: 100;
+	text-align: center;
 }
 
 
@@ -48,12 +64,12 @@
 	position: relative;
 	display: inline-block;
 	vertical-align: top;
-	margin: .5em;
-	width: 17em;
-	max-height: 25em;
+	margin: .35em;
+	width: 15em;
+	max-height: none;
 	overflow: visible;
 
-	padding: 2em 1em;
+	padding: .65em .5em;
 	/*border: gray solid 0.025em;*/
 
 
@@ -73,8 +89,8 @@
 }
 
 .profile {
-	width: 10.5em;
-	height: 10.5em;
+	width: 7em;
+	height: 7em;
 	margin: auto;
 	overflow: hidden;
 	border-radius: 50%;
@@ -98,12 +114,12 @@
 .profile:hover img:last-child{display:inline-block}
 
 .name {
-	margin: .25em;
-    font-size: 2em;
+	margin: .2em;
+	font-size: 1.35em;
 }
 
 .position {
-    font-size: 1.5em;
+	font-size: 1em;
 }
 
 .description {
