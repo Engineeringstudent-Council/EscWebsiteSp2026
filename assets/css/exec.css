@@ -6,37 +6,67 @@
 	overflow: hidden;
 }
 
-/*Execs */
-.exec-group-photo {
-	margin: 0 auto 2em;
+.board-year {
+	margin: 0.35em 0 0;
+	color: #000066;
+	font-size: 1.2em;
 }
 
-.exec-group-photo img {
-	display: block;
-	width: 100%;
-	max-width: 1000px;
-	height: auto;
-	margin: 0 auto;
+#main .container > header.major {
+	margin-bottom: 1.25em;
 }
 
-.committee-roster h3 {
+#committee-overview > h3,
+#executive-board > h3 {
 	color: #000066;
 	font-size: 1.35em;
-	margin: 0 0 0.5em;
+	margin: 0 0 0.4em;
 }
 
 .committee-roster {
-	clear: both;
-	margin: 1em 0;
+	display: contents;
+}
+
+#committee-overview {
+	margin-bottom: 1em;
+}
+
+.committee-list {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(100%, 17em), 1fr));
+	gap: 0.5em;
+}
+
+.committee-item {
+	padding: 0.55em 0.7em;
+	border: 1px solid rgba(0, 0, 102, 0.15);
+	text-align: left;
+}
+
+.committee-item h4 {
+	color: #000066;
+	font-size: 1em;
+	margin: 0 0 0.2em;
+}
+
+.committee-item p {
+	color: #555;
+	font-size: 0.88em;
+	line-height: 1.35;
+	margin: 0;
+}
+
+#executive-board {
+	text-align: center;
 }
 
 #grid {
 	width: 100%;
-	height: 100%;
+	height: auto;
 
 	font-family: "Helvetica Neue", sans-serif;
-    font-weight: 100;
-    text-align: center;
+	font-weight: 100;
+	text-align: center;
 }
 
 
@@ -48,12 +78,12 @@
 	position: relative;
 	display: inline-block;
 	vertical-align: top;
-	margin: .5em;
-	width: 17em;
-	max-height: 25em;
+	margin: .35em;
+	width: 15em;
+	max-height: none;
 	overflow: visible;
 
-	padding: 2em 1em;
+	padding: .65em .5em;
 	/*border: gray solid 0.025em;*/
 
 
@@ -73,8 +103,8 @@
 }
 
 .profile {
-	width: 10.5em;
-	height: 10.5em;
+	width: 7em;
+	height: 7em;
 	margin: auto;
 	overflow: hidden;
 	border-radius: 50%;
@@ -98,12 +128,12 @@
 .profile:hover img:last-child{display:inline-block}
 
 .name {
-	margin: .25em;
-    font-size: 2em;
+	margin: .2em;
+	font-size: 1.35em;
 }
 
 .position {
-    font-size: 1.5em;
+	font-size: 1em;
 }
 
 .description {

@@ -36,7 +36,6 @@
     "boost": 1.3,
     "featured": true
   },
-  "committees.html": { "keywords": "committee join tech finance communications eweek" },
   "engin_decals.html": { "keywords": "decal course units class student-run", "boost": 1.1 },
   "escaffiliation.html": {
     "trail": ["Organizations"],
@@ -50,7 +49,7 @@
     "featured": true
   },
   "execs.html": {
-    "keywords": "exec board officers president vice president leadership team contact",
+    "keywords": "exec board officers president vice president leadership team contact committee committees finance communications technical eweek",
     "boost": 1.2
   },
   "faqs.html": { "keywords": "faq questions help", "boost": 1.1 },

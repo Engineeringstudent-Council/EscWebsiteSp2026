@@ -24,12 +24,7 @@ escInsertHere('\
 		 <li>\
 			<a href="about.html">About Us</a>\
 			<ul>\
-<li><a href="#">Our Team</a>\
-  <ul>\
-	<li><a href="execs.html">Executive Board</a></li>\
-	<li><a href="committees.html">Our Committees</a></li>\
-  </ul>\
-</li>\
+<li><a href="execs.html">Our Team</a></li>\
 <li><a href="#">Our Finances</a>\
   <ul>\
 					<li><a href="https://docs.google.com/spreadsheets/d/1ig6p24CjkC6ggSZPXSRNSclqro15jaI2/edit">Our Budget</a></li>\

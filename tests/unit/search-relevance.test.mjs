@@ -37,7 +37,7 @@ const GOLDEN = [
   ['laser cutter', 'makerspaces.html', 2],
   ['decal', 'engin_decals.html', 1],
   ['exec board', 'execs.html', 1],
-  ['committees', 'committees.html', 1],
+  ['committees', 'execs.html', 1],
   ['treasurer training', 'treasurertrain.html', 1],
   ['tutoring', 'academics.html', 1],
   ['start a club', 'howtoguide.html', 1],
