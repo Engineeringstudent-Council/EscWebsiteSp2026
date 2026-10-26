@@ -13,7 +13,7 @@
     "lint": "eslint . && prettier --check .",
     "format": "prettier --write .",
     "test": "node --test --test-reporter=spec \"tests/unit/**/*.test.mjs\"",
-    "test:e2e": "playwright test",
+    "test:e2e": "playwright test --project=desktop --project=mobile --project=android-tablet",
     "check:data": "node scripts/validate-data.mjs",
     "lhci": "lhci autorun",
     "baseline:update": "UPDATE_BASELINE=1 playwright test --project=desktop --workers=1",
@@ -22,11 +22,14 @@
     "check:search": "node scripts/build-search-index.mjs --check",
     "test:stress": "node --test --test-reporter=spec \"tests/stress/**/*.test.mjs\"",
     "vendor:fuse": "cp node_modules/fuse.js/dist/fuse.min.mjs assets/js/vendor/fuse.esm.min.js",
-    "build:icons": "node scripts/build-icons.mjs"
+    "build:icons": "node scripts/build-icons.mjs",
+    "test:cross-browser": "playwright test --project=firefox --project=webkit --project=mobile-safari --project=iphone-se --project=ipad --project=ipad-mini --project=ipad-landscape"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",
     "@eslint/js": "^10.0.1",
+    "@guidepup/guidepup": "0.35.0",
+    "@guidepup/playwright": "0.19.1",
     "@lhci/cli": "^0.15.1",
     "@playwright/test": "^1.64.0",
     "ajv": "^8.20.0",
