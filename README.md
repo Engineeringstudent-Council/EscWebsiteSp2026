@@ -83,6 +83,15 @@ HTML pages ──► scripts/build-search-index.mjs ──► assets/search/inde
 
 The golden relevance tests in `tests/unit/search-relevance.test.mjs` pin queries real students type ("free food", "b&g", "mental health") to the page they need. If one fails, fix the ranking or the data, not the test.
 
+## Instant, animated page loads
+
+Two progressive enhancements make moving around the site feel like an app. Browsers that don't support them load pages exactly as before.
+
+- **Prerendering** (`assets/js/site/instant.js`). In Chromium browsers, [Speculation Rules](https://developer.mozilla.org/en-US/docs/Web/API/Speculation_Rules_API) prerender a page when you hover a link for a moment or start pressing it, so the click lands on a page that is already drawn. Other browsers prefetch the HTML on hover, touch, or keyboard focus instead. Both stay off for Data Saver and 2G connections. Links that open in a new tab, files, and anything marked `data-no-prerender` are left alone.
+- **Page transitions** (end of `assets/css/main.css`). Cross-document [View Transitions](https://developer.mozilla.org/en-US/docs/Web/API/View_Transition_API) cross-fade the content between pages while the header stays still. They're skipped for anyone who prefers reduced motion.
+
+Every page carries a one-line inline `<style>` in `<head>` that opts in to transitions. It has to be inline: Chrome decides whether to animate an incoming page before an external stylesheet is reliably applied, so with only the rule in `main.css`, most transitions were silently dropped. Copying an existing page keeps the line, and a test fails if a live page loses it.
+
 ## Quality gates
 
 Every PR runs these checks in [`ci.yml`](.github/workflows/ci.yml):

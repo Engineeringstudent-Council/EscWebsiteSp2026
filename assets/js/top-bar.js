@@ -116,11 +116,15 @@ escInsertHere('\
 </header>\
 ');
 
-// Site search (⌘K / Ctrl+K). Loaded as a module so it never blocks the page.
+// Site search (⌘K / Ctrl+K) and progressive enhancements (instant page
+// loads and friends). Loaded as modules so they never block the page, and
+// older browsers that don't understand modules simply skip them.
 (function () {
 	var here = document.currentScript;
-	var s = document.createElement('script');
-	s.type = 'module';
-	s.src = here ? new URL('search/ui.js', here.src).href : 'assets/js/search/ui.js';
-	document.head.appendChild(s);
+	['search/ui.js', 'site/enhance.js'].forEach(function (path) {
+		var s = document.createElement('script');
+		s.type = 'module';
+		s.src = here ? new URL(path, here.src).href : 'assets/js/' + path;
+		document.head.appendChild(s);
+	});
 })();

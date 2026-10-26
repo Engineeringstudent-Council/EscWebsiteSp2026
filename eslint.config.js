@@ -10,6 +10,8 @@ export default [
       '!assets/js/',
       '!assets/js/search/',
       '!assets/js/search/*.js',
+      '!assets/js/site/',
+      '!assets/js/site/*.js',
       'assets/js/vendor/**',
       'TableFilter/**',
       '.claude/**',
@@ -36,7 +38,7 @@ export default [
     },
   },
   {
-    files: ['assets/js/search/**/*.js'],
+    files: ['assets/js/search/**/*.js', 'assets/js/site/**/*.js'],
     languageOptions: {
       ecmaVersion: 2022,
       sourceType: 'module',
