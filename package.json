@@ -26,18 +26,18 @@
     "test:cross-browser": "playwright test --project=firefox --project=webkit --project=mobile-safari --project=iphone-se --project=ipad --project=ipad-mini --project=ipad-landscape"
   },
   "devDependencies": {
-    "@axe-core/playwright": "^4.13.0",
+    "@axe-core/playwright": "^4.14.0",
     "@eslint/js": "^10.0.1",
-    "@guidepup/guidepup": "0.35.0",
-    "@guidepup/playwright": "0.19.1",
+    "@guidepup/guidepup": "0.36.4",
+    "@guidepup/playwright": "0.20.0",
     "@lhci/cli": "^0.15.1",
-    "@playwright/test": "^1.64.0",
+    "@playwright/test": "^1.64.1",
     "ajv": "^8.20.0",
     "ajv-formats": "^3.0.1",
     "cheerio": "^1.2.0",
-    "eslint": "^10.12.0",
+    "eslint": "^10.13.0",
     "fuse.js": "^7.5.0",
     "globals": "^17.13.0",
-    "prettier": "^3.9.9"
+    "prettier": "^3.9.10"
   }
 }
