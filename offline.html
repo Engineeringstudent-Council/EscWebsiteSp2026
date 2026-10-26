@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>You're offline · Engineering Student Council</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="robots" content="noindex" />
+		<meta name="theme-color" content="#002676" />
+		<link rel="icon" href="favicon.ico" />
+		<!-- Served by the service worker when there's no connection, so it
+		     must not depend on anything that isn't already cached: all styles
+		     and script are inline. -->
+		<style>
+			:root { color-scheme: light dark; --blue: #002676; --gold: #fdb515; --ink: #0b1b3f; --paper: #f7f8fb; --muted: #4a5878; }
+			:root { --row: rgb(0 38 118 / 0.07); --row-hover: rgb(0 38 118 / 0.14); --button: var(--blue); --button-ink: #fff; }
+			@media (prefers-color-scheme: dark) {
+				:root { --ink: #eef2fb; --paper: #08122b; --muted: #a9b6d3; --row: rgb(255 255 255 / 0.06); --row-hover: rgb(255 255 255 / 0.11); --button: var(--gold); --button-ink: #08122b; }
+			}
+			* { box-sizing: border-box; }
+			body { margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 2rem 1.25rem;
+				background: var(--paper); color: var(--ink); font: 1.05rem/1.6 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
+			main { width: min(36rem, 100%); }
+			.cradle { width: 7.5rem; height: auto; display: block; margin-bottom: 1.75rem; }
+			.cradle .bar, .cradle .string { stroke: currentColor; }
+			.cradle .ball { fill: currentColor; }
+			.cradle .swing { transform-origin: 70px 10px; animation: swing 2.4s ease-in-out infinite alternate; }
+			.cradle .swing line { stroke: var(--gold); }
+			.cradle .swing circle { fill: var(--gold); }
+			@keyframes swing { from { transform: rotate(-4deg); } to { transform: rotate(-32deg); } }
+			@media (prefers-reduced-motion: reduce) { .cradle .swing { animation: none; transform: rotate(-24deg); } }
+			.eyebrow { margin: 0 0 0.5rem; color: var(--gold); font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; font-size: 0.78rem; }
+			h1 { margin: 0 0 0.75rem; font: 700 clamp(1.9rem, 6vw, 2.6rem)/1.15 ui-serif, Georgia, "Times New Roman", serif; }
+			p { margin: 0 0 1rem; color: var(--muted); }
+			.actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin: 1.5rem 0 2rem; }
+			button, .home { appearance: none; border: 0; border-radius: 999px; padding: 0.7rem 1.3rem; font: inherit; font-weight: 700; cursor: pointer; text-decoration: none; }
+			button { background: var(--button); color: var(--button-ink); }
+			.home { background: transparent; color: var(--ink); box-shadow: inset 0 0 0 2px currentColor; }
+			button:focus-visible, .home:focus-visible, a:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+			h2 { margin: 0 0 0.6rem; font-size: 0.95rem; letter-spacing: 0.02em; }
+			ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.4rem; }
+			li a { display: block; padding: 0.6rem 0.9rem; border-radius: 0.6rem; color: inherit; text-decoration: none;
+				background: var(--row); border-left: 3px solid var(--gold); }
+			li a:hover { background: var(--row-hover); }
+			[hidden] { display: none !important; }
+		</style>
+	</head>
+	<body>
+		<main>
+			<svg class="cradle" viewBox="0 0 120 70" aria-hidden="true">
+				<line class="bar" x1="10" y1="10" x2="110" y2="10" stroke-width="4" stroke-linecap="round" />
+				<g stroke-width="2.5">
+					<line class="string" x1="25" y1="10" x2="25" y2="50" /><circle class="ball" cx="25" cy="56" r="8" />
+					<line class="string" x1="43" y1="10" x2="43" y2="50" /><circle class="ball" cx="43" cy="56" r="8" />
+					<line class="string" x1="61" y1="10" x2="61" y2="50" /><circle class="ball" cx="61" cy="56" r="8" />
+				</g>
+				<g class="swing" stroke-width="2.5"><line x1="79" y1="10" x2="79" y2="50" /><circle cx="79" cy="56" r="8" /></g>
+			</svg>
+			<p class="eyebrow">No connection</p>
+			<h1>You're offline.</h1>
+			<p>Probably just Berkeley Wi-Fi being Berkeley Wi-Fi. Pages you've already visited still open, and this one reloads by itself the moment you're back.</p>
+			<div class="actions">
+				<button type="button" id="retry">Try again</button>
+				<a class="home" href="./">Go to the homepage</a>
+			</div>
+			<section id="saved" hidden>
+				<h2>Still available offline</h2>
+				<ul id="saved-list"></ul>
+			</section>
+		</main>
+		<script>
+			(function () {
+				document.getElementById('retry').addEventListener('click', function () { location.reload(); });
+				// Browsers can fire 'online' while still offline (and in the middle of
+				// the visitor navigating elsewhere), so only reload once the network
+				// really answers.
+				var checking = false;
+				addEventListener('online', function () {
+					if (!navigator.onLine || checking) return;
+					checking = true;
+					setTimeout(function () {
+						fetch(location.href, { method: 'HEAD', cache: 'no-store' })
+							.then(function (response) { if (response.ok && navigator.onLine) location.reload(); })
+							.catch(function () {})
+							.then(function () { checking = false; });
+					}, 400);
+				});
+				if (!('caches' in window)) return;
+				// List the pages the service worker has saved, newest first.
+				caches.keys().then(function (names) {
+					return Promise.all(names.filter(function (n) { return n.indexOf('esc-pages-') === 0; }).map(function (name) {
+						return caches.open(name).then(function (cache) {
+							return cache.keys().then(function (requests) {
+								return Promise.all(requests.map(function (request) {
+									return cache.match(request).then(function (response) { return response.text(); }).then(function (html) {
+										var match = /<title>([^<]*)<\/title>/i.exec(html);
+										var title = match ? match[1].replace(/\s+/g, ' ').trim() : request.url;
+										return { url: request.url, title: title.replace(/&amp;/g, '&') };
+									});
+								}));
+							});
+						});
+					}));
+				}).then(function (groups) {
+					var seen = {};
+					var pages = [].concat.apply([], groups).reverse().filter(function (page) {
+						var path = new URL(page.url).pathname;
+						if (seen[path] || path === location.pathname) return false;
+						return (seen[path] = true);
+					}).slice(0, 12);
+					if (!pages.length) return;
+					var list = document.getElementById('saved-list');
+					pages.forEach(function (page) {
+						var item = document.createElement('li');
+						var link = document.createElement('a');
+						link.href = page.url;
+						link.textContent = page.title;
+						item.appendChild(link);
+						list.appendChild(item);
+					});
+					document.getElementById('saved').hidden = false;
+				}).catch(function () {});
+			})();
+		</script>
+	</body>
+</html>

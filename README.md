@@ -92,6 +92,19 @@ Two progressive enhancements make moving around the site feel like an app. Brows
 
 Every page carries a one-line inline `<style>` in `<head>` that opts in to transitions. It has to be inline: Chrome decides whether to animate an incoming page before an external stylesheet is reliably applied, so with only the rule in `main.css`, most transitions were silently dropped. Copying an existing page keeps the line, and a test fails if a live page loses it.
 
+## Offline support and installing the site
+
+A small service worker ([`sw.js`](sw.js)) keeps the site useful on bad connections:
+
+- **Nothing is ever served stale.** Pages, scripts, and stylesheets always come from the network first. The saved copy is only used when the network is down or takes longer than 4 seconds.
+- **Repeat visits are faster.** Images and fonts are served from cache and refreshed in the background. The search index is cached too, so search keeps working offline.
+- **Offline, visited pages still open.** A page you never visited shows [`offline.html`](offline.html) instead: a friendly note, a list of pages still available, and an automatic reload once the network really answers.
+- **The site can be installed.** `manifest.webmanifest` and the icons in `images/icons/` let phones add it to the home screen, with shortcuts to funding, Blue & Gold, events, and search. To change the icon, edit `images/icons/esc-icon.svg` and run `npm run build:icons`.
+
+The worker only registers on the real site and Cloudflare previews, so local development never fights a cache. To try it locally, run `localStorage.setItem('esc-sw', 'on')` in the browser console and reload.
+
+**If something ever goes wrong**, set `ENABLED = false` in `assets/js/site/offline.js` and deploy. Every page then unregisters the worker on its next visit. Bump `VERSION` in `sw.js` to throw away old caches.
+
 ## Quality gates
 
 Every PR runs these checks in [`ci.yml`](.github/workflows/ci.yml):

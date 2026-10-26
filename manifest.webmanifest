@@ -1,0 +1,55 @@
+{
+  "name": "Engineering Student Council at UC Berkeley",
+  "short_name": "ESC Berkeley",
+  "description": "Funding, Blue & Gold, E-Week, and student resources from Berkeley's Engineering Student Council.",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#002676",
+  "lang": "en-US",
+  "categories": ["education"],
+  "icons": [
+    {
+      "src": "images/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "images/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "images/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Apply for Funding",
+      "url": "/applyfunding.html",
+      "icons": [{ "src": "images/icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Blue & Gold",
+      "url": "/blueandgold.html",
+      "icons": [{ "src": "images/icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Events",
+      "url": "/events.html",
+      "icons": [{ "src": "images/icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Search",
+      "url": "/?search=",
+      "icons": [{ "src": "images/icons/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}

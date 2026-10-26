@@ -45,4 +45,12 @@ export default [
       globals: globals.browser,
     },
   },
+  {
+    files: ['sw.js'],
+    languageOptions: {
+      ecmaVersion: 2022,
+      sourceType: 'script',
+      globals: globals.serviceworker,
+    },
+  },
 ];
