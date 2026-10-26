@@ -1,9 +1,22 @@
 /*Title Section*/
-#page-wrapper {
+#page-wrapper,
+.execs-wrapper {
 	height: 100%;
 	width: 100%;
 	/*background-color: #34495e; */
 	overflow: hidden;
+}
+
+/* The roster wrapper used to be a second #page-wrapper; keep the 3.5em gap
+   main.css gave it, now that the duplicate id is gone. */
+.execs-wrapper {
+	padding-top: 3.5em;
+}
+
+@media screen and (max-width: 736px) {
+	.execs-wrapper {
+		padding-top: 44px;
+	}
 }
 
 /*Execs */
@@ -19,7 +32,7 @@
 	margin: 0 auto;
 }
 
-.committee-roster h3 {
+.committee-roster h2 {
 	color: #000066;
 	font-size: 1.35em;
 	margin: 0 0 0.5em;

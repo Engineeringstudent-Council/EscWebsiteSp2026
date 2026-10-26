@@ -4,26 +4,36 @@
 	html5up.net | @ajlkn
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
-<html>
+<html lang="en">
 	<head>
 		<title>Makerspaces</title>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<style>@media (prefers-reduced-motion: no-preference) { @view-transition { navigation: auto; } }</style>
 		<link rel='icon' href='favicon.ico'/ >
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<style>
+			/* The lists below were loose <li>s and empty paragraphs; these keep their old spacing and bullets.
+			   Stacked links get a 24px line each so they are easy to hit (WCAG 2.5.8). */
+			#content { padding-top: 2em; } /* room the old empty paragraph above the first heading left */
+			#content .esc-bare-list { list-style: disc; margin: 0 0 2em 0; padding-left: 0; }
+			#content .esc-bare-list > li { padding: 0.125em 0; }
+			#content ol.esc-steps > li { margin-top: 2em; }
+			#sidebar .esc-link-list { list-style: disc; margin: 0; padding-left: 0; }
+			#sidebar .esc-link-list > li { padding-left: 0; margin-top: 2em; }
+		</style>
 	</head>
 	<body class="is-preload">
 		<script src="assets/js/top-bar.js"></script>
 		<div id="page-wrapper">
 
 			<!-- Main -->
-			<div id="main" class="wrapper style1">
+			<main id="main" class="wrapper style1">
 				<div class="container">
 					<header class="major">
 						<br>
-						<h2>Makerspaces</h2>
+						<h1>Makerspaces</h1>
 						<p> This page is intended to provide resources for students about the makerspaces on campus. Please email us at <a href="mailto:technical@esc.berkeley.edu?subject=Makerspace%20Resource%20">technical@esc.berkeley.edu </a> for resources we should add to this page</p>
 						</header>
 
@@ -38,55 +48,59 @@
 
 								<!-- <iframe src="https://www.google.com/maps/d/embed?mid=1U2CcMFIyOdbVIr137Q3-NSzXr2JS7in0" width="640" height="480"></iframe> -->
 
-								<p><h3> Steps to get started with making! </h3>
-								<p>Usually people that start out with using the makerspaces tend to focus on 3D printing and laser cutting since they are relatively easy to use compared to other machines such as a CNC.
-								<ol>
-								<p> <li>The great thing about attending UC Berkeley is the amount of support available at your disposal.</li>
-								<p><li>If you have no idea how to use CAD (Computer Aided Design) such as Solidworks, go the fast route and find examples online. Look for examples that you can download as a .stl file. <a href="https://en.wikipedia.org/wiki/STL_(file_format)">STL</a> stands for stereolithography and is the standard format used by most 3D printing software such as CURA.</li>
-								<p> <li>Once you find a design/make a design and save it as a .stl file, use a compatible slicing software. If you are using a 3D printer that is part of a makerspace on campus, they will have a recommendation to which software to use. For instance the Type A 3D printers in Jacobs Hall use Cura Type A slicing software.</li>
-								<p> <li>Afterwards, save your file as gcode. GCode is sent to the 3D printers.</li>
-								<p><li>Send the  <a href="https://en.wikipedia.org/wiki/G-code">G-code</a> to the printers</li></p>
+								<h2 class="as-h3"> Steps to get started with making! </h2>
+								<p>Usually people that start out with using the makerspaces tend to focus on 3D printing and laser cutting since they are relatively easy to use compared to other machines such as a CNC.</p>
+								<ol class="esc-steps">
+									<li>The great thing about attending UC Berkeley is the amount of support available at your disposal.</li>
+									<li>If you have no idea how to use CAD (Computer Aided Design) such as Solidworks, go the fast route and find examples online. Look for examples that you can download as a .stl file. <a href="https://en.wikipedia.org/wiki/STL_(file_format)">STL</a> stands for stereolithography and is the standard format used by most 3D printing software such as CURA.</li>
+									<li>Once you find a design/make a design and save it as a .stl file, use a compatible slicing software. If you are using a 3D printer that is part of a makerspace on campus, they will have a recommendation to which software to use. For instance the Type A 3D printers in Jacobs Hall use Cura Type A slicing software.</li>
+									<li>Afterwards, save your file as gcode. GCode is sent to the 3D printers.</li>
+									<li>Send the  <a href="https://en.wikipedia.org/wiki/G-code">G-code</a> to the printers</li>
 								</ol>
 
-								<p><h3>Useful Resources: </h3>
-								<p> <li><a href="https://www.instructables.com/">Instructions on building projects</a></li>
-								<li><a href="https://adafruit.com">Examples and tutorials on getting started</a></li>
-								<li><a href="https://hackaday.io/">Hardware examples</a></li>
-								<li><a href="https://www.thingiverse.com/">3D-print examples</a></li>
-								<li><a href="https://grabcad.com/">Additional 3D-print examples</a></li>
+								<h2 class="as-h3">Useful Resources: </h2>
+								<ul class="esc-bare-list">
+									<li><a href="https://www.instructables.com/">Instructions on building projects</a></li>
+									<li><a href="https://adafruit.com">Examples and tutorials on getting started</a></li>
+									<li><a href="https://hackaday.io/">Hardware examples</a></li>
+									<li><a href="https://www.thingiverse.com/">3D-print examples</a></li>
+									<li><a href="https://grabcad.com/">Additional 3D-print examples</a></li>
+								</ul>
 
-								<p><h3>Websites to buy beginning product: </h3>
-								We do not endorse these companies nor receive any funds from them.
-								<p> <li><a href="https://www.sparkfun.com/">https://www.sparkfun.com/</a></li>
-								<li><a href="https://www.digikey.com/">https://www.digikey.com/</a></li>
-								<li><a href="https://bayareacircuits.com/mobile/">https://bayareacircuits.com/mobile/</a></li>
-								<li><a href="https://adafruit.com">https://adafruit.com</a></li>
-								<li><a href="https://amazon.com">https://amazon.com</a></li>
+								<h2 class="as-h3">Websites to buy beginning product: </h2>
+								<p>We do not endorse these companies nor receive any funds from them.</p>
+								<ul class="esc-bare-list">
+									<li><a href="https://www.sparkfun.com/">https://www.sparkfun.com/</a></li>
+									<li><a href="https://www.digikey.com/">https://www.digikey.com/</a></li>
+									<li><a href="https://bayareacircuits.com/mobile/">https://bayareacircuits.com/mobile/</a></li>
+									<li><a href="https://adafruit.com">https://adafruit.com</a></li>
+									<li><a href="https://amazon.com">https://amazon.com</a></li>
+								</ul>
 
-
-
-								<p><h3><a href="https://en.wikipedia.org/wiki/Laser_cutting">Getting Started Laser Cutting</a></h3>
+								<h2 class="as-h3"><a href="https://en.wikipedia.org/wiki/Laser_cutting">Getting Started Laser Cutting</a></h2>
 								<p> Due to the dangers of laser cutting, we recommend that you are fully trained by a design specialist in the makerspaces. <a href="https://en.wikipedia.org/wiki/Laser_cutting">Laser cutting </a> basically involves a powerful beam (laser) burning through a material such as wood. These devices need to be operated in an open and well-ventilated room. For further background information, check out this <a href="https://www.instructables.com/id/Laser-Cutting-Basics/">Instructables</a> page!</p>
 
-								<p> <h3><a href="https://jacobsinstitute.berkeley.edu/"> Jacobs Institute for Design Innovation</a></h3>
+								<h2 class="as-h3"><a href="https://jacobsinstitute.berkeley.edu/"> Jacobs Institute for Design Innovation</a></h2>
 								<p> <a href="https://jacobsinstitute.berkeley.edu/"> The Jacobs Institute for Design Innovation</a> is UC Berkeley’s interdisciplinary hub for learning and making at the intersection of design and technology. With a <a href="https://jacobsinstitute.berkeley.edu/our-space/makerpass//"> Maker Pass</a> students can explore, prototype, and tinker in the <a href="https://jacobsinstitute.berkeley.edu/our-space/labs-and-equipment//">Jacobs Hall Makerspace</a>.
 
 								The Jacobs Institute also offers a variety of <a href="https://jacobsinstitute.berkeley.edu/student-resources/">resources</a> to students interested in getting involved with design-focused student groups, in attending events, or in learning more about design opportunities through Jacobs' student services advisor.
 
 								Sign up for the <a href="https://jacobsinstitute.berkeley.edu/newsletter/"> Jacobs Newsletter </a> to get updates on events and news at the Jacobs Institute. </p>
 
-								<h3><a href="https://citris-uc.org/"> CITRIS and the Banatao Institute</a></h3>
-								<p> <a href="https://citris-uc.org/"> The Center for Information Technology Research in the Interest of Society (CITRIS) and the Banatao Institute</a> create information technology solutions for society’s most pressing challenges. CITRIS and Banatao support students from concept to prototype through a variety of programs and labs that bring together multiple disciplines to address critical challenges. Programs and labs include:
-								<p><li><a href="https://invent.citris-uc.org/">CITRIS Invention Lab (requires Maker Pass)</a></li>
-								<li><a href="https://citris-uc.org/tech-social-good/">CITRIS Tech for Social Good</a></li>
-								<li><a href="https://citris-uc.org/initiatives/foundry/">CITRIS Foundry Startup Accelerator</a></li>
-								<li><a href="https://citris-uc.org/initiatives/social-apps-lab/">CITRIS Social Apps Lab</a></li></p>
+								<h2 class="as-h3"><a href="https://citris-uc.org/"> CITRIS and the Banatao Institute</a></h2>
+								<p> <a href="https://citris-uc.org/"> The Center for Information Technology Research in the Interest of Society (CITRIS) and the Banatao Institute</a> create information technology solutions for society’s most pressing challenges. CITRIS and Banatao support students from concept to prototype through a variety of programs and labs that bring together multiple disciplines to address critical challenges. Programs and labs include:</p>
+								<ul class="esc-bare-list">
+									<li><a href="https://invent.citris-uc.org/">CITRIS Invention Lab (requires Maker Pass)</a></li>
+									<li><a href="https://citris-uc.org/tech-social-good/">CITRIS Tech for Social Good</a></li>
+									<li><a href="https://citris-uc.org/initiatives/foundry/">CITRIS Foundry Startup Accelerator</a></li>
+									<li><a href="https://citris-uc.org/initiatives/social-apps-lab/">CITRIS Social Apps Lab</a></li>
+								</ul>
 								<p> Plus, check out a 3D Printer through CITRIS Invention Lan's GoFab(link is external) program. Open to all Maker Pass Holders, the Invention Lab is offering a suite of 3D printers that are available for checkout to extend your creativity and making outside of the lab, into your living room, dorm, kitchen, cafe, or personal workspace. </p>
 
-								<h3><a href="https://www.ets.berkeley.edu/services-facilities/moffitt-makerspace"> The Moffitt Makerspace </a></h3>
+								<h2 class="as-h3"><a href="https://www.ets.berkeley.edu/services-facilities/moffitt-makerspace"> The Moffitt Makerspace </a></h2>
 								<p>is a general access Makerspace located on the first floor of Moffitt Library. Operated primarily by student staff, the Makerspace features support for core maker activities such as CAD design, 3D printing, digital prototyping with digital components (e.g., Arduino, Raspberry Pi), as well as traditional craft and hand tool based design activities for wood and fabrics. It also offers training workshops to help and guide students learning both the basics (e.g. safety and basic use of equipment, use of software applications) and more advanced tutorials for projects and guided learning activities..</p>
 
-								<h3><a href="https://supernode.berkeley.edu/about/">Supernode</a></h3>
+								<h2 class="as-h3"><a href="https://supernode.berkeley.edu/about/">Supernode</a></h2>
 								<p> <a href="https://supernode.berkeley.edu/about/">Supernode </a> is a student-run space, and all our equipment will always be free to use to anybody in the UC Berkeley community. The door is open whenever a member is inside (which is a lot of the time!).</p>
 
 								</section>
@@ -98,17 +112,19 @@
 							<!-- Sidebar -->
 						<div id="content-desktop">
 								<section id="sidebar">
-									<p><li> <a href="https://jacobsinstitute.berkeley.edu/">Jacobs Institute for Design Innovation</a></li>
-									<p><li> <a href="https://jacobsinstitute.berkeley.edu/our-space/makerpass/">Get a Maker Pass</a></li>
-									<p><li><a href="https://citris-uc.org/">CITRIS and the Banatao Institute Center</a></li>
-									<p><li><a href="https://makerspace.berkeley.edu/">The Berkeley Makerspace</a></li>
-									<p><li><a href="https://supernode.berkeley.edu/about/">Supernode</a></li>
+									<ul class="esc-link-list">
+										<li><a href="https://jacobsinstitute.berkeley.edu/">Jacobs Institute for Design Innovation</a></li>
+										<li><a href="https://jacobsinstitute.berkeley.edu/our-space/makerpass/">Get a Maker Pass</a></li>
+										<li><a href="https://citris-uc.org/">CITRIS and the Banatao Institute Center</a></li>
+										<li><a href="https://makerspace.berkeley.edu/">The Berkeley Makerspace</a></li>
+										<li><a href="https://supernode.berkeley.edu/about/">Supernode</a></li>
+									</ul>
 								</section>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
+			</main>
 			<!-- Footer -->
 			<script src="assets/js/bottom-bar.js"></script>
 		</div>

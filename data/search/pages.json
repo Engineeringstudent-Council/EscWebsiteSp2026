@@ -14,7 +14,7 @@
   "applyfunding.html": {
     "title": "Apply for Funding",
     "trail": ["Organizations", "Finances"],
-    "description": "How engineering student orgs request money from ESC's FiComm.",
+    "description": "How engineering clubs and student orgs request funding from ESC's FiComm.",
     "keywords": "funding money grant reimbursement budget request ficomm finance clubs applications",
     "boost": 1.5,
     "featured": true
@@ -24,11 +24,6 @@
     "keywords": "blue gold b&g certification certify club requirements",
     "boost": 1.4,
     "featured": true
-  },
-  "calendar.html": {
-    "title": "Events Calendar",
-    "trail": ["Events"],
-    "keywords": "calendar schedule dates"
   },
   "clubs.html": {
     "title": "Certified Organizations",
@@ -91,16 +86,10 @@
     "trail": ["Organizations"],
     "keywords": "start club rso register new organization lead"
   },
-  "initallocate.html": {
-    "title": "Initial Allocations",
-    "trail": ["Organizations", "Finances"],
-    "keywords": "allocations funding semester"
-  },
   "makerspaces.html": {
     "keywords": "makerspace laser cutting 3d printing jacobs build prototype",
     "boost": 1.2
   },
-  "mission.html": { "trail": ["About Us"], "keywords": "mission ethics values code" },
   "organizations-home.html": {
     "title": "For Student Organizations",
     "trail": ["Organizations"],
@@ -110,16 +99,10 @@
     "trail": ["Organizations", "Finances"],
     "keywords": "policy rules guidelines bylaws"
   },
-  "positive_messages.html": {
-    "title": "Positive Messages Campaign",
-    "trail": ["About Us"],
-    "keywords": "positive messages campaign"
-  },
   "relevantfinance.html": {
     "title": "Relevant Finance Documents",
     "trail": ["Organizations", "Finances"]
   },
-  "report.html": { "trail": ["About Us"], "keywords": "report semester summary" },
   "students.html": {
     "title": "Student Resources",
     "trail": ["Students"],
@@ -128,5 +111,9 @@
   "treasurertrain.html": {
     "keywords": "treasurer training finance officer club money",
     "boost": 1.1
+  },
+  "accessibility.html": {
+    "title": "Accessibility",
+    "keywords": "accessibility accessible screen reader keyboard disability wcag ada dsp report barrier"
   }
 }

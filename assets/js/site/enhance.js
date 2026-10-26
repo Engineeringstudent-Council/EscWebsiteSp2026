@@ -4,6 +4,7 @@
 import { installInstantNavigation } from './instant.js';
 import { installOffline } from './offline.js';
 import { installNavA11y } from './nav-a11y.js';
+import { installA11y } from './a11y.js';
 
 const root = document.documentElement;
 root.dataset.escInstant = installInstantNavigation();
@@ -11,3 +12,4 @@ root.dataset.escInstant = installInstantNavigation();
 const siteRoot = new URL('../../../', import.meta.url);
 root.dataset.escOffline = installOffline({ siteRoot });
 installNavA11y();
+installA11y();

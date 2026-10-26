@@ -47,5 +47,5 @@ npm run format           # auto-fix code style
 - **Execs and opportunities:** these live in `data/*.json`, not in the HTML. See [docs/DATA.md](docs/DATA.md) for how to add an entry and render it on a page.
 - **New pages:** copy an existing page so you get the shared header and footer, then link it from the nav (`assets/js/top-bar.js`) or another page so it counts as live. Run `npm run build:sitemap` so Google hears about it.
 - **Don't reformat files you didn't otherwise change.** Teammates are probably editing them, and whitespace-only diffs cause merge conflicts.
-- **Accessibility:** give images real `alt` text, use headings in order, and make sure links say where they go. CI fails if a page gets worse.
+- **Accessibility:** every page passes WCAG 2.2 AA with zero violations, and CI fails on any new problem. Give images real `alt` text, use one `<h1>` and headings in order, and make sure links say where they go. The full checklist is in [docs/ACCESSIBILITY.md](docs/ACCESSIBILITY.md).
 - **Never commit secrets** (API keys, passwords). Ask the tech lead about repo secrets.

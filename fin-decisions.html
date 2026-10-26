@@ -4,14 +4,20 @@
 	2019-2023
 -->
 
-<head>
-<html>
+<html lang="en">
 	<head>
 		<title>FiComm Decisions and Initial Allocations</title>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<style>@media (prefers-reduced-motion: no-preference) { @view-transition { navigation: auto; } }</style>
+		<style>
+			/* The title is an h1 now; keep the intro the template gave "h2 + p". */
+			header h1 + p { font-size: 2em; margin-top: -1em; line-height: 1.75em; }
+			@media screen and (max-width: 736px) { header h1 + p { font-size: 1em; } }
+			/* The "+" is decoration; keep it out of the button's name. */
+			.accordion:after { content: '\002B' / ''; }
+		</style>
 		<link rel='icon' href='favicon.ico'/ >
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 	</head>
@@ -20,25 +26,25 @@
 		<div id="page-wrapper">
 
 			<!-- Main -->
-				<div id="main" class="wrapper style1">
+				<main id="main" class="wrapper style1">
 					<div class="container">
 						<header class="major">
-							<h2 style="font-weight:bold;">Finance Decisions: FiComm Decisions & Inital Allocations</h2>
+							<h1 style="font-weight:bold;">Finance Decisions: FiComm Decisions &amp; Initial Allocations</h1>
 							<p>ESC awards funding to Blue and Gold certified organizations through Initial Allocations (spring) and Ficomm funding (periodically throughout the year). We generally have around $70,000 to award annually, so we encourage all certified organizations to apply!
 							</p>
 
-							<p>If you are a certified organization looking to apply for funding, please consult the Funding page on the Blue and Gold portal <a href="https://sites.google.com/berkeley.edu/blue-and-gold-portal/benefits/funding">here</a>. If you have any questions concerning your club's finances, please contact <a href="mailto:evp@esc.berkeley.edu?subject=Club%Finance">treasurer@esc.berkeley.edu.</a></p>
+							<p>If you are a certified organization looking to apply for funding, please consult the Funding page on the Blue and Gold portal <a href="https://sites.google.com/berkeley.edu/blue-and-gold-portal/benefits/funding">here</a>. If you have any questions concerning your club's finances, please contact <a href="mailto:evp@esc.berkeley.edu?subject=Club%20Finance">treasurer@esc.berkeley.edu.</a></p>
 						</header>
 
 						<!-- Content -->
 							<section id="content">
-								<button class="accordion">FiComm Decisions</button>
+								<button type="button" class="accordion" aria-expanded="false" aria-controls="panel-ficomm">FiComm Decisions</button>
 									<!-- div class="panel"> <p></p><iframe src="https://docs.google.com/spreadsheets/d/1L3VthVu1FuQC7T3NYjEZKq5HFN4cYk_g/edit?usp=sharing&ouid=113287440863409136209&rtpof=true&sd=true#gid=1767153069&amp;single=true&amp;widget=true&amp;headers=false"  width="100%" height="372" >Loading...</iframe>
 									</div -->
-									<div class="panel"> <p></p><iframe src="https://docs.google.com/spreadsheets/d/15xtErGWVs6MytVrdGBJ3DG7RqO704RPPiZew89uqOVM/edit?usp=sharing&ouid=113287440863409136209&rtpof=true&sd=true#gid=1767153069&amp;single=true&amp;widget=true&amp;headers=false"  width="100%" height="372" >Loading...</iframe>
+									<div class="panel" id="panel-ficomm" hidden> <p></p><iframe title="FiComm funding decisions (Google Sheets)" src="https://docs.google.com/spreadsheets/d/15xtErGWVs6MytVrdGBJ3DG7RqO704RPPiZew89uqOVM/edit?usp=sharing&ouid=113287440863409136209&rtpof=true&sd=true#gid=1767153069&amp;single=true&amp;widget=true&amp;headers=false"  width="100%" height="372" >Loading...</iframe>
 									</div>
-								<button class="accordion">Inital Allocations</button>
-									<div class="panel"><p></p><iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQWvtiVRpX6ESG5Raeeyj_UWcOohsJ3Y3tlaC3pgHBwfQ9_zAPBlgnayiuiHkZ5A0VJr3jLay71NZHo/pubhtml?widget=true&amp;headers=false" width="100%" height="800" >Loading...</iframe>
+								<button type="button" class="accordion" aria-expanded="false" aria-controls="panel-initial">Initial Allocations</button>
+									<div class="panel" id="panel-initial" hidden><p></p><iframe title="Initial Allocations results (Google Sheets)" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQWvtiVRpX6ESG5Raeeyj_UWcOohsJ3Y3tlaC3pgHBwfQ9_zAPBlgnayiuiHkZ5A0VJr3jLay71NZHo/pubhtml?widget=true&amp;headers=false" width="100%" height="800" >Loading...</iframe>
 									</div>
 
 								<script>
@@ -47,20 +53,19 @@
 
 											for (i = 0; i < acc.length; i++) {
 												acc[i].addEventListener("click", function() {
-													this.classList.toggle("active");
-													var panel = this.nextElementSibling;
-													if (panel.style.maxHeight) {
-														panel.style.maxHeight = null;
-													} else {
-														panel.style.maxHeight = panel.scrollHeight + "px";
-													}
+													var open = this.getAttribute("aria-expanded") !== "true";
+							var panel = document.getElementById(this.getAttribute("aria-controls"));
+							this.classList.toggle("active", open);
+							this.setAttribute("aria-expanded", String(open));
+							panel.hidden = !open;
+							panel.style.maxHeight = open ? panel.scrollHeight + "px" : null;
 												});
 											}
 										</script>
 
 							</section>
 					</div>
-				</div>
+				</main>
 
 			<!-- Footer -->
 			<script src="assets/js/bottom-bar.js"></script>

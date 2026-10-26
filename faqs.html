@@ -4,16 +4,26 @@
 	html5up.net | @ajlkn
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
-<html>
+<html lang="en">
 
 	<head>
 		<title>Student FAQs</title>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<style>@media (prefers-reduced-motion: no-preference) { @view-transition { navigation: auto; } }</style>
 		<link rel='icon' href='favicon.ico'/ >
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<style>
+			/* FAQ questions are headings for screen readers; the heading adds
+			   no size or spacing of its own. */
+			.faq-question { margin: 0; font-size: 1em; line-height: inherit; }
+			/* A closed answer can't be reached with Tab or read out. Visibility
+			   flips after the slide closes, so the animation is unchanged. */
+			#content .panel { visibility: hidden; transition: max-height 0.2s ease-out, visibility 0s linear 0.2s; }
+			#content .panel.is-open { visibility: visible; transition: max-height 0.2s ease-out, visibility 0s; }
+			#content .accordion[aria-expanded="true"]:after { content: "\2212"; }
+		</style>
 	</head>
 	<body class="is-preload">
 		<script src="assets/js/top-bar.js"></script>
@@ -21,29 +31,29 @@
 
 
 			<!-- Main -->
-			<div id="main" class="wrapper style1">
+			<main id="main" class="wrapper style1">
 				<div class="container">
 					<header class="major">
 						<br>
-						<h2 style="font-weight:bold;">Frequently Asked Questions</h2>
+						<h1 style="font-weight:bold;">Frequently Asked Questions</h1>
 					</header>
 					<div class="container">
 
 							<!-- Content -->
 								<section id="content">
-									<button class="accordion">Q: How can I get involved in clubs and other organizations on campus?</button>
-									<div class="panel">
+									<h2 class="faq-question"><button type="button" class="accordion" id="faq-q1" aria-expanded="false" aria-controls="faq-a1">Q: How can I get involved in clubs and other organizations on campus?</button></h2>
+									<div class="panel" id="faq-a1" role="region" aria-labelledby="faq-q1">
 									  <p>A: Getting involved in student organizations can help students pursue what they are passionate about while also developing teamwork and leadership skills. You can find a list of all student organizations at <a href="https://callink.berkeley.edu/organizations">callink.berkeley.edu/organizations</a>. You can find engineering student organizations <a href="clubs.html">here</a>. To hear about organizations in person, you can also check out club fairs held at the beginning of each semester. </p>
 									</div>
 
-									<button class="accordion">Q: What if I don’t know what engineering (on non-engineering) major I want to study?</button>
-									<div class="panel">
+									<h2 class="faq-question"><button type="button" class="accordion" id="faq-q2" aria-expanded="false" aria-controls="faq-a2">Q: What if I don’t know what engineering (on non-engineering) major I want to study?</button></h2>
+									<div class="panel" id="faq-a2" role="region" aria-labelledby="faq-q2">
 									  <p>A: There are many ways to learn about different majors and concentrations. Engineering Student Services (ESS) hosts an event every semester called “Major Madness” for students to talk to their peers and help them decide which major best suits their interests. Another way to learn more about different majors is to talk to upperclassmen in a major you are interested in exploring,
 											or by talking to your advisor. </p>
 									</div>
 
-									<button class="accordion">Q: How do I know what classes to take?</button>
-									<div class="panel">
+									<h2 class="faq-question"><button type="button" class="accordion" id="faq-q3" aria-expanded="false" aria-controls="faq-a3">Q: How do I know what classes to take?</button></h2>
+									<div class="panel" id="faq-a3" role="region" aria-labelledby="faq-q3">
 									  <p>A: A great resource to check out is the “Four Year Degree Plan” mapped out for each major. Make sure to keep track of the major, college, and campus requirements when deciding what classes to take each semester. The <a href="https://classes.berkeley.edu/">Berkeley Course Catalog</a> has all courses listed for each semester and is a good way to learn more about different courses. There are also peer advisors at ESS to
 											help answer any extra questions. </p>
 									</div>
@@ -53,31 +63,15 @@
 										<p>A: The Center for Access to Engineering Excellence (CAEE) in 227 and 240 Bechtel is a study space that offers drop in tutoring services for many core engineering courses. Check out the CAEE course tutoring schedule to see specific hours for different courses. Office hours are another helpful resource to get extra help, ask questions, or engage in course material. </p>
 									</div> -->
 
-									<button class="accordion">Q: Where do I find resources for advising and counseling?</button>
-									<div class="panel">
+									<h2 class="faq-question"><button type="button" class="accordion" id="faq-q4" aria-expanded="false" aria-controls="faq-a4">Q: Where do I find resources for advising and counseling?</button></h2>
+									<div class="panel" id="faq-a4" role="region" aria-labelledby="faq-q4">
 										<p>A: Your ESS advisor can help you navigate degree and graduation requirements, academic procedures, and offer guidance and support. Each department also has advisors to help students with programs, facilities, and research opportunities. Peer advisors can give personal advice based on their perspective about topics like how to choose electives and juggling classes. Counseling and Psychological Services (CAPS) has an office in ESS and counselors are here to talk about any personal, professional, or academic concerns. There are walk-in hours, or you can schedule an appointment during the week. The Tang Center also offers counseling services.</p>
 									</div>
 
-									<button class="accordion">Q: Where can I learn about the most recent internship, research, and scholarship opportunities?</button>
-									<div class="panel">
+									<h2 class="faq-question"><button type="button" class="accordion" id="faq-q5" aria-expanded="false" aria-controls="faq-a5">Q: Where can I learn about the most recent internship, research, and scholarship opportunities?</button></h2>
+									<div class="panel" id="faq-a5" role="region" aria-labelledby="faq-q5">
 										<p>A: The weekly ESS newsletter provides up to date information about important deadlines, workshops, and numerous opportunities. Your advisor or department may also have weekly emails/newsletters, so make sure to check your inbox for new information. </p>
 									</div>
-									<script>
-											var acc = document.getElementsByClassName("accordion");
-											var i;
-
-											for (i = 0; i < acc.length; i++) {
-												acc[i].addEventListener("click", function() {
-													this.classList.toggle("active");
-													var panel = this.nextElementSibling;
-													if (panel.style.maxHeight) {
-														panel.style.maxHeight = null;
-													} else {
-														panel.style.maxHeight = panel.scrollHeight + "px";
-													}
-												});
-											}
-										</script>
 
 
 								</section>
@@ -86,24 +80,7 @@
 					</div>
 					<p>Please email us at <a href="mailto:technical@esc.berkeley.edu?subject=FAQs%20Page%20Question">technical@esc.berkeley.edu </a> for any questions you would like to see added onto this page.</p>
 				</div>
-
-				<script>
-					var acc = document.getElementsByClassName("accordion");
-					var i;
-
-					for (i = 0; i < acc.length; i++) {
-					  acc[i].addEventListener("click", function() {
-					    this.classList.toggle("acc active");
-					    var panel = this.nextElementSibling;
-					    if (panel.style.maxHeight) {
-					      panel.style.maxHeight = null;
-					    } else {
-					      panel.style.maxHeight = panel.scrollHeight + "px";
-					    }
-					  });
-					}
-			</script>
-			</div>
+			</main>
 
 			<!-- Footer -->
 			<script src="assets/js/bottom-bar.js"></script>
@@ -118,6 +95,25 @@
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
+
+		<script>
+			// FAQ accordion: each question is a real button that says whether
+			// its answer is shown (aria-expanded), and a closed answer is
+			// hidden from keyboard and screen reader users too.
+			(function () {
+				var buttons = document.querySelectorAll('#content .accordion[aria-controls]');
+				for (var i = 0; i < buttons.length; i++) {
+					buttons[i].addEventListener('click', function () {
+						var panel = document.getElementById(this.getAttribute('aria-controls'));
+						var open = this.getAttribute('aria-expanded') !== 'true';
+						this.setAttribute('aria-expanded', String(open));
+						this.classList.toggle('active', open);
+						panel.classList.toggle('is-open', open);
+						panel.style.maxHeight = open ? panel.scrollHeight + 'px' : null;
+					});
+				}
+			})();
+		</script>
 
 	</body>
 </html>

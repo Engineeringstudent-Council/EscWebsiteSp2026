@@ -20,8 +20,8 @@ function escInsertHere(html) {
 
 escInsertHere('\
 <header id="header">\
-<h2 id="logo"><a href="index.html">\
-	<span class="image"><img src="images/main_nobckgnd.png" alt="Engineering Student Council Logo"  height="95" width="285" style="vertical-align: top; width:auto;"/></span></a></h1>\
+<div id="logo"><a href="index.html">\
+	<span class="image"><img src="images/main_nobckgnd.png" alt="Engineering Student Council home"  height="95" width="285" style="vertical-align: top; width:auto;"/></span></a></div>\
 <nav id="nav">\
 	<ul>\
 		 <li>\
@@ -40,6 +40,7 @@ escInsertHere('\
   </ul>\
 </li>\
 			  <!-- <li><a href="positive_messages.html">Positive Messages Campaign</a></li> -->\
+				<li><a href="gallery.html">Photo Gallery</a></li>\
 				<li><a href="https://sites.google.com/berkeley.edu/escinternal/" target="_blank">ESC Internal</a></li>\
 \
 			</ul>\
@@ -80,7 +81,11 @@ escInsertHere('\
 				<li><a href="blueandgold.html">Blue and Gold Certification Info</a></li>\
 				<li><a href="https://sites.google.com/berkeley.edu/blue-and-gold-portal/home">Blue and Gold Portal</a></li>\
 				<li><a href="clubs.html">List of Certified Organizations</a></li>\
+				<li><a href="howtoguide.html">Start an Organization</a></li>\
+				<li><a href="escaffiliation.html">Affiliation Process</a></li>\
 				<li><a href="fin-decisions.html">Finances</a></li>\
+				<li><a href="relevantfinance.html">Finance Documents</a></li>\
+				<li><a href="policies.html">Policies and Guidelines</a></li>\
 				<li><a href="treasurertrain.html">Treasurer Training</a></li>\
 \
 			</ul>\
@@ -96,7 +101,7 @@ escInsertHere('\
 		</li>\
 		<li><a href="https://forms.gle/Q2K6TZySHtWS65ex9" target="_blank">Connect</a>\
 			<ul>\
-				<li> <!-- <a href="https://forms.gle/7ycA5tAZuPQepzV16" target="_blank">Contact Us</a> --> </li>\
+				<!-- <li><a href="https://forms.gle/7ycA5tAZuPQepzV16" target="_blank">Contact Us</a></li> -->\
 				<li><a href="https://www.facebook.com/ESC.Berkeley/">Facebook</a>\
 						<!-- <ul>\
 							<li><a href="https://www.facebook.com/eweekberkeley/" target="_blank">EWeek Facebook</a></li>\

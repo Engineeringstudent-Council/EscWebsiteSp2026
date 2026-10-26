@@ -4,26 +4,34 @@
 	Updated as of 11/18/2019
 	contact: technical@esc.berkeley.edu for issues on this website
 -->
-<html>
+<html lang="en">
 	<head>
 		<title>Student Resources</title>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel='icon' href='favicon.ico'/ >
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<style>@media (prefers-reduced-motion: no-preference) { @view-transition { navigation: auto; } }</style>
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<style>
+			/* The banner title is the page's <h1> now; keep the old banner <h2> look. */
+			#banner .content header h1 { font-size: 2.5em; line-height: 1em; letter-spacing: -0.025em; margin: 0; }
+			@media screen and (max-width: 736px) {
+				#banner .content header h1 { font-size: 1.5em; }
+			}
+		</style>
 	</head>
 	<body class="is-preload landing">
 		<script src="assets/js/top-bar.js"></script>
 		<div id="page-wrapper">
+			<main id="main">
 
 			<!-- Banner -->
 				<section id="banner" class="student">
 					<div class="content">
 						<header>
 							<center>
-							<h2 style="font-weight: bold;color:#FFFFFF;">Founded to represent Engineers at Berkeley</h2><br>
+							<h1 style="font-weight: bold;color:#FFFFFF;">Founded to represent Engineers at Berkeley</h1><br>
 							<p style="font-size:20px; color:#FFFFFF;">Our mission is to represent the engineering student body,
 								support engineering societies in reaching their full potential,
 								 and promote a diverse community through successful collaboration
@@ -31,7 +39,7 @@
 							</center>
 						</header>
 					</div>
-					<a href="#one" class="goto-next scrolly">Next</a>
+					<a href="#one" class="goto-next scrolly">Next section: Founded in 1974</a>
 				</section>
 
 			<!-- One -->
@@ -59,7 +67,7 @@
 							</div>
 						</div>
 					</div>
-					<a href="#two" class="goto-next scrolly">Next</a>
+					<a href="#two" class="goto-next scrolly">Next section: Resources We Provide</a>
 				</section>
 
 			<!-- Two -->
@@ -142,7 +150,7 @@
 						</div>
 					</div>
 				</div>
-				<a href="#three" class="goto-next scrolly">Next</a>
+				<a href="#three" class="goto-next scrolly">Next section: For the engineer, by the engineer</a>
 			</section>
 
 			<!-- Three -->
@@ -158,7 +166,7 @@
 							<li><a href="blm_statement.html" class="button" style="color:#FFFFFF;">ESC's Official BLM Statment</a></li>
 						</ul>
 					</div>
-					<a href="#four" class="goto-next scrolly">Next</a>
+					<a href="#four" class="goto-next scrolly">Next section: Reinventing Engineering</a>
 				</section>
 
 			<!-- Four -->
@@ -175,7 +183,7 @@
 							<li><a href="clubs.html" class="button" style="color:#FFFFFF;">Affiliated Organizations</a></li>
 						</ul>
 					</div>
-					<a href="#five" class="goto-next scrolly">Next</a>
+					<a href="#five" class="goto-next scrolly">Next section: Join the ESC team</a>
 				</section>
 
 
@@ -187,7 +195,7 @@
  							<h2>Interested in Joining the ESC team?</h2>
  							</header>
 
- 							<form target="https://docs.google.com/forms/d/e/1FAIpQLSdPfEPRk3_C-3yV6CdbIs9xKeJtISg1bGdQJ1v63iDWeryKFg/viewform" class="cta">
+ 							<form action="https://docs.google.com/forms/d/e/1FAIpQLSdPfEPRk3_C-3yV6CdbIs9xKeJtISg1bGdQJ1v63iDWeryKFg/viewform" class="cta">
 							<div class="row gtr-uniform gtr-50">
 								<div class="col-4 col-12-xsmall" style= "width: 100%;"><input type="submit" value="Join us" class="button primary" /></div>
 							</div>
@@ -204,6 +212,7 @@
 						</form>
 <!-- 					</div>
  -->					</section>
+			</main>
 
 
 			<!-- Footer -->

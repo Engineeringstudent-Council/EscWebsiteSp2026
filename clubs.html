@@ -4,15 +4,90 @@
 	Updated as of 09/29/2021
 	contact: technical@esc.berkeley.edu for issues on this website
 -->
-<html>
+<html lang="en">
 	<head>
 		<title>Certified Organizations</title>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<script src="assets/js/clubs.js"></script>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<style>@media (prefers-reduced-motion: no-preference) { @view-transition { navigation: auto; } }</style>
-		<link rel="stylesheet" href="assets/css/clubs.css" />
+		<link rel="stylesheet" href="assets/css/clubs.css" />		<style>
+			/* The title is an h1 now; keep the intro the template gave "h2 + p". */
+			header h1 + p { font-size: 2em; margin-top: -1em; line-height: 1.75em; }
+			@media screen and (max-width: 736px) { header h1 + p { font-size: 1em; } }
+
+			/* Category titles are real headings now; keep the old .title look. */
+			h2.title {
+				line-height: 1.4em;
+				letter-spacing: normal;
+				margin: 0;
+			}
+
+			/* 42em boxes ran off the side of phones. */
+			.category {
+				max-width: 100%;
+				box-sizing: border-box;
+			}
+
+			/* A club with no website yet: same look as the links around it. */
+			.category .no-link {
+				color: #000066;
+				font-weight: lighter;
+				padding: 0 1em;
+				display: block;
+			}
+
+			/* "Go to..." entries are real links now. */
+			#categoryUL a {
+				color: inherit;
+				display: block;
+				text-decoration: none;
+			}
+
+			/* Accordion help section. The grey is a shade darker than before
+			   so white text reaches 4.5:1. */
+			.accordion {
+				font-family: inherit;
+				font-size: 18px;
+				text-align: left;
+				background-color: #6b6b70;
+				color: #FFFFFF;
+				cursor: pointer;
+				padding: 21px 3px 21px 39px;
+				width: 100%;
+				border: none;
+				transition: 0.4s;
+			}
+
+			.accordion:after {
+				content: '\002B';
+				content: '\002B' / '';
+			}
+
+			.accordion:hover {
+				background-color: #071966;
+			}
+
+			#acor_pan {
+				padding: 0 15px;
+				background-color: #6b6b70;
+				color: white;
+				max-height: 0px;
+				overflow: hidden;
+				transition: max-height 0.2s ease-out;
+			}
+
+			#acor_pan p {
+				margin: 0;
+			}
+
+			@media only screen and (max-width: 1000px) {
+				/* 9px rows were unreadable and too small to tap. */
+				.category li {
+					font-size: 14px;
+				}
+			}
+		</style>
 		<link rel='icon' href='favicon.ico'/ >
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 	</head>
@@ -21,11 +96,11 @@
 		<div id="page-wrapper">
 
 			<!-- Main -->
-				<div id="main" class="wrapper style1">
+				<main id="main" class="wrapper style1">
 					<div class="container">
 						<header class="major">
 							<br>
-							<h2 style='font-weight:bold;'>Certified Organizations</h2>
+							<h1 style='font-weight:bold;'>Certified Organizations</h1>
 							<p style='font-size:1em;'>All of the clubs listed below are Blue and Gold certified. They are committed to creating a healthier community for all engineering students — one that promotes equity, inclusion, safety, and transparency. Please check out <a href="https://sites.google.com/berkeley.edu/blue-and-gold-portal/home"> this portal</a> for more information about the process.</p>
 							<p style='font-size:1.5em;'>Please also check out <a href="https://docs.google.com/spreadsheets/d/1Z5eoR_5U5eoOhuBpCXmgKLOU7Hu0T02IjBastRTz7Co/edit?usp=sharing"> this spreadsheet</a> for an updated list of certified clubs. The list below is updated less frequently.</p>
 						</header>
@@ -36,7 +111,7 @@
 									<section id="content">
 
 										<div class="category">
-												<div class="title">Professional Societies</div>
+												<h2 class="title" id="cat-professional">Professional Societies</h2>
 												<ul>
 													<li><a href="https://ans.nuc.berkeley.edu/" target="_blank">American Nuclear Society (ANS)</a></li>
 													<li><a href="https://www.asce.berkeley.edu/" target="_blank">American Society of Civil Engineers (ASCE)</a></li>
@@ -50,7 +125,7 @@
 										</div>
 
 										<div class="category">
-												<div class="title">College Community Based</div>
+												<h2 class="title" id="cat-college">College Community Based</h2>
 												<ul>
 														<li><a href="https://awe.berkeley.edu/" target="_blank">Association of Women in EE&CS (AWE)</a></li>
 														<li><a href="https://bmes.berkeley.edu/" target="_blank">Biomedical Engineering Society (BMES)</a></li>
@@ -62,7 +137,7 @@
 										</div>
 
 										<div class="category">
-												<div class="title">Competition Teams</div>
+												<h2 class="title" id="cat-competition">Competition Teams</h2>
 												<ul>
 														<li><a href="https://www.ocf.berkeley.edu/~asae/" target="_blank">Aerospace SAE (ASAE)</a></li>
 														<!-- <li><a href="https://www.asce.berkeley.edu/sustainable-solutions" target="_blank">ASCE Sustainable Solutions (SS)</a></li> -->
@@ -83,14 +158,14 @@
 										</div>
 
 										<div class="category">
-												<div class="title">Design, Make, Hack</div>
+												<h2 class="title" id="cat-design">Design, Make, Hack</h2>
 												<ul>
-														<li><a <li><a href="https://zivenposner4.wixsite.com/website" target="_blank">Bike Builders of Berkeley (B^3)</a></li>
+														<li><a href="https://zivenposner4.wixsite.com/website" target="_blank">Bike Builders of Berkeley (B^3)</a></li>
 														<li><a href="https://enabletech.berkeley.edu/" target="_blank">EnableTech</a></li>
 														<!-- <li><a href="https://www.ocf.berkeley.edu/~igem/" target="_blank">iGEM at Berkeley</a></li> -->
 														<!--<li><a href="https://neurotech-berkeley.github.io/" target="_blank">Neurotech@Berkeley (NTAB)</a></li> -->
 														<li><a href="https://uav.berkeley.edu/" target="_blank">UAVs@B</a></li>
-														<li><a href="" target="_blank">Behavioral Economics Association at Cal (BEA@Cal)</a></li>
+														<li><span class="no-link">Behavioral Economics Association at Cal (BEA@Cal)</span></li>
 												</ul>
 										</div>
 
@@ -102,7 +177,7 @@
 										<!-- </div> -->
 
 										<div class="category">
-												<div class="title">Fraternities/Sororities</div>
+												<h2 class="title" id="cat-greek">Fraternities/Sororities</h2>
 												<ul>
 														<li><a href="https://www.calphirho.com/" target="_blank">Phi Sigma Rho (PSR)</a></li>
 														<!-- <li><a href="https://www.calthetatau.com/" target="_blank">Theta Tau (TT)</a></li> --> 
@@ -117,7 +192,7 @@
 										</div> -->
 
 										<div class="category">
-												<div class="title">Project-based Teams</div>
+												<h2 class="title" id="cat-projects">Project-based Teams</h2>
 												<ul>
 													<li><a href="https://btc.berkeley.edu/" target="_blank">Biofuels Technology Club (BTC)</a></li>
 													<li><a href="https://bioprinting.berkeley.edu/" target="_blank">Bioprinting@Berkeley (B@B)</a></li>
@@ -137,7 +212,7 @@
 											</div>
 
 										<div class="category">
-												<div class="title">Community/Global Outreach</div>
+												<h2 class="title" id="cat-outreach">Community/Global Outreach</h2>
 												<ul>
 														<!--<li><a href="https://www.facebook.com/calgeowall">Cal GeoWall</a></li> -->
 														<li><a href="http://www.ucberkeleybessa.com/" target="_blank">Black Engineering and Science Student Association (BESSA)</a></li>
@@ -148,12 +223,12 @@
 														<!-- <li><a href="http://pasae.berkeley.edu/" target="_blank">Pilipinx Association of Scientists, Architects, and Engineers (PASAE)</a></li> -->
 														<li><a href="http://swe.berkeley.edu/" target="_blank">Society of Women Engineers (SWE)</a></li>
 														<li><a href="https://shac.berkeley.edu//" target="_blank">Sustainable Housing at California (SHAC)</a></li>
-														<li><a href="http://beam.berkeley.edu/" target="_blank">Berkeley Engnineers and Mentors (BEAM)</a></li>
+														<li><a href="http://beam.berkeley.edu/" target="_blank">Berkeley Engineers and Mentors (BEAM)</a></li>
 												</ul>
 										</div>
 
 										<div class="category">
-												<div class="title">Honor Societies</div>
+												<h2 class="title" id="cat-honor">Honor Societies</h2>
 												<ul>
 													<li><a href="https://bioehs.berkeley.edu/" target="_blank"> Bioengineering Honor Society (BioEHS)</a></li>
 													<li><a href="https://xe.berkeley.edu/" target="_blank">Chi Epsilon (XE)</a></li>
@@ -169,48 +244,15 @@
 													<!--<li><a href="https://gwe.berkeley.edu" target="_blank">Graduate Women of Engineering (GWE)</a></li> -->
 													<li><a href="https://apm.ieor.berkeley.edu/" target="_blank">Alpha Pi Mu (APM)</a></li>
 													</ul>
-												<style>
-													/* Acordion Help Section Styling */
-
-														/*Style the buttons that are used to open and close the accordion panel */
-														.accordion {
-														font-size: 12px;
-														text-align: left;
-														background-color: #7c7c82;
-														color: #444;
-														cursor: pointer;
-														padding: 3px;
-														width: 100%;
-														text-align: left;
-														border: none;
-														outline: none;
-														transition: 0.4s;
-														}
-
-														/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
-														.accordion:hover {
-														background-color: #071966;
-														}
-
-														/* Style the accordion panel. Note: hidden by default */
-														#acor_pan {
-														padding: 0 15px;
-														background-color: #7c7c82;;
-														color: white;
-														max-height: 0px;
-														overflow: hidden;
-														transition: max-height 0.2s ease-out;
-}
-												</style>
-												<div class="accordion" style="font-size: 18px"> <ul style="color: white">Honor Societies: How are members chosen? </ul></div>
-												<div id="acor_pan">
-										  <p1>From The Berkeley Engineering Website: <br>Membership in one of Berkeley Engineering’s honorary student organizations reflects outstanding academic achievement and service to the collegiate community. Students are invited into these societies according to the following procedures, which ensure the university’s compliance with the Federal Educational Rights and Privacy Act (FERPA). <br> <br>
+												<button type="button" class="accordion" aria-expanded="false" aria-controls="acor_pan">Honor Societies: How are members chosen?</button>
+												<div id="acor_pan" hidden>
+										  <p>From The Berkeley Engineering Website: <br>Membership in one of Berkeley Engineering’s honorary student organizations reflects outstanding academic achievement and service to the collegiate community. Students are invited into these societies according to the following procedures, which ensure the university’s compliance with the Federal Educational Rights and Privacy Act (FERPA). <br> <br>
 1. No later than the first day of classes for the fall semester, engineering honorary organizations email Engineering Student Services (ESS) at ess@berkeley.edu with current contact information for their membership officer(s). <br> <br>
 2. Each honorary organization drafts an email invitation to be sent to all students who meet their membership criteria (e.g., major, number of units completed, GPA). The organization emails the draft invitation to ESS with the honorary organization’s name in the subject line. <br> <br>
 3. Each honorary organization sends a current membership roster to ESS so that current members can be distinguished from potentially eligible new members. <br> <br>
 4. Approximately four weeks into the fall semester, ESS receives an enrollment data report from the registrar. ESS uses this data to determine which students are eligible for membership in each honorary organization. <br> <br>
 5. ESS invites eligible students using the email invitations drafted by the honorary organizations. Each message instructs the invited student to confirm his or her acceptance directly with the relevant honorary organization.
-</p1>
+</p>
 										</div>
 											</div>
 
@@ -220,13 +262,12 @@
 
 											for (i = 0; i < acc.length; i++) {
 												acc[i].addEventListener("click", function() {
-													this.classList.toggle("active");
-													var panel = this.nextElementSibling;
-													if (panel.style.maxHeight) {
-														panel.style.maxHeight = null;
-													} else {
-														panel.style.maxHeight = panel.scrollHeight + "px";
-													}
+													var open = this.getAttribute("aria-expanded") !== "true";
+													var panel = document.getElementById(this.getAttribute("aria-controls"));
+													this.classList.toggle("active", open);
+													this.setAttribute("aria-expanded", String(open));
+													panel.hidden = !open;
+													panel.style.maxHeight = open ? panel.scrollHeight + "px" : null;
 												});
 											}
 										</script>
@@ -240,32 +281,26 @@
 
 								<!-- Sidebar -->
 									<section id="sidebar">
-										<section>
-											<div id="search">
-												<div class="title" style="font-weight:bold;position:sticky;">Go to...</div>
-												<!-- Change in Categories should be changed in clubs.js in filterCategory function -->
-												<ul id="categoryUL">
-													<li onclick="filterCategory(0)">Professional Societies</li>
-													<li onclick="filterCategory(1)">College Community Based</li>
-													<li onclick="filterCategory(2)">Competition Teams</li>
-													<li onclick="filterCategory(3)">Design, Make, Hack</li>
-													<li onclick="filterCategory(4)">Entrepreneurship/Consulting</li>
-													<li onclick="filterCategory(5)">Fraternities/Sororities</li>
-													<li onclick="filterCategory(6)">Local School Outreach</li>
-													<!-- <li onclick="filterCategory(7)">Graduate Student Organizations</li> -->
-													<li onclick="filterCategory(7)">Project-based Teams</li>
-													<li onclick="filterCategory(8)">Community/Global Outreach</li>
-													<li onclick="filterCategory(9)">Honor Societies</li>
-
-													</ul>
-											</div>
+										<nav id="search" aria-labelledby="goto-title">
+											<h2 class="title" id="goto-title" style="font-weight:bold;position:sticky;">Go to...</h2>
+											<ul id="categoryUL">
+												<li><a href="#cat-professional">Professional Societies</a></li>
+												<li><a href="#cat-college">College Community Based</a></li>
+												<li><a href="#cat-competition">Competition Teams</a></li>
+												<li><a href="#cat-design">Design, Make, Hack</a></li>
+												<li><a href="#cat-greek">Fraternities/Sororities</a></li>
+												<li><a href="#cat-projects">Project-based Teams</a></li>
+												<li><a href="#cat-outreach">Community/Global Outreach</a></li>
+												<li><a href="#cat-honor">Honor Societies</a></li>
+											</ul>
+										</nav>
 
 									</section>
 
 							</div>
 						</div>
 					</div>
-				</div>
+				</main>
 
 			<!-- Footer -->
 			<script src="assets/js/bottom-bar.js"></script>
