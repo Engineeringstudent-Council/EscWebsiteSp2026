@@ -8,3 +8,7 @@ blob-report/
 .claude/
 coverage/
 .dev.vars*
+
+# Temporary pages written by end-to-end tests
+*.tmp.html
+recordings/

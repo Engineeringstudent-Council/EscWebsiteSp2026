@@ -585,3 +585,40 @@ ul.esc-search-list > li {
     transition: none;
   }
 }
+
+/* ---------- Touch screens with the desktop nav (iPads) ---------- */
+
+/* A finger-sized target, and no ⌘K hint: there's no keyboard to press it on. */
+@media (pointer: coarse) {
+  .esc-search-trigger:not(.esc-search-trigger--bar) {
+    min-height: 44px;
+    padding-inline: 1em;
+  }
+
+  .esc-search-trigger:not(.esc-search-trigger--bar) kbd {
+    display: none;
+  }
+}
+
+/* Narrow tablets (iPad Mini, iPads in portrait) have little room left in the
+   nav, so the button becomes a round, icon-only target. The label stays in
+   the accessibility tree, visually hidden, so it is still named "Search". */
+@media (pointer: coarse) and (max-width: 980px) {
+  .esc-search-trigger:not(.esc-search-trigger--bar) {
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    justify-content: center;
+    font-size: 16px;
+  }
+
+  .esc-search-trigger:not(.esc-search-trigger--bar) .esc-search-trigger-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
