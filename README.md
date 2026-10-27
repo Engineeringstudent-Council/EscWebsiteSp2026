@@ -32,15 +32,19 @@ To edit a page, open the `.html` file, change it, and refresh the browser. That'
 ├── *.html                     One file per page, all at the root
 ├── assets/
 │   ├── css/main.css           Site-wide styles (HTML5 UP "Landed" base)
+│   ├── css/theme.css          Dark mode and the bear toggle
+│   ├── js/theme/theme.js      Applies the saved theme before first paint, mounts the toggle
 │   ├── js/top-bar.js          Shared nav, injected into every page
 │   ├── js/bottom-bar.js       Shared footer
 │   └── js/main.js             Dropdowns, mobile nav panel, parallax
 ├── images/                    Photos and logos (keep each under 1 MB)
+│   └── dark/                  Light-on-dark logo twins (`npm run build:logos`)
 ├── scripts/                   Dev tooling, never served to visitors
 │   ├── serve.mjs              Local static server that mirrors production
 │   ├── site-pages.mjs         Finds every live page by crawling from the nav
 │   ├── build-og.mjs           Link preview cards and <meta> tags (see below)
 │   ├── build-sitemap.mjs      Writes sitemap.xml from the live pages
+│   ├── build-dark-logos.mjs   Recolours the navy logos for dark mode
 │   └── check-image-budget.mjs Blocks oversized images in PRs
 ├── tests/
 │   ├── unit/                  node:test unit tests (`npm test`)
@@ -73,7 +77,7 @@ HTML pages ──► scripts/build-search-index.mjs ──► assets/search/inde
   - `synonyms.json` holds groups like `money ↔ funding ↔ grant` and `rso ↔ club ↔ org`.
 - **Ranking** (`assets/js/search/core.js`): [Fuse.js](https://www.fusejs.io/) fuzzy-matches titles, keywords, and descriptions, so typos like "fnding" still work. Body text uses a fast exact-word pass, which is about 10× faster than fuzzy-matching long text. Long natural phrases ("money for my club") fall back to Fuse token search. Pages beat their own sections, and weak matches past the top three are dropped.
 - **Address-bar search.** [`opensearch.xml`](opensearch.xml) is an [OpenSearch](https://developer.mozilla.org/en-US/docs/Web/XML/Guides/OpenSearch) description, linked from `index.html` (and added at runtime on other pages), so browsers can search the site from the address bar: in Chrome, type `esc.studentorg.berkeley.edu` then <kbd>Tab</kbd> once the homepage has been visited; in Firefox, pick **Add "ESC Berkeley"** from the search menu. Queries land on `/?search=…`, which opens the palette with results.
-- **Accessibility.** The palette is a native `<dialog>` and follows the [WAI-ARIA combobox pattern](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/). It respects reduced motion and dark mode.
+- **Accessibility.** The palette is a native `<dialog>` and follows the [WAI-ARIA combobox pattern](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/). It respects reduced motion and follows the site's light/dark toggle.
 - **Zero-result telemetry (off by default).** An optional Cloudflare Worker in [`workers/search-telemetry/`](workers/search-telemetry/README.md) counts the searches that find nothing, so we can see what students look for and fill the gaps. It stores only the cleaned-up query and a daily count, never IPs or cookies. It turns on only when a page has the `esc-search-telemetry` meta tag.
 - **You don't need to rebuild the index by hand.** [`search-index.yml`](.github/workflows/search-index.yml) rebuilds and commits it whenever HTML changes on `main`. PRs get a warning if the index is stale.
 
@@ -85,6 +89,25 @@ HTML pages ──► scripts/build-search-index.mjs ──► assets/search/inde
 | `npm run vendor:fuse`  | Copy Fuse.js from `node_modules` after a Dependabot upgrade                   |
 
 The golden relevance tests in `tests/unit/search-relevance.test.mjs` pin queries real students type ("free food", "b&g", "mental health") to the page they need. If one fails, fix the ranking or the data, not the test.
+
+## Light and dark mode
+
+The site is light by default, exactly as designed. The bear button at the end of the nav (Oski, awake) turns the lights out: Oski falls asleep, and the page goes to a deep Berkeley-navy dark theme with the same gold accents. It's a toggle on purpose, not the computer's brightness setting, so nobody gets dark mode by surprise. The choice is remembered on that device and syncs across open tabs.
+
+![The about page in light and dark mode](docs/images/theme-desktop.jpg)
+
+![Phone title bar and homepage in both themes](docs/images/theme-phone.jpg)
+
+```
+<head>: theme.css + theme.js ──► reads localStorage('esc-theme') ──► <html data-theme="dark">
+         (first script, blocking)                                     before <body> is parsed: no white flash
+DOMContentLoaded ──► bear button into the nav (or phone title bar, or homepage corner) + logo swap
+click ──► View Transition: the new theme grows out of the bear as a circle (instant with reduced motion)
+```
+
+- **Where the styles live.** `assets/css/theme.css` holds the dark palette as `--theme-*` tokens and overrides the legacy template's hard-coded colours, including common inline `style="color:#000066"`. The search palette's dark variant lives in `assets/css/search.css`.
+- **Logos.** Navy logos vanish on navy, so each one has a twin in `images/dark/` (navy turned soft white, gold kept). Run `npm run build:logos` after changing a logo. Partner logos that can't be recoloured get `class="esc-on-light"`, which puts them on a light plate in dark mode.
+- **Contrast is tested.** Every live page is checked with axe-core in dark mode and must have zero contrast failures. If you add a page and the check fails, add an override to `theme.css`.
 
 ## Link previews
 
@@ -144,6 +167,7 @@ Every PR runs these checks in [`ci.yml`](.github/workflows/ci.yml):
 | **Unit tests**            | `node --test` over `tests/unit/`.                                                                                                                        |
 | **Page smoke tests**      | Every live page loads with a 200, renders the header, and adds no new script errors or missing files.                                                    |
 | **Accessibility ratchet** | axe-core (WCAG 2.1 AA) on every live page. Known issues are recorded in a baseline, and a PR fails only if it makes a page _worse_.                      |
+| **Dark mode**             | The theme loads before first paint on every page, the toggle works by mouse, keyboard, and touch, and dark mode has zero contrast failures.              |
 | **Phones and tablets**    | Every live page on a Pixel 7 and a Galaxy Tab S4: fits the screen, and the menu and search work by touch.                                                |
 | **Firefox & Safari**      | Keyboard navigation and search in Firefox and Safari (WebKit), plus the touch suite on iPhone 14, iPhone SE, iPad Pro, iPad Mini, and iPad in landscape. |
 | **Lighthouse**            | Performance, accessibility, SEO, and layout-shift budgets on key pages. Reports are uploaded as artifacts.                                               |

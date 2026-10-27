@@ -10,6 +10,8 @@ export default [
       '!assets/js/',
       '!assets/js/search/',
       '!assets/js/search/*.js',
+      '!assets/js/theme/',
+      '!assets/js/theme/*.js',
       '!assets/js/site/',
       '!assets/js/site/*.js',
       'assets/js/vendor/**',
@@ -30,6 +32,15 @@ export default [
       ecmaVersion: 2024,
       sourceType: 'module',
       globals: { ...globals.node, ...globals.browser },
+    },
+  },
+  {
+    // Classic, render-blocking script (it must run before first paint).
+    files: ['assets/js/theme/**/*.js'],
+    languageOptions: {
+      ecmaVersion: 2020,
+      sourceType: 'script',
+      globals: globals.browser,
     },
   },
   {

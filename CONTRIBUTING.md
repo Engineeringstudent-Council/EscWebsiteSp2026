@@ -45,7 +45,12 @@ npm run format           # auto-fix code style
 
 - **Images:** keep each one under 1 MB (CI enforces this) and under about 2000px on the long edge. [Squoosh](https://squoosh.app) makes this easy.
 - **Execs and opportunities:** these live in `data/*.json`, not in the HTML. See [docs/DATA.md](docs/DATA.md) for how to add an entry and render it on a page.
-- **New pages:** copy an existing page so you get the shared header and footer, then link it from the nav (`assets/js/top-bar.js`) or another page so it counts as live. Then run `npm run build:sitemap` so Google hears about it, and `npm run build:og` to give it a link preview card and tags (CI checks for both). Add its title and breadcrumb to `data/search/pages.json` if the defaults read poorly.
+- **New pages:** copy an existing page so you get the shared header and footer, then link it from the nav (`assets/js/top-bar.js`) or another page so it counts as live. Then run `npm run build:sitemap` so Google hears about it, and `npm run build:og` to give it a link preview card and tags (CI checks for both). Add its title and breadcrumb to `data/search/pages.json` if the defaults read poorly. Keep these two lines as the first script in `<head>` so dark mode works without a flash (a unit test checks):
+  ```html
+  <link rel="stylesheet" href="assets/css/theme.css" />
+  <script src="assets/js/theme/theme.js"></script>
+  ```
+- **Dark mode:** press the bear in the nav and check your change in both themes. Prefer stylesheet rules over inline colours. If a transparent logo disappears on the dark background, add `class="esc-on-light"` to it.
 - **Don't reformat files you didn't otherwise change.** Teammates are probably editing them, and whitespace-only diffs cause merge conflicts.
 - **Accessibility:** give images real `alt` text, use headings in order, and make sure links say where they go. CI fails if a page gets worse.
 - **Never commit secrets** (API keys, passwords). Ask the tech lead about repo secrets.

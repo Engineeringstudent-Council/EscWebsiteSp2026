@@ -655,7 +655,11 @@ function triggerButton(variant) {
 function mountTriggers() {
   const navList = document.querySelector('#header nav > ul, #nav > ul');
   if (navList && !navList.querySelector('.esc-search-nav')) {
-    navList.append(h('li', { class: 'esc-search-nav' }, triggerButton()));
+    // Keep search before the theme toggle (assets/js/theme/theme.js) if it got there first.
+    navList.insertBefore(
+      h('li', { class: 'esc-search-nav' }, triggerButton()),
+      navList.querySelector(':scope > .esc-theme-nav'),
+    );
   }
   const bar = document.getElementById('titleBar');
   if (bar && !bar.querySelector('.esc-search-trigger')) bar.append(triggerButton('bar'));
