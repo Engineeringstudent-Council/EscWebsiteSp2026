@@ -4892,3 +4892,278 @@ input, select, textarea {
   .hmove:hover { animation-play-state: paused; }
 
   /* Ticker Bar for Announcements END*/
+
+
+/* Page transitions START
+   Cross-document View Transitions: moving between pages cross-fades the
+   content while the header stays put, instead of flashing white. Browsers
+   without support (and visitors who prefer reduced motion) get a normal,
+   instant page load.
+   Each page also repeats the @view-transition opt-in as an inline <style>
+   in its <head>: Chrome decides whether to animate the incoming page very
+   early, before an external stylesheet is reliably in effect, so the rule
+   here alone only works some of the time. */
+
+@media (prefers-reduced-motion: no-preference) {
+	@view-transition {
+		navigation: auto;
+	}
+
+	#header { view-transition-name: esc-header; }
+
+	::view-transition-group(esc-header) { animation-duration: 0s; }
+
+	::view-transition-old(root) {
+		animation: 120ms ease-out both esc-vt-fade-out;
+	}
+
+	::view-transition-new(root) {
+		animation: 240ms cubic-bezier(0.2, 0.7, 0.2, 1) both esc-vt-fade-in;
+	}
+
+	@media screen and (min-width: 981px) {
+		::view-transition-new(root) {
+			animation-name: esc-vt-rise;
+		}
+	}
+}
+
+@keyframes esc-vt-fade-out { to { opacity: 0; } }
+@keyframes esc-vt-fade-in { from { opacity: 0; } }
+@keyframes esc-vt-rise { from { opacity: 0; transform: translateY(6px); } }
+
+/* Page transitions END */
+
+
+/* Accessible navigation START
+   Companion styles for assets/js/site/nav-a11y.js (skip link, keyboard
+   dropdowns, current section, phone menu). Kept here rather than injected
+   from JS so focus rings and the current-section underline are part of the
+   cached stylesheet and never flash in late. Nothing here changes what a
+   mouse user sees: focus styles use :focus-visible, and the disclosure
+   buttons stay visually hidden until they receive keyboard focus.
+   Colours: Berkeley Blue #002676, California Gold #FDB515. */
+
+/* Skip link: hidden off-screen until focused, then a blue pill top-left. */
+.esc-skip-link {
+	position: fixed;
+	top: 0.75rem;
+	left: 0.75rem;
+	z-index: 100000;
+	padding: 0.7em 1.1em;
+	border-radius: 999px;
+	background: #002676;
+	color: #FFFFFF !important;
+	font-weight: bold;
+	font-size: 0.95rem;
+	line-height: 1.2;
+	text-decoration: none;
+	border: 0;
+	transform: translateY(calc(-100% - 2rem));
+}
+
+.esc-skip-link:focus,
+.esc-skip-link:focus-visible {
+	transform: none;
+	outline: none;
+	box-shadow: 0 0 0 3px #FDB515, 0 0.5em 1.5em rgba(0, 38, 118, 0.35);
+}
+
+.esc-skip-target:focus {
+	outline: none;
+}
+
+/* One consistent, high-contrast focus ring for keyboard users. */
+#header nav a:focus-visible,
+#header nav button:focus-visible,
+.dropotron a:focus-visible,
+#titleBar .toggle:focus-visible,
+#titleBar .title a:focus-visible {
+	outline: 3px solid #002676 !important;
+	outline-offset: 3px;
+	border-radius: 3px;
+	box-shadow: 0 0 0 6px rgba(253, 181, 21, 0.85);
+}
+
+.dropotron a:focus-visible {
+	outline-offset: 1px;
+	box-shadow: 0 0 0 4px rgba(253, 181, 21, 0.85);
+}
+
+#navPanel a:focus-visible {
+	outline: 3px solid #FDB515 !important;
+	outline-offset: -3px;
+	border-radius: 3px;
+	color: #FFFFFF !important;
+}
+
+#titleBar .toggle:focus-visible {
+	outline-offset: -3px;
+	box-shadow: none;
+}
+
+/* Disclosure buttons next to top-level links: invisible to the mouse,
+   a small blue chevron tab under the link once keyboard focus lands. */
+#nav > ul > li {
+	position: relative;
+}
+
+#nav .esc-nav-toggle {
+	-webkit-appearance: none;
+	appearance: none;
+	position: absolute;
+	left: 50%;
+	bottom: -0.25em;
+	/* Same size and place whether or not it has focus, only invisible and
+	   unclickable by mouse until then. It used to be a 1px clipped box that
+	   grew on focus, and VoiceOver could press it using the old 1px frame
+	   and miss. */
+	width: 1.9em;
+	height: 1.15em;
+	font-size: 0.75em;
+	transform: translateX(-50%);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	border-radius: 999px;
+	white-space: nowrap;
+	background: #002676;
+	color: #FDB515;
+	cursor: pointer;
+	line-height: 1;
+	opacity: 0;
+	pointer-events: none;
+}
+
+#nav .esc-nav-toggle:focus {
+	opacity: 1;
+	pointer-events: auto;
+}
+
+#nav .esc-nav-toggle svg {
+	width: 0.95em;
+	height: 0.95em;
+	display: block;
+}
+
+#nav .esc-nav-toggle[aria-expanded="true"] svg {
+	transform: rotate(180deg);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	#nav .esc-nav-toggle svg {
+		transition: transform 0.18s ease;
+	}
+}
+
+/* Current section: a quiet gold underline under the top-level label. */
+#header nav > ul > li.esc-nav-current > a {
+	text-decoration: underline;
+	text-decoration-color: #FDB515;
+	text-decoration-thickness: 3px;
+	text-underline-offset: 0.4em;
+}
+
+/* Open menus: the opener used to turn template gold (#FBB03B) on white,
+   about 1.9:1 contrast, which fails WCAG for everyone. It now keeps its
+   navy text and sits on a soft gold wash, distinct from the current-section
+   underline above. Same look for mouse hover and keyboard. */
+#header nav > ul > li.active > a,
+#header nav > ul > li.active > span {
+	color: #000066;
+	background-color: rgb(253 181 21 / 0.24);
+	border-radius: 0.3em;
+	box-shadow: 0 0 0 0.3em rgb(253 181 21 / 0.24);
+}
+
+.dropotron > li.active > a,
+.dropotron > li.active > span {
+	color: #000066;
+	background-color: rgb(253 181 21 / 0.24);
+	border-radius: 3px;
+}
+
+/* The template turns every link gold on hover (a:hover, !important). In
+   the nav that meant gold-on-white again, so menu items hover with the
+   same wash instead. Links in page content keep their gold hover. */
+#header nav > ul > li > a:hover,
+.dropotron > li > a:hover {
+	color: #000066 !important;
+}
+
+.dropotron > li > a:hover {
+	background-color: rgb(253 181 21 / 0.24);
+	border-radius: 3px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	#header nav > ul > li > a,
+	.dropotron > li > a {
+		transition: background-color 0.15s ease, box-shadow 0.15s ease;
+	}
+}
+
+/* Current page inside menus and the phone panel. */
+.dropotron a[aria-current="page"] {
+	font-weight: bold;
+}
+
+#navPanel a[aria-current="page"] {
+	color: #FFFFFF;
+	box-shadow: inset 3px 0 0 #FDB515;
+	padding-left: 0.6em;
+}
+
+/* Phone menu group labels ("Our Team", "Health") are text, not links. */
+#navPanel .link.esc-nav-group {
+	cursor: default;
+}
+
+/* The phone panel's slide is decorative; skip it for reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+	#navPanel,
+	#titleBar,
+	#page-wrapper {
+		transition: none !important;
+	}
+}
+
+/* Accessible navigation END */
+
+
+/* Touch and tablet fixes START
+   Found by running every live page on phones and iPads (tests/e2e/touch.spec.mjs). */
+
+/* Fixed-width embeds (Google Calendar, Docs, Slides) shrink to fit tablets
+   instead of pushing the whole page sideways. */
+iframe {
+	max-width: 100%;
+}
+
+/* The footer's harassment-report button sits in a 20% column, about 150px
+   on an iPad, so its label must be allowed to wrap. */
+#footer .button {
+	white-space: normal;
+	height: auto;
+	line-height: 1.35;
+	padding-top: 0.8em;
+	padding-bottom: 0.8em;
+	max-width: 100%;
+}
+
+/* Small phones: keep the title bar logo between the menu button and the
+   search button so it never sits on top of either tap target. */
+#titleBar .toggle {
+	z-index: 2;
+	width: 60px; /* hugs the 54px orange tab; still a generous tap target */
+}
+
+#titleBar .title img {
+	max-width: calc(100vw - 136px);
+	object-fit: contain;
+}
+
+/* Touch and tablet fixes END */

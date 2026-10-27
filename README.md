@@ -73,6 +73,7 @@ HTML pages ──► scripts/build-search-index.mjs ──► assets/search/inde
   - `synonyms.json` holds groups like `money ↔ funding ↔ grant` and `rso ↔ club ↔ org`.
 - **Ranking** (`assets/js/search/core.js`): [Fuse.js](https://www.fusejs.io/) fuzzy-matches titles, keywords, and descriptions, so typos like "fnding" still work. Body text uses a fast exact-word pass, which is about 10× faster than fuzzy-matching long text. Long natural phrases ("money for my club") fall back to Fuse token search. Pages beat their own sections, and weak matches past the top three are dropped.
 - **Accessibility.** The palette is a native `<dialog>` and follows the [WAI-ARIA combobox pattern](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/). It respects reduced motion and dark mode.
+- **Zero-result telemetry (off by default).** An optional Cloudflare Worker in [`workers/search-telemetry/`](workers/search-telemetry/README.md) counts the searches that find nothing, so we can see what students look for and fill the gaps. It stores only the cleaned-up query and a daily count, never IPs or cookies. It turns on only when a page has the `esc-search-telemetry` meta tag.
 - **You don't need to rebuild the index by hand.** [`search-index.yml`](.github/workflows/search-index.yml) rebuilds and commits it whenever HTML changes on `main`. PRs get a warning if the index is stale.
 
 | Command                | What it does                                                                  |
@@ -110,22 +111,46 @@ assets/search/index.json ──► scripts/build-og.mjs ──┬─► images/o
 
 To preview a card, open the PNG in `images/og/`. To check a deployed page, use a validator such as <https://www.opengraph.xyz>.
 
+## Instant, animated page loads
+
+Two progressive enhancements make moving around the site feel like an app. Browsers that don't support them load pages exactly as before.
+
+- **Prerendering** (`assets/js/site/instant.js`). In Chromium browsers, [Speculation Rules](https://developer.mozilla.org/en-US/docs/Web/API/Speculation_Rules_API) prerender a page when you hover a link for a moment or start pressing it, so the click lands on a page that is already drawn. Other browsers prefetch the HTML on hover, touch, or keyboard focus instead. Both stay off for Data Saver and 2G connections. Links that open in a new tab, files, and anything marked `data-no-prerender` are left alone.
+- **Page transitions** (end of `assets/css/main.css`). Cross-document [View Transitions](https://developer.mozilla.org/en-US/docs/Web/API/View_Transition_API) cross-fade the content between pages while the header stays still. They're skipped for anyone who prefers reduced motion.
+
+Every page carries a one-line inline `<style>` in `<head>` that opts in to transitions. It has to be inline: Chrome decides whether to animate an incoming page before an external stylesheet is reliably applied, so with only the rule in `main.css`, most transitions were silently dropped. Copying an existing page keeps the line, and a test fails if a live page loses it.
+
+## Offline support and installing the site
+
+A small service worker ([`sw.js`](sw.js)) keeps the site useful on bad connections:
+
+- **Nothing is ever served stale.** Pages, scripts, and stylesheets always come from the network first. The saved copy is only used when the network is down or takes longer than 4 seconds.
+- **Repeat visits are faster.** Images and fonts are served from cache and refreshed in the background. The search index is cached too, so search keeps working offline.
+- **Offline, visited pages still open.** A page you never visited shows [`offline.html`](offline.html) instead: a friendly note, a list of pages still available, and an automatic reload once the network really answers.
+- **The site can be installed.** `manifest.webmanifest` and the icons in `images/icons/` let phones add it to the home screen, with shortcuts to funding, Blue & Gold, events, and search. To change the icon, edit `images/icons/esc-icon.svg` and run `npm run build:icons`.
+
+The worker only registers on the real site and Cloudflare previews, so local development never fights a cache. To try it locally, run `localStorage.setItem('esc-sw', 'on')` in the browser console and reload.
+
+**If something ever goes wrong**, set `ENABLED = false` in `assets/js/site/offline.js` and deploy. Every page then unregisters the worker on its next visit. Bump `VERSION` in `sw.js` to throw away old caches.
+
 ## Quality gates
 
 Every PR runs these checks in [`ci.yml`](.github/workflows/ci.yml):
 
-| Check                     | What it catches                                                                                                                     |
-| ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| **Lint**                  | ESLint + Prettier on modern code (scripts, tests, search). Legacy files are left alone on purpose.                                  |
-| **Unit tests**            | `node --test` over `tests/unit/`.                                                                                                   |
-| **Page smoke tests**      | Every live page loads with a 200, renders the header, and adds no new script errors or missing files.                               |
-| **Accessibility ratchet** | axe-core (WCAG 2.1 AA) on every live page. Known issues are recorded in a baseline, and a PR fails only if it makes a page _worse_. |
-| **Mobile**                | The e2e suite also runs on a Pixel 7 viewport.                                                                                      |
-| **Lighthouse**            | Performance, accessibility, SEO, and layout-shift budgets on key pages. Reports are uploaded as artifacts.                          |
-| **Image budget**          | Rejects newly added images over 1 MB.                                                                                               |
+| Check                     | What it catches                                                                                                                                          |
+| ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Lint**                  | ESLint + Prettier on modern code (scripts, tests, search). Legacy files are left alone on purpose.                                                       |
+| **Unit tests**            | `node --test` over `tests/unit/`.                                                                                                                        |
+| **Page smoke tests**      | Every live page loads with a 200, renders the header, and adds no new script errors or missing files.                                                    |
+| **Accessibility ratchet** | axe-core (WCAG 2.1 AA) on every live page. Known issues are recorded in a baseline, and a PR fails only if it makes a page _worse_.                      |
+| **Phones and tablets**    | Every live page on a Pixel 7 and a Galaxy Tab S4: fits the screen, and the menu and search work by touch.                                                |
+| **Firefox & Safari**      | Keyboard navigation and search in Firefox and Safari (WebKit), plus the touch suite on iPhone 14, iPhone SE, iPad Pro, iPad Mini, and iPad in landscape. |
+| **Lighthouse**            | Performance, accessibility, SEO, and layout-shift budgets on key pages. Reports are uploaded as artifacts.                                               |
+| **Image budget**          | Rejects newly added images over 1 MB.                                                                                                                    |
 
-There are also two scheduled or optional workflows:
+There are also scheduled or optional workflows:
 
+- **[Screen readers](.github/workflows/screen-readers.yml)** walk the nav with real VoiceOver (macOS) and NVDA (Windows) whenever the nav changes, every Monday, and on demand. They check what is actually spoken: the skip link, the current page, and menu buttons that announce their state and move focus into the menu.
 - **[Link check](.github/workflows/links.yml)** runs every Monday and keeps one "Broken links report" issue up to date.
 - **[Preview deploys](.github/workflows/preview.yml)** give every PR its own Cloudflare Pages URL once a repo admin adds the Cloudflare secrets.
 - **Dependabot** keeps dev tooling and Actions current.

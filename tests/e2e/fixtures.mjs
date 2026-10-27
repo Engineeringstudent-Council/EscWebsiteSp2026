@@ -15,3 +15,14 @@ export const test = base.extend({
 });
 
 export { expect };
+
+/**
+ * Press Tab the way a keyboard user of this browser would. Safari (WebKit)
+ * only moves Tab between form controls and buttons by default; reaching links
+ * takes Option+Tab unless the user turns on "Press Tab to highlight each item".
+ */
+export async function pressTab(page, { shift = false } = {}) {
+  const engine = page.context().browser()?.browserType().name();
+  const keys = [shift && 'Shift', engine === 'webkit' && 'Alt', 'Tab'].filter(Boolean);
+  await page.keyboard.press(keys.join('+'));
+}
