@@ -19,6 +19,7 @@ const ROOT = new URL('../../../', import.meta.url);
 const INDEX_URL = new URL('assets/search/index.json', ROOT);
 const FUSE_URL = new URL('assets/js/vendor/fuse.esm.min.js', ROOT);
 const CSS_URL = new URL('assets/css/search.css', ROOT);
+const OPENSEARCH_URL = new URL('opensearch.xml', ROOT);
 const RECENT_KEY = 'esc-search:recent';
 const MAX_RECENT = 5;
 const CONTACT = 'president@esc.studentorg.berkeley.edu';
@@ -168,8 +169,10 @@ const telemetry = (() => {
         const key = query.toLowerCase();
         if (sent.has(key)) return;
         sent.add(key);
-        const body = JSON.stringify({ q: query, page: location.pathname });
-        navigator.sendBeacon(endpoint, new Blob([body], { type: 'application/json' }));
+        // A plain string is sent as text/plain, a CORS-safelisted type, so the
+        // beacon needs no preflight. Only the query is sent (see
+        // workers/search-telemetry/README.md for what is stored).
+        navigator.sendBeacon(endpoint, JSON.stringify({ q: query }));
       }, 1500);
     },
     cancel() {
@@ -693,6 +696,19 @@ function init() {
   if (!document.querySelector(`link[href="${CSS_URL.href}"], link[data-esc-search]`)) {
     document.head.append(
       h('link', { rel: 'stylesheet', href: CSS_URL.href, 'data-esc-search': '' }),
+    );
+  }
+  // Lets browsers add the site as an address-bar search engine. index.html
+  // declares this statically (Chrome mostly discovers it there); adding it on
+  // other pages is harmless and helps browsers that look wherever you are.
+  if (!document.querySelector('link[rel="search"]')) {
+    document.head.append(
+      h('link', {
+        rel: 'search',
+        type: 'application/opensearchdescription+xml',
+        title: 'ESC Berkeley',
+        href: OPENSEARCH_URL.href,
+      }),
     );
   }
   mountTriggers();

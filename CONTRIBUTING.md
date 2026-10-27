@@ -22,7 +22,7 @@ Welcome to the Tech Committee! Here's how to go from zero to your first merged c
    git switch main && git pull
    git switch -c exec-tab        # or opportunities-tab, fix-search-console, ...
    ```
-2. **Edit, then check it in the browser.** Look at desktop _and_ a narrow window, because many visitors are on phones.
+2. **Edit, then check it in the browser.** Look at desktop _and_ a narrow window, because many visitors are on phones and iPads. CI checks every page on phones and tablets too.
 3. **Commit in small steps** with messages that say what the commit does, in the imperative:
    - ✅ `Add committee descriptions to the exec tab`
    - ❌ `updates`, `fixed stuff`, `Add files via upload`
@@ -35,6 +35,7 @@ Welcome to the Tech Committee! Here's how to go from zero to your first merged c
 ```bash
 npm test                 # unit tests (fast)
 npm run test:e2e         # every page in a real browser, plus accessibility
+npm run test:cross-browser  # Firefox, Safari, iPhones, and iPads (first: npx playwright install firefox webkit)
 npm run lint             # code style for scripts and tests
 npm run check:data       # validate data/*.json (execs, opportunities)
 npm run format           # auto-fix code style
@@ -44,7 +45,7 @@ npm run format           # auto-fix code style
 
 - **Images:** keep each one under 1 MB (CI enforces this) and under about 2000px on the long edge. [Squoosh](https://squoosh.app) makes this easy.
 - **Execs and opportunities:** these live in `data/*.json`, not in the HTML. See [docs/DATA.md](docs/DATA.md) for how to add an entry and render it on a page.
-- **New pages:** copy an existing page so you get the shared header and footer, then link it from the nav (`assets/js/top-bar.js`) or another page so it counts as live. Run `npm run build:sitemap` so Google hears about it. Keep these two lines as the first script in `<head>` so dark mode works without a flash (a unit test checks):
+- **New pages:** copy an existing page so you get the shared header and footer, then link it from the nav (`assets/js/top-bar.js`) or another page so it counts as live. Then run `npm run build:sitemap` so Google hears about it, and `npm run build:og` to give it a link preview card and tags (CI checks for both). Add its title and breadcrumb to `data/search/pages.json` if the defaults read poorly. Keep these two lines as the first script in `<head>` so dark mode works without a flash (a unit test checks):
   ```html
   <link rel="stylesheet" href="assets/css/theme.css" />
   <script src="assets/js/theme/theme.js"></script>

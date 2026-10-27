@@ -10,6 +10,7 @@ assets/*
 assets/js/*
 !assets/js/search/
 !assets/js/theme/
+!assets/js/site/
 !assets/css/
 assets/css/*
 !assets/css/search.css

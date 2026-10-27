@@ -1,0 +1,81 @@
+name: Search telemetry Worker
+
+# Validates the zero-result search telemetry Worker on PRs and deploys it to
+# Cloudflare on pushes to main (or by hand). Unit tests run in ci.yml.
+#
+# One-time setup (repo admin), see workers/search-telemetry/README.md:
+#   1. secrets CLOUDFLARE_API_TOKEN (needs "Workers Scripts: Edit" and
+#      "D1: Edit") and CLOUDFLARE_ACCOUNT_ID
+#   2. create the D1 database and commit its database_id in wrangler.jsonc
+# Until both are done the deploy job skips itself instead of failing.
+on:
+  pull_request:
+    paths:
+      - 'workers/search-telemetry/**'
+      - '.github/workflows/telemetry-worker.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'workers/search-telemetry/**'
+      - '.github/workflows/telemetry-worker.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: telemetry-worker-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  WRANGLER_VERSION: '4.149.0'
+  WORKER_DIR: workers/search-telemetry
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+      - name: Bundle without deploying
+        working-directory: ${{ env.WORKER_DIR }}
+        run: npx --yes wrangler@${{ env.WRANGLER_VERSION }} deploy --dry-run --outdir "$RUNNER_TEMP/worker-dist"
+
+  deploy:
+    if: github.event_name != 'pull_request'
+    needs: validate
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      HAS_CLOUDFLARE: ${{ secrets.CLOUDFLARE_API_TOKEN != '' && secrets.CLOUDFLARE_ACCOUNT_ID != '' }}
+    steps:
+      - name: Skip when Cloudflare is not configured
+        if: env.HAS_CLOUDFLARE != 'true'
+        run: echo "::notice::Telemetry Worker deploys are off. Add CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID to enable them."
+      - uses: actions/checkout@v7
+        if: env.HAS_CLOUDFLARE == 'true'
+      - name: Check the D1 database is configured
+        id: d1
+        if: env.HAS_CLOUDFLARE == 'true'
+        run: |
+          if grep -q '"database_id": "00000000-0000-0000-0000-000000000000"' "$WORKER_DIR/wrangler.jsonc"; then
+            echo "::notice::Telemetry Worker deploy skipped: wrangler.jsonc still has the placeholder database_id. See $WORKER_DIR/README.md."
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Apply D1 migrations and deploy
+        if: env.HAS_CLOUDFLARE == 'true' && steps.d1.outputs.ready == 'true'
+        uses: cloudflare/wrangler-action@v4
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          wranglerVersion: ${{ env.WRANGLER_VERSION }}
+          workingDirectory: ${{ env.WORKER_DIR }}
+          # Migrations first so the new code never runs against an old schema.
+          command: |
+            d1 migrations apply esc-search-telemetry --remote
+            deploy

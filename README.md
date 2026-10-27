@@ -42,6 +42,7 @@ To edit a page, open the `.html` file, change it, and refresh the browser. That'
 ├── scripts/                   Dev tooling, never served to visitors
 │   ├── serve.mjs              Local static server that mirrors production
 │   ├── site-pages.mjs         Finds every live page by crawling from the nav
+│   ├── build-og.mjs           Link preview cards and <meta> tags (see below)
 │   ├── build-sitemap.mjs      Writes sitemap.xml from the live pages
 │   ├── build-dark-logos.mjs   Recolours the navy logos for dark mode
 │   └── check-image-budget.mjs Blocks oversized images in PRs
@@ -75,7 +76,9 @@ HTML pages ──► scripts/build-search-index.mjs ──► assets/search/inde
   - `links.json` holds external destinations (forms, portals, email) in the `{ title, url, description, keywords }` format.
   - `synonyms.json` holds groups like `money ↔ funding ↔ grant` and `rso ↔ club ↔ org`.
 - **Ranking** (`assets/js/search/core.js`): [Fuse.js](https://www.fusejs.io/) fuzzy-matches titles, keywords, and descriptions, so typos like "fnding" still work. Body text uses a fast exact-word pass, which is about 10× faster than fuzzy-matching long text. Long natural phrases ("money for my club") fall back to Fuse token search. Pages beat their own sections, and weak matches past the top three are dropped.
+- **Address-bar search.** [`opensearch.xml`](opensearch.xml) is an [OpenSearch](https://developer.mozilla.org/en-US/docs/Web/XML/Guides/OpenSearch) description, linked from `index.html` (and added at runtime on other pages), so browsers can search the site from the address bar: in Chrome, type `esc.studentorg.berkeley.edu` then <kbd>Tab</kbd> once the homepage has been visited; in Firefox, pick **Add "ESC Berkeley"** from the search menu. Queries land on `/?search=…`, which opens the palette with results.
 - **Accessibility.** The palette is a native `<dialog>` and follows the [WAI-ARIA combobox pattern](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/). It respects reduced motion and follows the site's light/dark toggle.
+- **Zero-result telemetry (off by default).** An optional Cloudflare Worker in [`workers/search-telemetry/`](workers/search-telemetry/README.md) counts the searches that find nothing, so we can see what students look for and fill the gaps. It stores only the cleaned-up query and a daily count, never IPs or cookies. It turns on only when a page has the `esc-search-telemetry` meta tag.
 - **You don't need to rebuild the index by hand.** [`search-index.yml`](.github/workflows/search-index.yml) rebuilds and commits it whenever HTML changes on `main`. PRs get a warning if the index is stale.
 
 | Command                | What it does                                                                  |
@@ -106,23 +109,74 @@ click ──► View Transition: the new theme grows out of the bear as a circle
 - **Logos.** Navy logos vanish on navy, so each one has a twin in `images/dark/` (navy turned soft white, gold kept). Run `npm run build:logos` after changing a logo. Partner logos that can't be recoloured get `class="esc-on-light"`, which puts them on a light plate in dark mode.
 - **Contrast is tested.** Every live page is checked with axe-core in dark mode and must have zero contrast failures. If you add a page and the check fails, add an override to `theme.css`.
 
+## Link previews
+
+Paste any page into iMessage, Instagram, Slack, Discord, GroupMe, or LinkedIn and it unfurls as a branded card: Berkeley Blue, the Newton's cradle from our logo with the gold ball mid-swing, the page title in Source Serif, and its breadcrumb in gold.
+
+![Link preview card for Finance Decisions & Initial Allocations](images/og/fin-decisions.png)
+
+```
+assets/search/index.json ──► scripts/build-og.mjs ──┬─► images/og/<page>.png     1200×630 card, rendered by Playwright
+ (titles, descriptions,       (+ scripts/og/          │                            from scripts/og/template.html
+  breadcrumbs)                 template.html)         └─► <!-- link-preview --> block in each page's <head>
+```
+
+- **Cards** come from one HTML template with locally bundled fonts (`@fontsource`) and the real logo, so they render the same on every machine. Long titles shrink to fit three lines. Each card is around 60 KB.
+- **Tags.** Each live page gets Open Graph and Twitter tags plus `theme-color`, between `<!-- link-preview:start -->` and `<!-- link-preview:end -->`, on the line right after the viewport `<meta>`. Don't edit the block by hand; change the title, breadcrumb, or description in `data/search/pages.json` and rebuild.
+- **Only changed cards re-render.** `images/og/manifest.json` fingerprints each card's text and the template, fonts, and logo, so rebuilding never churns images.
+- **Skipped pages.** `execs.html` and `committees.html` are listed in `SKIP` in `scripts/lib/og.mjs` while they're being rewritten on another branch. Remove them from the list once that work merges.
+- **You don't need to run this by hand.** The same workflow that rebuilds the search index regenerates link previews on `main`. CI fails a PR if a live page is missing its block or card.
+
+| Command                       | What it does                                                      |
+| ----------------------------- | ----------------------------------------------------------------- |
+| `npm run build:og`            | Refresh every page's block and render any changed cards           |
+| `npm run build:og -- --force` | Re-render every card (after a design change)                      |
+| `npm run check:og`            | Exit 1 if a block is missing or stale, or a card image is missing |
+
+To preview a card, open the PNG in `images/og/`. To check a deployed page, use a validator such as <https://www.opengraph.xyz>.
+
+## Instant, animated page loads
+
+Two progressive enhancements make moving around the site feel like an app. Browsers that don't support them load pages exactly as before.
+
+- **Prerendering** (`assets/js/site/instant.js`). In Chromium browsers, [Speculation Rules](https://developer.mozilla.org/en-US/docs/Web/API/Speculation_Rules_API) prerender a page when you hover a link for a moment or start pressing it, so the click lands on a page that is already drawn. Other browsers prefetch the HTML on hover, touch, or keyboard focus instead. Both stay off for Data Saver and 2G connections. Links that open in a new tab, files, and anything marked `data-no-prerender` are left alone.
+- **Page transitions** (end of `assets/css/main.css`). Cross-document [View Transitions](https://developer.mozilla.org/en-US/docs/Web/API/View_Transition_API) cross-fade the content between pages while the header stays still. They're skipped for anyone who prefers reduced motion.
+
+Every page carries a one-line inline `<style>` in `<head>` that opts in to transitions. It has to be inline: Chrome decides whether to animate an incoming page before an external stylesheet is reliably applied, so with only the rule in `main.css`, most transitions were silently dropped. Copying an existing page keeps the line, and a test fails if a live page loses it.
+
+## Offline support and installing the site
+
+A small service worker ([`sw.js`](sw.js)) keeps the site useful on bad connections:
+
+- **Nothing is ever served stale.** Pages, scripts, and stylesheets always come from the network first. The saved copy is only used when the network is down or takes longer than 4 seconds.
+- **Repeat visits are faster.** Images and fonts are served from cache and refreshed in the background. The search index is cached too, so search keeps working offline.
+- **Offline, visited pages still open.** A page you never visited shows [`offline.html`](offline.html) instead: a friendly note, a list of pages still available, and an automatic reload once the network really answers.
+- **The site can be installed.** `manifest.webmanifest` and the icons in `images/icons/` let phones add it to the home screen, with shortcuts to funding, Blue & Gold, events, and search. To change the icon, edit `images/icons/esc-icon.svg` and run `npm run build:icons`.
+
+The worker only registers on the real site and Cloudflare previews, so local development never fights a cache. To try it locally, run `localStorage.setItem('esc-sw', 'on')` in the browser console and reload.
+
+**If something ever goes wrong**, set `ENABLED = false` in `assets/js/site/offline.js` and deploy. Every page then unregisters the worker on its next visit. Bump `VERSION` in `sw.js` to throw away old caches.
+
+
 ## Quality gates
 
 Every PR runs these checks in [`ci.yml`](.github/workflows/ci.yml):
 
-| Check                     | What it catches                                                                                                                             |
-| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Lint**                  | ESLint + Prettier on modern code (scripts, tests, search). Legacy files are left alone on purpose.                                          |
-| **Unit tests**            | `node --test` over `tests/unit/`.                                                                                                           |
-| **Page smoke tests**      | Every live page loads with a 200, renders the header, and adds no new script errors or missing files.                                       |
-| **Accessibility ratchet** | axe-core (WCAG 2.1 AA) on every live page. Known issues are recorded in a baseline, and a PR fails only if it makes a page _worse_.         |
-| **Dark mode**             | The theme loads before first paint on every page, the toggle works by mouse, keyboard, and touch, and dark mode has zero contrast failures. |
-| **Mobile**                | The e2e suite also runs on a Pixel 7 viewport.                                                                                              |
-| **Lighthouse**            | Performance, accessibility, SEO, and layout-shift budgets on key pages. Reports are uploaded as artifacts.                                  |
-| **Image budget**          | Rejects newly added images over 1 MB.                                                                                                       |
+| Check                     | What it catches                                                                                                                                          |
+| ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Lint**                  | ESLint + Prettier on modern code (scripts, tests, search). Legacy files are left alone on purpose.                                                       |
+| **Unit tests**            | `node --test` over `tests/unit/`.                                                                                                                        |
+| **Page smoke tests**      | Every live page loads with a 200, renders the header, and adds no new script errors or missing files.                                                    |
+| **Accessibility ratchet** | axe-core (WCAG 2.1 AA) on every live page. Known issues are recorded in a baseline, and a PR fails only if it makes a page _worse_.                      |
+| **Dark mode**              | The theme loads before first paint on every page, the toggle works by mouse, keyboard, and touch, and dark mode has zero contrast failures.              |
+| **Phones and tablets**    | Every live page on a Pixel 7 and a Galaxy Tab S4: fits the screen, and the menu and search work by touch.                                                |
+| **Firefox & Safari**      | Keyboard navigation and search in Firefox and Safari (WebKit), plus the touch suite on iPhone 14, iPhone SE, iPad Pro, iPad Mini, and iPad in landscape. |
+| **Lighthouse**            | Performance, accessibility, SEO, and layout-shift budgets on key pages. Reports are uploaded as artifacts.                                               |
+| **Image budget**          | Rejects newly added images over 1 MB.                                                                                                                    |
 
-There are also two scheduled or optional workflows:
+There are also scheduled or optional workflows:
 
+- **[Screen readers](.github/workflows/screen-readers.yml)** walk the nav with real VoiceOver (macOS) and NVDA (Windows) whenever the nav changes, every Monday, and on demand. They check what is actually spoken: the skip link, the current page, and menu buttons that announce their state and move focus into the menu.
 - **[Link check](.github/workflows/links.yml)** runs every Monday and keeps one "Broken links report" issue up to date.
 - **[Preview deploys](.github/workflows/preview.yml)** give every PR its own Cloudflare Pages URL once a repo admin adds the Cloudflare secrets.
 - **Dependabot** keeps dev tooling and Actions current.

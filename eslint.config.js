@@ -12,6 +12,8 @@ export default [
       '!assets/js/search/*.js',
       '!assets/js/theme/',
       '!assets/js/theme/*.js',
+      '!assets/js/site/',
+      '!assets/js/site/*.js',
       'assets/js/vendor/**',
       'TableFilter/**',
       '.claude/**',
@@ -25,12 +27,7 @@ export default [
   },
   js.configs.recommended,
   {
-    files: [
-      'scripts/**/*.{js,mjs}',
-      'tests/**/*.{js,mjs}',
-      '*.config.{js,mjs}',
-      'workers/**/*.{js,mjs}',
-    ],
+    files: ['scripts/**/*.{js,mjs}', 'tests/**/*.{js,mjs}', '*.config.{js,mjs}'],
     languageOptions: {
       ecmaVersion: 2024,
       sourceType: 'module',
@@ -47,11 +44,29 @@ export default [
     },
   },
   {
-    files: ['assets/js/search/**/*.js'],
+    files: ['assets/js/search/**/*.js', 'assets/js/site/**/*.js'],
     languageOptions: {
       ecmaVersion: 2022,
       sourceType: 'module',
       globals: globals.browser,
+    },
+  },
+  {
+    // Cloudflare Workers run in a service-worker-like runtime (fetch, Request,
+    // Response, crypto.subtle), with no Node or DOM globals.
+    files: ['workers/**/*.{js,mjs}'],
+    languageOptions: {
+      ecmaVersion: 2024,
+      sourceType: 'module',
+      globals: globals.serviceworker,
+    },
+  },
+  {
+    files: ['sw.js'],
+    languageOptions: {
+      ecmaVersion: 2022,
+      sourceType: 'script',
+      globals: globals.serviceworker,
     },
   },
 ];
