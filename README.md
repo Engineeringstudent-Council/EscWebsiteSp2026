@@ -157,7 +157,6 @@ The worker only registers on the real site and Cloudflare previews, so local dev
 
 **If something ever goes wrong**, set `ENABLED = false` in `assets/js/site/offline.js` and deploy. Every page then unregisters the worker on its next visit. Bump `VERSION` in `sw.js` to throw away old caches.
 
-
 ## Quality gates
 
 Every PR runs these checks in [`ci.yml`](.github/workflows/ci.yml):
@@ -168,7 +167,7 @@ Every PR runs these checks in [`ci.yml`](.github/workflows/ci.yml):
 | **Unit tests**            | `node --test` over `tests/unit/`.                                                                                                                        |
 | **Page smoke tests**      | Every live page loads with a 200, renders the header, and adds no new script errors or missing files.                                                    |
 | **Accessibility ratchet** | axe-core (WCAG 2.1 AA) on every live page. Known issues are recorded in a baseline, and a PR fails only if it makes a page _worse_.                      |
-| **Dark mode**              | The theme loads before first paint on every page, the toggle works by mouse, keyboard, and touch, and dark mode has zero contrast failures.              |
+| **Dark mode**             | The theme loads before first paint on every page, the toggle works by mouse, keyboard, and touch, and dark mode has zero contrast failures.              |
 | **Phones and tablets**    | Every live page on a Pixel 7 and a Galaxy Tab S4: fits the screen, and the menu and search work by touch.                                                |
 | **Firefox & Safari**      | Keyboard navigation and search in Firefox and Safari (WebKit), plus the touch suite on iPhone 14, iPhone SE, iPad Pro, iPad Mini, and iPad in landscape. |
 | **Lighthouse**            | Performance, accessibility, SEO, and layout-shift budgets on key pages. Reports are uploaded as artifacts.                                               |
