@@ -40,6 +40,8 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm test
+      - name: Check link previews are current
+        run: npm run check:og
 
   data:
     name: Data contracts

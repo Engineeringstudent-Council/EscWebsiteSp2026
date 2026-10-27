@@ -39,6 +39,7 @@ To edit a page, open the `.html` file, change it, and refresh the browser. That'
 ├── scripts/                   Dev tooling, never served to visitors
 │   ├── serve.mjs              Local static server that mirrors production
 │   ├── site-pages.mjs         Finds every live page by crawling from the nav
+│   ├── build-og.mjs           Link preview cards and <meta> tags (see below)
 │   ├── build-sitemap.mjs      Writes sitemap.xml from the live pages
 │   └── check-image-budget.mjs Blocks oversized images in PRs
 ├── tests/
@@ -83,6 +84,32 @@ HTML pages ──► scripts/build-search-index.mjs ──► assets/search/inde
 | `npm run vendor:fuse`  | Copy Fuse.js from `node_modules` after a Dependabot upgrade                   |
 
 The golden relevance tests in `tests/unit/search-relevance.test.mjs` pin queries real students type ("free food", "b&g", "mental health") to the page they need. If one fails, fix the ranking or the data, not the test.
+
+## Link previews
+
+Paste any page into iMessage, Instagram, Slack, Discord, GroupMe, or LinkedIn and it unfurls as a branded card: Berkeley Blue, the Newton's cradle from our logo with the gold ball mid-swing, the page title in Source Serif, and its breadcrumb in gold.
+
+![Link preview card for Finance Decisions & Initial Allocations](images/og/fin-decisions.png)
+
+```
+assets/search/index.json ──► scripts/build-og.mjs ──┬─► images/og/<page>.png     1200×630 card, rendered by Playwright
+ (titles, descriptions,       (+ scripts/og/          │                            from scripts/og/template.html
+  breadcrumbs)                 template.html)         └─► <!-- link-preview --> block in each page's <head>
+```
+
+- **Cards** come from one HTML template with locally bundled fonts (`@fontsource`) and the real logo, so they render the same on every machine. Long titles shrink to fit three lines. Each card is around 60 KB.
+- **Tags.** Each live page gets Open Graph and Twitter tags plus `theme-color`, between `<!-- link-preview:start -->` and `<!-- link-preview:end -->`, on the line right after the viewport `<meta>`. Don't edit the block by hand; change the title, breadcrumb, or description in `data/search/pages.json` and rebuild.
+- **Only changed cards re-render.** `images/og/manifest.json` fingerprints each card's text and the template, fonts, and logo, so rebuilding never churns images.
+- **Skipped pages.** `execs.html` and `committees.html` are listed in `SKIP` in `scripts/lib/og.mjs` while they're being rewritten on another branch. Remove them from the list once that work merges.
+- **You don't need to run this by hand.** The same workflow that rebuilds the search index regenerates link previews on `main`. CI fails a PR if a live page is missing its block or card.
+
+| Command                       | What it does                                                      |
+| ----------------------------- | ----------------------------------------------------------------- |
+| `npm run build:og`            | Refresh every page's block and render any changed cards           |
+| `npm run build:og -- --force` | Re-render every card (after a design change)                      |
+| `npm run check:og`            | Exit 1 if a block is missing or stale, or a card image is missing |
+
+To preview a card, open the PNG in `images/og/`. To check a deployed page, use a validator such as <https://www.opengraph.xyz>.
 
 ## Instant, animated page loads
 

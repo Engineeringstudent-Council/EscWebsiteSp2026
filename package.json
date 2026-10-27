@@ -22,12 +22,16 @@
     "check:search": "node scripts/build-search-index.mjs --check",
     "test:stress": "node --test --test-reporter=spec \"tests/stress/**/*.test.mjs\"",
     "vendor:fuse": "cp node_modules/fuse.js/dist/fuse.min.mjs assets/js/vendor/fuse.esm.min.js",
+    "build:og": "node scripts/build-og.mjs",
+    "check:og": "node scripts/build-og.mjs --check",
     "build:icons": "node scripts/build-icons.mjs",
     "test:cross-browser": "playwright test --project=firefox --project=webkit --project=mobile-safari --project=iphone-se --project=ipad --project=ipad-mini --project=ipad-landscape"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",
     "@eslint/js": "^10.0.1",
+    "@fontsource/source-sans-3": "5.3.0",
+    "@fontsource/source-serif-4": "5.3.0",
     "@guidepup/guidepup": "0.35.0",
     "@guidepup/playwright": "0.19.1",
     "@lhci/cli": "^0.15.1",
