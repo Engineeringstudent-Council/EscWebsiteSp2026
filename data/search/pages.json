@@ -154,5 +154,11 @@
   },
   "startups.html": {
     "description": "Startup resources for Berkeley engineering students."
+  },
+  "ficomm.html": {
+    "title": "FiComm Decisions",
+    "trail": ["Organizations", "Finances"],
+    "description": "Funding decisions from ESC's Finance Committee (FiComm) for engineering student organizations.",
+    "keywords": "ficomm finance committee decisions"
   }
 }
