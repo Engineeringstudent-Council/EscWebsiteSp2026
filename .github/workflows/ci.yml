@@ -40,6 +40,8 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm test
+      - name: Check link previews are current
+        run: npm run check:og
 
   data:
     name: Data contracts
@@ -78,6 +80,9 @@ jobs:
   e2e:
     name: Pages, accessibility & mobile (Playwright)
     runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.64.0-noble
+      options: --user 1001
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v7
@@ -86,8 +91,6 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
       - run: npm ci
-      - name: Install Chromium
-        run: npx playwright install --with-deps chromium
       - run: npm run test:e2e
       - uses: actions/upload-artifact@v7
         if: ${{ !cancelled() }}
@@ -99,6 +102,9 @@ jobs:
   cross-browser:
     name: Firefox & Safari (WebKit)
     runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.64.0-noble
+      options: --user 1001
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v7
@@ -107,8 +113,6 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
       - run: npm ci
-      - name: Install Firefox and WebKit
-        run: npx playwright install --with-deps firefox webkit
       - name: Keyboard navigation and search in Firefox, desktop Safari, and iPhone Safari
         run: npm run test:cross-browser
       - uses: actions/upload-artifact@v7

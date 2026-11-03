@@ -33,16 +33,21 @@ To edit a page, open the `.html` file, change it, and refresh the browser. That'
 ├── *.html                     One file per page, all at the root
 ├── assets/
 │   ├── css/main.css           Site-wide styles (HTML5 UP "Landed" base)
+│   ├── css/theme.css          Dark mode and the bear toggle
+│   ├── js/theme/theme.js      Applies the saved theme before first paint, mounts the toggle
 │   ├── js/top-bar.js          Shared nav, injected into every page
 │   ├── js/bottom-bar.js       Shared footer
 │   ├── js/site/a11y.js        Announces new-tab links (nav-a11y.js does the menus)
 │   └── js/main.js             Dropdowns, mobile nav panel, parallax
 ├── docs/ACCESSIBILITY.md      What the accessibility tests check, and a page checklist
 ├── images/                    Photos and logos (keep each under 1 MB)
+│   └── dark/                  Light-on-dark logo twins (`npm run build:logos`)
 ├── scripts/                   Dev tooling, never served to visitors
 │   ├── serve.mjs              Local static server that mirrors production
 │   ├── site-pages.mjs         Finds every live page by crawling from the nav
+│   ├── build-og.mjs           Link preview cards and <meta> tags (see below)
 │   ├── build-sitemap.mjs      Writes sitemap.xml from the live pages
+│   ├── build-dark-logos.mjs   Recolours the navy logos for dark mode
 │   └── check-image-budget.mjs Blocks oversized images in PRs
 ├── tests/
 │   ├── unit/                  node:test unit tests (`npm test`)
@@ -74,7 +79,9 @@ HTML pages ──► scripts/build-search-index.mjs ──► assets/search/inde
   - `links.json` holds external destinations (forms, portals, email) in the `{ title, url, description, keywords }` format.
   - `synonyms.json` holds groups like `money ↔ funding ↔ grant` and `rso ↔ club ↔ org`.
 - **Ranking** (`assets/js/search/core.js`): [Fuse.js](https://www.fusejs.io/) fuzzy-matches titles, keywords, and descriptions, so typos like "fnding" still work. Body text uses a fast exact-word pass, which is about 10× faster than fuzzy-matching long text. Long natural phrases ("money for my club") fall back to Fuse token search. Pages beat their own sections, and weak matches past the top three are dropped.
-- **Accessibility.** The palette is a native `<dialog>` and follows the [WAI-ARIA combobox pattern](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/). It respects reduced motion and dark mode.
+- **Address-bar search.** [`opensearch.xml`](opensearch.xml) is an [OpenSearch](https://developer.mozilla.org/en-US/docs/Web/XML/Guides/OpenSearch) description, linked from `index.html` (and added at runtime on other pages), so browsers can search the site from the address bar: in Chrome, type `esc.studentorg.berkeley.edu` then <kbd>Tab</kbd> once the homepage has been visited; in Firefox, pick **Add "ESC Berkeley"** from the search menu. Queries land on `/?search=…`, which opens the palette with results.
+- **Accessibility.** The palette is a native `<dialog>` and follows the [WAI-ARIA combobox pattern](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/). It respects reduced motion and follows the site's light/dark toggle.
+- **Zero-result telemetry (off by default).** An optional Cloudflare Worker in [`workers/search-telemetry/`](workers/search-telemetry/README.md) counts the searches that find nothing, so we can see what students look for and fill the gaps. It stores only the cleaned-up query and a daily count, never IPs or cookies. It turns on only when a page has the `esc-search-telemetry` meta tag.
 - **You don't need to rebuild the index by hand.** [`search-index.yml`](.github/workflows/search-index.yml) rebuilds and commits it whenever HTML changes on `main`. PRs get a warning if the index is stale.
 
 | Command                | What it does                                                                  |
@@ -85,6 +92,51 @@ HTML pages ──► scripts/build-search-index.mjs ──► assets/search/inde
 | `npm run vendor:fuse`  | Copy Fuse.js from `node_modules` after a Dependabot upgrade                   |
 
 The golden relevance tests in `tests/unit/search-relevance.test.mjs` pin queries real students type ("free food", "b&g", "mental health") to the page they need. If one fails, fix the ranking or the data, not the test.
+
+## Light and dark mode
+
+The site is light by default, exactly as designed. The bear button at the end of the nav (Oski, awake) turns the lights out: Oski falls asleep, and the page goes to a deep Berkeley-navy dark theme with the same gold accents. It's a toggle on purpose, not the computer's brightness setting, so nobody gets dark mode by surprise. The choice is remembered on that device and syncs across open tabs.
+
+![The about page in light and dark mode](docs/images/theme-desktop.jpg)
+
+![Phone title bar and homepage in both themes](docs/images/theme-phone.jpg)
+
+```
+<head>: theme.css + theme.js ──► reads localStorage('esc-theme') ──► <html data-theme="dark">
+         (first script, blocking)                                     before <body> is parsed: no white flash
+DOMContentLoaded ──► bear button into the nav (or phone title bar, or homepage corner) + logo swap
+click ──► View Transition: the new theme grows out of the bear as a circle (instant with reduced motion)
+```
+
+- **Where the styles live.** `assets/css/theme.css` holds the dark palette as `--theme-*` tokens and overrides the legacy template's hard-coded colours, including common inline `style="color:#000066"`. The search palette's dark variant lives in `assets/css/search.css`.
+- **Logos.** Navy logos vanish on navy, so each one has a twin in `images/dark/` (navy turned soft white, gold kept). Run `npm run build:logos` after changing a logo. Partner logos that can't be recoloured get `class="esc-on-light"`, which puts them on a light plate in dark mode.
+- **Contrast is tested.** Every live page is checked with axe-core in dark mode and must have zero contrast failures. If you add a page and the check fails, add an override to `theme.css`.
+
+## Link previews
+
+Paste any page into iMessage, Instagram, Slack, Discord, GroupMe, or LinkedIn and it unfurls as a branded card: Berkeley Blue, the Newton's cradle from our logo with the gold ball mid-swing, the page title in Source Serif, and its breadcrumb in gold.
+
+![Link preview card for Finance Decisions & Initial Allocations](images/og/fin-decisions.png)
+
+```
+assets/search/index.json ──► scripts/build-og.mjs ──┬─► images/og/<page>.png     1200×630 card, rendered by Playwright
+ (titles, descriptions,       (+ scripts/og/          │                            from scripts/og/template.html
+  breadcrumbs)                 template.html)         └─► <!-- link-preview --> block in each page's <head>
+```
+
+- **Cards** come from one HTML template with locally bundled fonts (`@fontsource`) and the real logo, so they render the same on every machine. Long titles shrink to fit three lines. Each card is around 60 KB.
+- **Tags.** Each live page gets Open Graph and Twitter tags plus `theme-color`, between `<!-- link-preview:start -->` and `<!-- link-preview:end -->`, on the line right after the viewport `<meta>`. Don't edit the block by hand; change the title, breadcrumb, or description in `data/search/pages.json` and rebuild.
+- **Only changed cards re-render.** `images/og/manifest.json` fingerprints each card's text and the template, fonts, and logo, so rebuilding never churns images.
+- **Skipped pages.** `execs.html` and `committees.html` are listed in `SKIP` in `scripts/lib/og.mjs` while they're being rewritten on another branch. Remove them from the list once that work merges.
+- **You don't need to run this by hand.** The same workflow that rebuilds the search index regenerates link previews on `main`. CI fails a PR if a live page is missing its block or card.
+
+| Command                       | What it does                                                      |
+| ----------------------------- | ----------------------------------------------------------------- |
+| `npm run build:og`            | Refresh every page's block and render any changed cards           |
+| `npm run build:og -- --force` | Re-render every card (after a design change)                      |
+| `npm run check:og`            | Exit 1 if a block is missing or stale, or a card image is missing |
+
+To preview a card, open the PNG in `images/og/`. To check a deployed page, use a validator such as <https://www.opengraph.xyz>.
 
 ## Instant, animated page loads
 
@@ -112,16 +164,17 @@ The worker only registers on the real site and Cloudflare previews, so local dev
 
 Every PR runs these checks in [`ci.yml`](.github/workflows/ci.yml):
 
-| Check                  | What it catches                                                                                                                                                                                             |
+| Check                   | What it catches                                                                                                                                                                                              |
 | ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Lint**               | ESLint + Prettier on modern code (scripts, tests, search). Legacy files are left alone on purpose.                                                                                                          |
-| **Unit tests**         | `node --test` over `tests/unit/`.                                                                                                                                                                           |
-| **Page smoke tests**   | Every live page loads with a 200, renders the header, and adds no new script errors or missing files.                                                                                                       |
-| **Accessibility**      | Zero axe-core violations (WCAG 2.2 AA plus best practices) on every live page at desktop and phone sizes, plus focus, zoom, spacing, and motion checks. See [docs/ACCESSIBILITY.md](docs/ACCESSIBILITY.md). |
-| **Phones and tablets** | Every live page on a Pixel 7 and a Galaxy Tab S4: fits the screen, and the menu and search work by touch.                                                                                                   |
-| **Firefox & Safari**   | Keyboard navigation and search in Firefox and Safari (WebKit), plus the touch suite on iPhone 14, iPhone SE, iPad Pro, iPad Mini, and iPad in landscape.                                                    |
-| **Lighthouse**         | Performance, accessibility, SEO, and layout-shift budgets on key pages. Reports are uploaded as artifacts.                                                                                                  |
-| **Image budget**       | Rejects newly added images over 1 MB.                                                                                                                                                                       |
+| **Lint**                | ESLint + Prettier on modern code (scripts, tests, search). Legacy files are left alone on purpose.                                                                                                          |
+| **Unit tests**          | `node --test` over `tests/unit/`.                                                                                                                                                                           |
+| **Page smoke tests**    | Every live page loads with a 200, renders the header, and adds no new script errors or missing files.                                                                                                      |
+| **Accessibility**       | Zero axe-core violations (WCAG 2.2 AA plus best practices) on every live page at desktop and phone sizes, plus focus, zoom, spacing, and motion checks. See [docs/ACCESSIBILITY.md](docs/ACCESSIBILITY.md). |
+| **Dark mode**           | The theme loads before first paint on every page, the toggle works by mouse, keyboard, and touch, and dark mode has zero contrast failures.                                                                |
+| **Phones and tablets**  | Every live page on a Pixel 7 and a Galaxy Tab S4: fits the screen, and the menu and search work by touch.                                                                                                   |
+| **Firefox & Safari**    | Keyboard navigation and search in Firefox and Safari (WebKit), plus the touch suite on iPhone 14, iPhone SE, iPad Pro, iPad Mini, and iPad in landscape.                                                    |
+| **Lighthouse**          | Performance, accessibility, SEO, and layout-shift budgets on key pages. Reports are uploaded as artifacts.                                                                                                  |
+| **Image budget**        | Rejects newly added images over 1 MB.                                                                                                                                                                       |
 
 There are also scheduled or optional workflows:
 

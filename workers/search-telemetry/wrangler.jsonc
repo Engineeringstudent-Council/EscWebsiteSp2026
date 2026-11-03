@@ -1,0 +1,48 @@
+{
+  "$schema": "https://unpkg.com/wrangler@4/config-schema.json",
+  "name": "esc-search-telemetry",
+  "main": "src/index.js",
+  "compatibility_date": "2026-10-01",
+  "workers_dev": true,
+  "preview_urls": false,
+
+  // Logs from our own console.log calls only. Invocation logs are off and query
+  // strings are redacted so request metadata (including client IPs) is never
+  // persisted in Workers Logs.
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1,
+    "redact_query_string": true,
+    "logs": { "invocation_logs": false },
+  },
+
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "esc-search-telemetry",
+      // PLACEHOLDER: replace with the id printed by
+      //   npx wrangler d1 create esc-search-telemetry
+      // The deploy workflow skips itself while this placeholder is present.
+      "database_id": "00000000-0000-0000-0000-000000000000",
+      "migrations_dir": "migrations",
+    },
+  ],
+
+  // Per-client abuse guard (30 beacons per minute per IP, per Cloudflare
+  // location). Counters are ephemeral; the IP is never stored.
+  "ratelimits": [
+    {
+      "name": "RATE_LIMITER",
+      "namespace_id": "41720",
+      "simple": { "limit": 30, "period": 60 },
+    },
+  ],
+
+  // Daily cleanup of rows older than RETENTION_DAYS.
+  "triggers": { "crons": ["17 9 * * *"] },
+
+  "vars": { "RETENTION_DAYS": "365" },
+
+  // Secret (never in this file): REPORT_TOKEN, set with
+  //   npx wrangler secret put REPORT_TOKEN
+}
