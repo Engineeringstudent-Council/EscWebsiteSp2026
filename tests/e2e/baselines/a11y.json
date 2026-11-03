@@ -105,11 +105,9 @@
   ],
   "ficomm.html": [
     "color-contrast:1",
-    "html-has-lang:1",
     "link-name:3",
-    "list:1",
-    "listitem:7",
-    "meta-viewport:1"
+    "list:5",
+    "listitem:6"
   ],
   "fin-decisions.html": [
     "color-contrast:1",

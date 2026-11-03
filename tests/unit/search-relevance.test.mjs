@@ -18,7 +18,9 @@ const searcher = createSearcher(Fuse, records);
 const GOLDEN = [
   ['funding', 'applyfunding.html', 1],
   ['fnding', 'applyfunding.html', 1],
-  ['fundng for clubs', 'applyfunding.html', 3],
+  // ficomm.html is titled "Funding for Blue & Gold Clubs"; applyfunding.html
+  // now only points there.
+  ['fundng for clubs', 'ficomm.html', 3],
   ['money for my club', 'applyfunding.html', 1],
   ['blue gold', 'blueandgold.html', 1],
   ['blue and gold', 'blueandgold.html', 1],
@@ -49,6 +51,13 @@ const GOLDEN = [
   ['join', 'https://forms.gle/', 2],
   ['instagram', 'https://www.instagram.com/berkeleyesc', 1],
   ['ficomm', 'ficomm.html', 1],
+  ['purchase request', 'ficomm.html', 1],
+  ['reimburse', 'ficomm.html', 1],
+  ['reimbursement', 'ficomm.html', 2],
+  ['callink', 'ficomm.html', 1],
+  ['spending rules', 'ficomm.html', 1],
+  ['asuc funds', 'ficomm.html', 1],
+  ['ess funds', 'ficomm.html', 1],
   ['sponsors', 'sponsors.html', 1],
   ['startups', 'startups.html', 1],
   ['upcoming events', 'events.html', 1],
