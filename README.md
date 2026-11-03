@@ -164,17 +164,17 @@ The worker only registers on the real site and Cloudflare previews, so local dev
 
 Every PR runs these checks in [`ci.yml`](.github/workflows/ci.yml):
 
-| Check                   | What it catches                                                                                                                                                                                              |
+| Check                  | What it catches                                                                                                                                                                                             |
 | ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Lint**                | ESLint + Prettier on modern code (scripts, tests, search). Legacy files are left alone on purpose.                                                                                                          |
-| **Unit tests**          | `node --test` over `tests/unit/`.                                                                                                                                                                           |
-| **Page smoke tests**    | Every live page loads with a 200, renders the header, and adds no new script errors or missing files.                                                                                                      |
-| **Accessibility**       | Zero axe-core violations (WCAG 2.2 AA plus best practices) on every live page at desktop and phone sizes, plus focus, zoom, spacing, and motion checks. See [docs/ACCESSIBILITY.md](docs/ACCESSIBILITY.md). |
-| **Dark mode**           | The theme loads before first paint on every page, the toggle works by mouse, keyboard, and touch, and dark mode has zero contrast failures.                                                                |
-| **Phones and tablets**  | Every live page on a Pixel 7 and a Galaxy Tab S4: fits the screen, and the menu and search work by touch.                                                                                                   |
-| **Firefox & Safari**    | Keyboard navigation and search in Firefox and Safari (WebKit), plus the touch suite on iPhone 14, iPhone SE, iPad Pro, iPad Mini, and iPad in landscape.                                                    |
-| **Lighthouse**          | Performance, accessibility, SEO, and layout-shift budgets on key pages. Reports are uploaded as artifacts.                                                                                                  |
-| **Image budget**        | Rejects newly added images over 1 MB.                                                                                                                                                                       |
+| **Lint**               | ESLint + Prettier on modern code (scripts, tests, search). Legacy files are left alone on purpose.                                                                                                          |
+| **Unit tests**         | `node --test` over `tests/unit/`.                                                                                                                                                                           |
+| **Page smoke tests**   | Every live page loads with a 200, renders the header, and adds no new script errors or missing files.                                                                                                       |
+| **Accessibility**      | Zero axe-core violations (WCAG 2.2 AA plus best practices) on every live page at desktop and phone sizes, plus focus, zoom, spacing, and motion checks. See [docs/ACCESSIBILITY.md](docs/ACCESSIBILITY.md). |
+| **Dark mode**          | The theme loads before first paint on every page, the toggle works by mouse, keyboard, and touch, and dark mode has zero contrast failures.                                                                 |
+| **Phones and tablets** | Every live page on a Pixel 7 and a Galaxy Tab S4: fits the screen, and the menu and search work by touch.                                                                                                   |
+| **Firefox & Safari**   | Keyboard navigation and search in Firefox and Safari (WebKit), plus the touch suite on iPhone 14, iPhone SE, iPad Pro, iPad Mini, and iPad in landscape.                                                    |
+| **Lighthouse**         | Performance, accessibility, SEO, and layout-shift budgets on key pages. Reports are uploaded as artifacts.                                                                                                  |
+| **Image budget**       | Rejects newly added images over 1 MB.                                                                                                                                                                       |
 
 There are also scheduled or optional workflows:
 
