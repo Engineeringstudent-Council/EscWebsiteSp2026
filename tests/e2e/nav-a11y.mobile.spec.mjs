@@ -2,6 +2,7 @@
 // #navPanel, built by main.js, enhanced by assets/js/site/nav-a11y.js).
 import { test, expect, pressTab } from './fixtures.mjs';
 import AxeBuilder from '@axe-core/playwright';
+import { AXE_TAGS } from './lib/axe.mjs';
 
 async function open(page, path) {
   await page.goto(path, { waitUntil: 'load' });
@@ -107,7 +108,7 @@ test('the open panel and title bar have no axe violations', async ({ page }) => 
   await expect(page.locator('body')).toHaveClass(/navPanel-visible/);
   await page.waitForTimeout(600); // let the slide-in finish
   const { violations } = await new AxeBuilder({ page })
-    .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
+    .withTags(AXE_TAGS)
     .include('#navPanel')
     .include('#titleBar')
     .analyze();
