@@ -1,5 +1,6 @@
 /*Title Section*/
-#page-wrapper {
+#page-wrapper,
+.execs-wrapper {
 	height: 100%;
 	width: 100%;
 	/*background-color: #34495e; */
@@ -13,12 +14,28 @@
 	font-weight: 600;
 }
 
+/* The roster wrapper used to be a second #page-wrapper; keep the 3.5em gap
+   main.css gave it, now that the duplicate id is gone. */
+.execs-wrapper {
+	padding-top: 3.5em;
+}
+
+@media screen and (max-width: 736px) {
+	.execs-wrapper {
+		padding-top: 44px;
+	}
+}
+
+/*Execs */
+.exec-group-photo {
+	margin: 0 auto 2em;
+}
+
 #main .container > header.major {
 	margin-bottom: 1.25em;
 }
 
-#committee-overview > h3,
-#executive-board > h3 {
+#committee-overview > h3 {
 	color: #000066;
 	font-size: 1.35em;
 	margin: 0 0 0.4em;

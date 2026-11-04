@@ -1,0 +1,98 @@
+name: Screen readers
+
+# Real VoiceOver (macOS) and NVDA (Windows) walk the site navigation. These
+# runs are slower and noisier than the main CI, so they run when the nav
+# changes, weekly, and on demand rather than on every PR.
+on:
+  pull_request:
+    paths:
+      - 'assets/js/site/nav-a11y.js'
+      - 'assets/js/top-bar.js'
+      - 'assets/js/main.js'
+      - 'tests/screenreader/**'
+      - 'playwright.screenreader.config.mjs'
+      - '.github/workflows/screen-readers.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'assets/js/site/nav-a11y.js'
+      - 'assets/js/top-bar.js'
+      - 'tests/screenreader/**'
+  schedule:
+    - cron: '0 15 * * 1' # Mondays, 8am Pacific
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: screen-readers-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  voiceover:
+    name: VoiceOver (macOS, Safari engine)
+    runs-on: macos-15
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      # The same two-step setup Guidepup's own CI uses: prepare the OS, then
+      # (after dependencies) install the VoiceOver automation support.
+      # Turning on Do Not Disturb fails now and then on the hosted Mac
+      # runners (and Guidepup's error handler then crashes on Node 22, hiding
+      # the message), so try up to three times before giving up.
+      - name: Prepare macOS for VoiceOver automation
+        run: |
+          for attempt in 1 2 3; do
+            npx -y @guidepup/setup@0.24.6 setup --ci --macos-record && exit 0
+            echo "::warning::Guidepup setup failed (attempt $attempt of 3), retrying"
+            sleep 10
+          done
+          exit 1
+      - run: npm ci
+      - name: Install VoiceOver automation support
+        run: npx -y @guidepup/setup@0.24.6 install
+      - run: npx playwright install webkit
+      - run: npx playwright test -c playwright.screenreader.config.mjs --project=voiceover
+      - uses: actions/upload-artifact@v7
+        if: ${{ !cancelled() }}
+        with:
+          name: voiceover-results
+          path: |
+            playwright-report/
+            test-results/
+            recordings/
+          retention-days: 14
+
+  nvda:
+    name: NVDA (Windows, Chrome engine)
+    runs-on: windows-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      # The same two-step setup Guidepup's own CI uses: prepare the OS, then
+      # (after dependencies) install the NVDA automation support.
+      - name: Prepare Windows for NVDA automation
+        run: npx -y @guidepup/setup@0.24.6 setup --ci --macos-record
+      - run: npm ci
+      - name: Install NVDA automation support
+        run: npx -y @guidepup/setup@0.24.6 install
+      - run: npx playwright install chromium
+      - run: npx playwright test -c playwright.screenreader.config.mjs --project=nvda
+      - uses: actions/upload-artifact@v7
+        if: ${{ !cancelled() }}
+        with:
+          name: nvda-results
+          path: |
+            playwright-report/
+            test-results/
+            recordings/
+          retention-days: 14

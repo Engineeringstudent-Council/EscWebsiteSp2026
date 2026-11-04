@@ -3,22 +3,25 @@
 // <li><a href="https://form.typeform.com/to/UTcmX9lD" data-mode="popup">Contact Us </a> <script> (function() { var qs,js,q,s,d=document, gi=d.getElementById, ce=d.createElement, gt=d.getElementsByTagName, id="typef_orm_share", b="https://embed.typeform.com/"; if(!gi.call(d,id)){ js=ce.call(d,"script"); js.id=id; js.src=b+"embed.js"; q=gt.call(d,"script")[0]; q.parentNode.insertBefore(js,q) } })() </script></li>\
 //h1 changed to h2 in line 8 by Ethan
 
-// Inserts the shared nav right where this <script> tag sits.
-// From inside <body> that is done with insertAdjacentHTML. Most pages load
-// this file from <head>, though, and only document.write can synchronously
-// place markup into <body> from there (main.js needs #nav to exist when it
-// runs). Moving those script tags into <body> lets every page use the
-// modern path.
+// Inserts the shared nav right where this <script> tag sits, so include it as
+// the first thing inside <body>. main.js needs #nav to exist when it runs,
+// which is why this stays a plain synchronous script.
+// A page that still loads this file from <head> can only be served by
+// document.write, so that path is kept as a fallback with a nudge to fix it.
 function escInsertHere(html) {
 	var here = document.currentScript;
-	if (here && here.parentNode && here.parentNode !== document.head) here.insertAdjacentHTML('beforebegin', html);
-	else document.write(html);
+	if (here && here.parentNode && here.parentNode !== document.head) {
+		here.insertAdjacentHTML('beforebegin', html);
+		return;
+	}
+	if (typeof console !== 'undefined') console.warn('[ESC] Move <script src="assets/js/top-bar.js"> from <head> to the top of <body>.');
+	document.write(html);
 }
 
 escInsertHere('\
 <header id="header">\
-<h2 id="logo"><a href="index.html">\
-	<span class="image"><img src="images/main_nobckgnd.png" alt="Engineering Student Council Logo"  height="95" width="285" style="vertical-align: top; width:auto;"/></span></a></h1>\
+<div id="logo"><a href="index.html">\
+	<span class="image"><img src="images/main_nobckgnd.png" alt="Engineering Student Council home"  height="95" width="285" style="vertical-align: top; width:auto;"/></span></a></div>\
 <nav id="nav">\
 	<ul>\
 		 <li>\
@@ -32,6 +35,7 @@ escInsertHere('\
   </ul>\
 </li>\
 			  <!-- <li><a href="positive_messages.html">Positive Messages Campaign</a></li> -->\
+				<li><a href="gallery.html">Photo Gallery</a></li>\
 				<li><a href="https://sites.google.com/berkeley.edu/escinternal/" target="_blank">ESC Internal</a></li>\
 \
 			</ul>\
@@ -72,7 +76,11 @@ escInsertHere('\
 				<li><a href="blueandgold.html">Blue and Gold Certification Info</a></li>\
 				<li><a href="https://sites.google.com/berkeley.edu/blue-and-gold-portal/home">Blue and Gold Portal</a></li>\
 				<li><a href="clubs.html">List of Certified Organizations</a></li>\
+				<li><a href="howtoguide.html">Start an Organization</a></li>\
+				<li><a href="escaffiliation.html">Affiliation Process</a></li>\
 				<li><a href="fin-decisions.html">Finances</a></li>\
+				<li><a href="relevantfinance.html">Finance Documents</a></li>\
+				<li><a href="policies.html">Policies and Guidelines</a></li>\
 				<li><a href="treasurertrain.html">Treasurer Training</a></li>\
 \
 			</ul>\
@@ -88,7 +96,7 @@ escInsertHere('\
 		</li>\
 		<li><a href="https://forms.gle/Q2K6TZySHtWS65ex9" target="_blank">Connect</a>\
 			<ul>\
-				<li> <!-- <a href="https://forms.gle/7ycA5tAZuPQepzV16" target="_blank">Contact Us</a> --> </li>\
+				<!-- <li><a href="https://forms.gle/7ycA5tAZuPQepzV16" target="_blank">Contact Us</a></li> -->\
 				<li><a href="https://www.facebook.com/ESC.Berkeley/">Facebook</a>\
 						<!-- <ul>\
 							<li><a href="https://www.facebook.com/eweekberkeley/" target="_blank">EWeek Facebook</a></li>\
@@ -108,11 +116,15 @@ escInsertHere('\
 </header>\
 ');
 
-// Site search (⌘K / Ctrl+K). Loaded as a module so it never blocks the page.
+// Site search (⌘K / Ctrl+K) and progressive enhancements (instant page
+// loads and friends). Loaded as modules so they never block the page, and
+// older browsers that don't understand modules simply skip them.
 (function () {
 	var here = document.currentScript;
-	var s = document.createElement('script');
-	s.type = 'module';
-	s.src = here ? new URL('search/ui.js', here.src).href : 'assets/js/search/ui.js';
-	document.head.appendChild(s);
+	['search/ui.js', 'site/enhance.js'].forEach(function (path) {
+		var s = document.createElement('script');
+		s.type = 'module';
+		s.src = here ? new URL(path, here.src).href : 'assets/js/' + path;
+		document.head.appendChild(s);
+	});
 })();

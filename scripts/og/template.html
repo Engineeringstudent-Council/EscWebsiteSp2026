@@ -1,0 +1,292 @@
+<!doctype html>
+<!--
+  Social card template rendered by scripts/build-og.mjs at 1200×630.
+  Every asset is local (fonts come from node_modules/@fontsource, the logo
+  from images/), so cards render identically wherever the build runs.
+  The build calls window.renderCard({ title, trail, logo }) and screenshots.
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      @font-face {
+        font-family: 'Card Serif';
+        font-weight: 600;
+        src: url('../../node_modules/@fontsource/source-serif-4/files/source-serif-4-latin-600-normal.woff2')
+          format('woff2');
+      }
+      @font-face {
+        font-family: 'Card Serif';
+        font-weight: 600;
+        font-style: italic;
+        src: url('../../node_modules/@fontsource/source-serif-4/files/source-serif-4-latin-600-italic.woff2')
+          format('woff2');
+      }
+      @font-face {
+        font-family: 'Card Sans';
+        font-weight: 600;
+        src: url('../../node_modules/@fontsource/source-sans-3/files/source-sans-3-latin-600-normal.woff2')
+          format('woff2');
+      }
+      @font-face {
+        font-family: 'Card Sans';
+        font-weight: 700;
+        src: url('../../node_modules/@fontsource/source-sans-3/files/source-sans-3-latin-700-normal.woff2')
+          format('woff2');
+      }
+
+      :root {
+        --blue: #002676;
+        --gold: #fdb515;
+        --ink: #ffffff;
+        --muted: rgba(255, 255, 255, 0.7);
+        --pad: 80px;
+        --title-width: 700px;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html,
+      body {
+        width: 1200px;
+        height: 630px;
+        overflow: hidden;
+        background: var(--blue);
+      }
+
+      body {
+        position: relative;
+        font-family: 'Card Sans', sans-serif;
+        color: var(--ink);
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .motif {
+        position: absolute;
+        inset: 0;
+      }
+
+      .brand {
+        position: absolute;
+        top: 64px;
+        left: var(--pad);
+        display: flex;
+        align-items: flex-end;
+        gap: 22px;
+      }
+
+      .brand svg {
+        display: block;
+      }
+
+      /* The wordmark is cut out of the real logo PNG and recoloured white. */
+      .wordmark {
+        width: 180px;
+        height: 66px;
+        background: #fff;
+        -webkit-mask: var(--logo) no-repeat;
+        -webkit-mask-size: 328px 83px;
+        -webkit-mask-position: -132px -4px;
+      }
+
+      .copy {
+        position: absolute;
+        left: var(--pad);
+        bottom: 136px;
+        width: var(--title-width);
+      }
+
+      .trail {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        font-weight: 700;
+        font-size: 22px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 20px;
+      }
+
+      .trail:empty {
+        display: none;
+      }
+
+      .trail .sep {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: currentColor;
+        opacity: 0.7;
+      }
+
+      .title {
+        font-family: 'Card Serif', serif;
+        font-weight: 600;
+        font-size: 84px;
+        line-height: 1.04;
+        letter-spacing: -0.015em;
+        text-wrap: balance;
+      }
+
+      .title .amp {
+        font-style: italic;
+        color: var(--gold);
+      }
+
+      .foot {
+        position: absolute;
+        left: var(--pad);
+        right: var(--pad);
+        bottom: 56px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 24px;
+        font-weight: 600;
+        color: var(--muted);
+      }
+
+      .foot .url {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        letter-spacing: 0.01em;
+      }
+
+      .foot .url::before {
+        content: '';
+        width: 32px;
+        height: 3px;
+        background: var(--gold);
+      }
+
+      .foot .tag {
+        font-family: 'Card Serif', serif;
+        font-style: italic;
+      }
+
+      .rule {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 10px;
+        background: var(--gold);
+      }
+    </style>
+  </head>
+  <body>
+    <svg class="motif" width="1200" height="630" viewBox="0 0 1200 630" aria-hidden="true">
+      <!-- The Newton's cradle from the ESC logo, enlarged: three balls at rest… -->
+      <g stroke="rgba(255,255,255,0.16)" stroke-width="3" fill="none">
+        <line x1="760" y1="0" x2="760" y2="216" />
+        <line x1="848" y1="0" x2="848" y2="216" />
+        <line x1="936" y1="0" x2="936" y2="216" />
+        <circle cx="760" cy="260" r="44" />
+        <circle cx="848" cy="260" r="44" />
+        <circle cx="936" cy="260" r="44" />
+      </g>
+      <!-- …and the gold one swung out 22°, with a ghost of where it started. -->
+      <g stroke="#fdb515" fill="none" stroke-linecap="round">
+        <circle
+          cx="1024"
+          cy="260"
+          r="44"
+          stroke-opacity="0.4"
+          stroke-width="2.5"
+          stroke-dasharray="1 9"
+        />
+        <path
+          d="M 1024 304 A 304 304 0 0 0 1137.9 281.9"
+          stroke-opacity="0.5"
+          stroke-width="3"
+          stroke-dasharray="1 12"
+        />
+        <line x1="1024" y1="0" x2="1104.9" y2="200.3" stroke-width="4" />
+      </g>
+      <circle cx="1121.4" cy="241.1" r="44" fill="#fdb515" />
+    </svg>
+
+    <div class="brand">
+      <svg width="128" height="66" viewBox="0 20 670 345" aria-hidden="true">
+        <rect x="0" y="25" width="665" height="20" fill="#fff" />
+        <g stroke-width="9">
+          <line x1="90" y1="40" x2="90" y2="300" stroke="#fff" />
+          <line x1="218" y1="40" x2="218" y2="300" stroke="#fff" />
+          <line x1="348" y1="40" x2="348" y2="300" stroke="#fff" />
+          <line x1="474" y1="40" x2="560" y2="260" stroke="#fdb515" />
+        </g>
+        <circle cx="90" cy="307" r="56" fill="#fff" />
+        <circle cx="218" cy="307" r="56" fill="#fff" />
+        <circle cx="348" cy="307" r="56" fill="#fff" />
+        <circle cx="577" cy="308" r="56" fill="#fdb515" />
+      </svg>
+      <div class="wordmark"></div>
+    </div>
+
+    <div class="copy">
+      <div class="trail" id="trail"></div>
+      <h1 class="title" id="title"></h1>
+    </div>
+
+    <div class="foot">
+      <span class="url">esc.studentorg.berkeley.edu</span>
+      <span class="tag">UC Berkeley · College of Engineering</span>
+    </div>
+    <div class="rule"></div>
+
+    <script>
+      // Fill in a card, then shrink the title until it fits in three lines.
+      window.renderCard = async ({ title, trail, logo }) => {
+        if (logo) {
+          const img = new Image();
+          img.src = logo;
+          await img.decode();
+          document.documentElement.style.setProperty('--logo', `url("${logo}")`);
+        }
+        const titleEl = document.getElementById('title');
+        const trailEl = document.getElementById('trail');
+        trailEl.replaceChildren();
+        (trail || []).forEach((crumb, i) => {
+          if (i) {
+            const dot = document.createElement('span');
+            dot.className = 'sep';
+            trailEl.append(dot);
+          }
+          const span = document.createElement('span');
+          span.textContent = crumb;
+          trailEl.append(span);
+        });
+        // Set ampersands in gold italic, the way a typesetter would.
+        titleEl.replaceChildren();
+        title.split('&').forEach((part, i) => {
+          if (i) {
+            const amp = document.createElement('span');
+            amp.className = 'amp';
+            amp.textContent = '&';
+            titleEl.append(amp);
+          }
+          titleEl.append(part);
+        });
+        await document.fonts.ready;
+        const maxWidth = titleEl.clientWidth;
+        let size = 84;
+        const fits = () =>
+          titleEl.scrollHeight <= Math.ceil(size * 1.04 * 3) + 1 && titleEl.scrollWidth <= maxWidth;
+        titleEl.style.fontSize = `${size}px`;
+        while (size > 44 && !fits()) {
+          size -= 2;
+          titleEl.style.fontSize = `${size}px`;
+        }
+        // Let the browser finish decoding the mask image before the screenshot.
+        await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+        return size;
+      };
+    </script>
+  </body>
+</html>

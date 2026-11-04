@@ -572,8 +572,56 @@ ul.esc-search-list > li {
   }
 }
 
-/* The palette stays white in dark mode on purpose: the rest of the site is
-   light-only, and the brand palette is navy, gold, and white. */
+/* ---------- Dark theme (the bear toggle, assets/js/theme/theme.js) ---------- */
+
+/* Only follows the site's own toggle, never the OS setting, so search always
+   matches the page around it. */
+html[data-theme='dark'] dialog.esc-search,
+html[data-theme='dark'] .esc-search-trigger,
+html[data-theme='dark'] .esc-hero-search {
+  --esc-blue: #a9c1ff;
+  --esc-blue-ink: #e6eaf6;
+  --esc-founders: #8cc3e3;
+  --esc-paper: #1a2342;
+  --esc-panel: #131a33;
+  --esc-line: rgba(214, 224, 255, 0.13);
+  --esc-muted: #a6afca;
+  --esc-hover: #1d2748;
+  --esc-selected: #243058;
+  --esc-ring: rgba(169, 193, 255, 0.7);
+  --esc-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(214, 224, 255, 0.1);
+}
+
+html[data-theme='dark'] .esc-search-trigger {
+  background: var(--esc-paper);
+  border-color: var(--esc-line);
+}
+
+html[data-theme='dark'] .esc-search-trigger:hover {
+  background: var(--esc-selected);
+  border-color: rgba(214, 224, 255, 0.3);
+}
+
+html[data-theme='dark'] .esc-hero-search {
+  background: rgba(19, 26, 51, 0.94);
+  border-color: rgba(214, 224, 255, 0.22);
+}
+
+html[data-theme='dark'] .esc-hero-search:hover {
+  background: var(--esc-panel);
+}
+
+html[data-theme='dark'] dialog.esc-search::backdrop {
+  background: rgba(2, 5, 16, 0.66);
+}
+
+html[data-theme='dark'] .esc-search input.esc-search-input::placeholder {
+  color: #8f98b5;
+}
+
+html[data-theme='dark'] [aria-selected='true'] .esc-search-icon {
+  color: #0c1124;
+}
 
 @media (prefers-reduced-motion: reduce) {
   dialog.esc-search[open],
@@ -583,5 +631,42 @@ ul.esc-search-list > li {
   .esc-search-trigger {
     animation: none;
     transition: none;
+  }
+}
+
+/* ---------- Touch screens with the desktop nav (iPads) ---------- */
+
+/* A finger-sized target, and no ⌘K hint: there's no keyboard to press it on. */
+@media (pointer: coarse) {
+  .esc-search-trigger:not(.esc-search-trigger--bar) {
+    min-height: 44px;
+    padding-inline: 1em;
+  }
+
+  .esc-search-trigger:not(.esc-search-trigger--bar) kbd {
+    display: none;
+  }
+}
+
+/* Narrow tablets (iPad Mini, iPads in portrait) have little room left in the
+   nav, so the button becomes a round, icon-only target. The label stays in
+   the accessibility tree, visually hidden, so it is still named "Search". */
+@media (pointer: coarse) and (max-width: 980px) {
+  .esc-search-trigger:not(.esc-search-trigger--bar) {
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    justify-content: center;
+    font-size: 16px;
+  }
+
+  .esc-search-trigger:not(.esc-search-trigger--bar) .esc-search-trigger-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
   }
 }
