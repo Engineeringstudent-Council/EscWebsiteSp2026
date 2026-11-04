@@ -9,7 +9,8 @@
 .board-year {
 	margin: 0.35em 0 0;
 	color: #000066;
-	font-size: 1.2em;
+	font-size: 1.6em;
+	font-weight: 600;
 }
 
 #main .container > header.major {
@@ -32,12 +33,15 @@
 }
 
 .committee-list {
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(min(100%, 17em), 1fr));
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
 	gap: 0.5em;
 }
 
 .committee-item {
+	flex: 1 1 17em;
+	max-width: 23em;
 	padding: 0.55em 0.7em;
 	border: 1px solid rgba(0, 0, 102, 0.15);
 	text-align: left;
@@ -79,11 +83,11 @@
 	display: inline-block;
 	vertical-align: top;
 	margin: .35em;
-	width: 15em;
+	width: 17em;
 	max-height: none;
 	overflow: visible;
 
-	padding: .65em .5em;
+	padding: 2em 1em;
 	/*border: gray solid 0.025em;*/
 
 
@@ -103,8 +107,8 @@
 }
 
 .profile {
-	width: 7em;
-	height: 7em;
+	width: 10.5em;
+	height: 10.5em;
 	margin: auto;
 	overflow: hidden;
 	border-radius: 50%;
@@ -112,11 +116,34 @@
 }
 
 .profile img {
-	height: 120%;
+	height: 210%;
 	position: absolute;
 	left: 50%;
-	top: 55%;
+	top: 38%;
 	transform: translateX(-50%) translateY(-50%);
+}
+
+/* Per-photo overrides: the shared crop above doesn't fit every source photo
+   (different framing/orientation), so a couple need their own values. */
+.profile img[src*="Josemite_SeniorTreasurer"] {
+	height: 200%;
+	left: 23%;
+	top: 62%;
+}
+
+.profile img[src*="Adriel_1"] {
+	height: 210%;
+	left: 54.2%;
+	top: 56.3%;
+}
+
+/* The ESC placeholder is a logo, not a face: show it whole instead of
+   running it through the photo crop above. */
+.profile img[src*="esc_newton"] {
+	height: auto;
+	width: 58%;
+	top: 50%;
+	object-fit: contain;
 }
 
 .hidden {
@@ -129,11 +156,11 @@
 
 .name {
 	margin: .2em;
-	font-size: 1.35em;
+	font-size: 2em;
 }
 
 .position {
-	font-size: 1em;
+	font-size: 1.5em;
 }
 
 .description {
