@@ -1,0 +1,38 @@
+/* Shared chrome for the current pages (index.html, execs.html) -- built by
+   assets/js/main-header.js and assets/js/main-footer.js. Everything else
+   still uses top-bar.js/bottom-bar.js and main.css's rules for those. */
+
+/* The header logo is a <div id="logo">, not an <h1>, so main.css's
+   "#header h1" position rule (left: 1.25em; position: absolute; top: 0;)
+   never reaches it -- restate it here. */
+#header #logo {
+	height: inherit;
+	left: 1.25em;
+	line-height: inherit;
+	margin: 0;
+	position: absolute;
+	top: 0;
+}
+
+/* Footer columns: three across, stacked on phones so nothing runs off the
+   side of the screen (WCAG 1.4.10). */
+.esc-home-footer-grid {
+	display: grid;
+	grid-template-columns: 1.9fr 1fr 1fr;
+	gap: 2.5em;
+	align-items: start;
+}
+@media screen and (max-width: 736px) {
+	.esc-home-footer-grid { grid-template-columns: 1fr; gap: 2em; }
+}
+
+/* Footer column titles are headings for screen readers but keep the small
+   bold look they had as paragraphs. */
+#footer .esc-home-footer-heading {
+	color: inherit;
+	font-size: 1em;
+	font-weight: bold;
+	letter-spacing: normal;
+	line-height: inherit;
+	margin: 0 0 0.6em;
+}

@@ -33,6 +33,7 @@
     <link rel="icon" href="favicon.ico" />
     <link href="assets/css/exec.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/theme.css" />
+    <link rel="stylesheet" href="assets/css/site-chrome.css" />
     <script src="assets/js/theme/theme.js"></script>
 
     <!-- Email wrap helper: allow wrapping but prefer <wbr> insertion points -->
@@ -44,8 +45,8 @@
       }
     </style>
   </head>
-  <body class="is-preload" style="background:#F8F8F8;">
-    <script src="assets/js/top-bar.js"></script>
+  <body class="is-preload">
+    <script src="assets/js/main-header.js"></script>
     <div id="page-wrapper">
 
       <!-- Main -->
@@ -258,12 +259,11 @@
       </main>
 
       <!-- Footer -->
-      <script src="assets/js/bottom-bar.js"></script>
+      <script src="assets/js/main-footer.js"></script>
     </div>
 
     <!-- Scripts -->
     <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/exec.js" type="text/javascript" charset="utf-8"></script>
     <script src="assets/js/jquery.scrolly.min.js"></script>
     <script src="assets/js/jquery.dropotron.min.js"></script>
     <script src="assets/js/jquery.scrollex.min.js"></script>
@@ -283,5 +283,7 @@
         });
       })();
     </script>
+    <script type="module" src="assets/js/search/ui.js"></script>
+    <script type="module" src="assets/js/site/enhance.js"></script>
   </body>
 </html>

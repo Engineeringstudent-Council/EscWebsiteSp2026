@@ -92,38 +92,16 @@
 			#banner .esc-hero-pause svg[hidden] { display: none; }
 			#banner .esc-hero-pause svg { width: 14px; height: 14px; flex: none; }
 
-			/* Footer columns: three across, stacked on phones so nothing
-			   runs off the side of the screen (WCAG 1.4.10). */
-			.esc-home-footer-grid { display: grid; grid-template-columns: 1.9fr 1fr 1fr; gap: 2.5em; align-items: start; }
-			@media screen and (max-width: 736px) {
-				.esc-home-footer-grid { grid-template-columns: 1fr; gap: 2em; }
-			}
-
-			/* Footer column titles are headings for screen readers but keep the
-			   small bold look they had as paragraphs. */
-			#footer .esc-home-footer-heading {
-				color: inherit;
-				font-size: 1em;
-				font-weight: bold;
-				letter-spacing: normal;
-				line-height: inherit;
-				margin: 0 0 0.6em;
-			}
-			/* The header logo was an <h1>; it is a home link, not a heading.
-			   This keeps the place the template gave "#header h1". */
-			#header #logo { height: inherit; left: 1.25em; line-height: inherit; margin: 0; position: absolute; top: 0; }
 		</style>
+		<link rel="stylesheet" href="assets/css/site-chrome.css" />
 		<link rel="stylesheet" href="assets/css/theme.css" />
 		<script src="assets/js/theme/theme.js"></script>
 	</head>
 	<body class="is-preload">
 		<div id="page-wrapper">
 
-			<!-- Header: logo only, no nav/tabs -->
-			<header id="header">
-				<div id="logo"><a href="index.html">
-					<span class="image"><img src="images/MAIN_long_nobackground.png" alt="Engineering Student Council home" height="90" width="244" style="width:auto;"/></span></a></div>
-			</header>
+			<!-- Header: logo + Our Team (assets/js/main-header.js) -->
+			<script src="assets/js/main-header.js"></script>
 
 			<main id="main">
 			<!-- Hero (same pattern as index.html's #banner) -->
@@ -168,42 +146,20 @@
 			</div>
 			</main>
 
-			<!-- Footer: real structure from bottom-bar.js — logo embedded alongside About Us, like the live site -->
-			<footer id="footer" style="margin-top:2em;background:#f4f4f4;">
-				<div style="max-width:1100px;margin:0 auto;padding:3.5em 1.5em 1.5em;">
-
-					<div class="esc-home-footer-grid">
-						<div style="display:flex;gap:1.3em;align-items:flex-start;">
-							<span class="image" style="flex:0 0 auto;margin-top:0.15em;"><img src="images/MAIN_nobackground.png" alt="Engineering Student Council" height="120" style="width:auto;"/></span>
-							<div>
-								<h2 class="esc-home-footer-heading">About Us</h2>
-								<p style="margin:0 0 1em;">Our mission is to represent the engineering student body; support engineering societies in reaching their full potential; and promote a diverse community through successful collaboration between students, faculty, societies, and the College of Engineering.</p>
-								<ul class="icons" style="margin:0;">
-									<li><a href="https://www.facebook.com/ESC.Berkeley" class="icon brands alt fa-facebook-f" target="_blank"><span class="label">Facebook</span></a></li>
-									<li><a href="https://www.instagram.com/berkeleyesc/" class="icon brands alt fa-instagram" target="_blank"><span class="label">Instagram</span></a></li>
-								</ul>
-							</div>
-						</div>
-						<div>
-							<h2 class="esc-home-footer-heading">Join the Team</h2>
-							<p style="margin:0 0 1em;">Interested in getting involved with ESC? Fill out the application form to get started.</p>
-							<a href="https://docs.google.com/forms/d/e/1FAIpQLSekmRMjn2weQUrBLl4xukqHT9f-0daD28Pufqyeu30jSc1oHA/viewform?usp=sharing&ouid=108883144436249446366" target="_blank" class="button primary" style="height:2.4em;line-height:2.4em;padding:0 1.5em;font-size:14px;">Application Form</a>
-						</div>
-						<div>
-							<h2 class="esc-home-footer-heading">Contacting Us</h2>
-							<p style="margin:0 0 1em;">For general inquiries about the ESC, or if you are part of a company interested in partnering with the ESC, please email our presidents at, <a href="mailto:president@esc.studentorg.berkeley.edu">president@esc.studentorg.berkeley.edu</a>.</p>
-							<p style="margin:0;"><a href="accessibility.html">Accessibility</a>: tell us about any barrier you hit on this site.</p>
-						</div>
-					</div>
-
-					<ul class="copyright" style="padding-top:2.5em;text-align:center;">
-						<li style="display:block;">&copy; 2026. All rights reserved | <a href="https://esc.berkeley.edu">Engineering Student Council</a> takes responsibility for this website and its content.</li>
-					</ul>
-				</div>
-			</footer>
+			<!-- Footer (assets/js/main-footer.js) -->
+			<script src="assets/js/main-footer.js"></script>
 
 
 		</div>
+
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/jquery.scrolly.min.js"></script>
+		<script src="assets/js/jquery.dropotron.min.js"></script>
+		<script src="assets/js/jquery.scrollex.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/main.js"></script>
 
 		<script>
 			(function () {
