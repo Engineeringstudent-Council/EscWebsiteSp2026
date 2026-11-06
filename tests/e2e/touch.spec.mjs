@@ -66,7 +66,7 @@ test('the menu works by touch', async ({ page }) => {
     expect(Math.min(box.width, box.height)).toBeGreaterThanOrEqual(44);
     await toggle.tap();
     await expect(page.locator('body')).toHaveClass(/navPanel-visible/);
-    const target = page.locator('#navPanel a', { hasText: 'Executive Board' });
+    const target = page.locator('#navPanel a', { hasText: 'Our Team' });
     await target.scrollIntoViewIfNeeded();
     await target.tap();
     await expect(page).toHaveURL(/execs\.html$/);
@@ -82,16 +82,15 @@ test('the menu works by touch', async ({ page }) => {
   await tapInPlace(page, about);
   await expect(menu).toBeVisible();
   await expect(page).toHaveURL(/students\.html$/);
-  await tapInPlace(page, menu.getByRole('button', { name: 'Our Team' }));
-  const execs = menu.locator('a', { hasText: 'Executive Board' });
-  await expect(execs).toBeVisible();
   // Tapping elsewhere closes it.
   await page.touchscreen.tap(20, (page.viewportSize().height * 3) / 4);
   await expect(menu).toBeHidden();
-  // Open again and follow a link inside.
+  // Open again and follow a link inside -- Our Team is a flat link now
+  // (execs.html folds in what used to be committees.html), not a nested
+  // disclosure button.
   await tapInPlace(page, about);
-  await tapInPlace(page, menu.getByRole('button', { name: 'Our Team' }));
-  await tapInPlace(page, execs);
+  const ourTeam = menu.getByRole('link', { name: 'Our Team' });
+  await tapInPlace(page, ourTeam);
   await expect(page).toHaveURL(/execs\.html$/);
   // A second tap on an open top-level item follows its own link.
   await ready(page, 'students.html');

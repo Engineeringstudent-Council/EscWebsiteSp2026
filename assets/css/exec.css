@@ -35,7 +35,7 @@
 	margin-bottom: 1.25em;
 }
 
-#committee-overview > h3 {
+#committee-overview > h2 {
 	color: #000066;
 	font-size: 1.35em;
 	margin: 0 0 0.4em;
@@ -64,7 +64,7 @@
 	text-align: left;
 }
 
-.committee-item h4 {
+.committee-item h3 {
 	color: #000066;
 	font-size: 1em;
 	margin: 0 0 0.2em;
@@ -212,4 +212,22 @@
 @keyframes arrow-bounce { /*Safari and Chrome*/
 	from {-webkit-transform: translate(-50%, 5px);}
 	to {-webkit-transform: translate(-50%, -5px);}
+}
+
+/* Dark mode: the committee/officer colours above assume a white
+   background, so give them readable equivalents here (same custom
+   properties theme.css uses everywhere else). */
+html[data-theme='dark'] .board-year,
+html[data-theme='dark'] #committee-overview > h2,
+html[data-theme='dark'] .committee-item h3 {
+	color: var(--theme-heading);
+}
+
+html[data-theme='dark'] .committee-item {
+	border-color: var(--theme-line);
+}
+
+html[data-theme='dark'] .committee-item p,
+html[data-theme='dark'] .description {
+	color: var(--theme-muted);
 }

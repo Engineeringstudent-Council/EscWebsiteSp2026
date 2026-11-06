@@ -58,9 +58,7 @@ test.describe('desktop dropdowns from the keyboard', () => {
     expect(box.width).toBeGreaterThan(10);
   });
 
-  test('Enter opens, arrows move, nested menus open with ArrowRight, Escape backs out', async ({
-    page,
-  }) => {
+  test('Enter opens, arrows move, Escape backs out', async ({ page }) => {
     await open(page, 'students.html');
     const toggle = aboutToggle(page);
     await toggle.focus();
@@ -70,9 +68,10 @@ test.describe('desktop dropdowns from the keyboard', () => {
     await page.keyboard.press('Enter');
     await expect(menu).toBeVisible();
     await expect(toggle).toHaveAttribute('aria-expanded', 'true');
-    const ourTeam = menu.getByRole('button', { name: 'Our Team' });
+    // Our Team is a flat link now (execs.html folds in what used to be
+    // committees.html), not a nested disclosure button.
+    const ourTeam = menu.getByRole('link', { name: 'Our Team' });
     await expect(ourTeam).toBeFocused();
-    await expect(ourTeam).toHaveAttribute('aria-expanded', 'false');
 
     await page.keyboard.press('ArrowDown');
     await expect(focused(page)).toHaveText('Our Finances');
@@ -86,26 +85,6 @@ test.describe('desktop dropdowns from the keyboard', () => {
     await expect(focused(page)).toHaveText('ESC Internal (opens in a new tab)');
     await page.keyboard.press('Home');
     await expect(ourTeam).toBeFocused();
-
-    await page.keyboard.press('ArrowRight');
-    const nested = await menuFor(page, ourTeam);
-    await expect(nested).toBeVisible();
-    await expect(ourTeam).toHaveAttribute('aria-expanded', 'true');
-    await expect(focused(page)).toHaveText('Executive Board');
-    await page.keyboard.press('ArrowDown');
-    await expect(focused(page)).toHaveText('Our Committees');
-
-    await page.keyboard.press('Escape');
-    await expect(nested).toBeHidden();
-    await expect(ourTeam).toBeFocused();
-    await expect(ourTeam).toHaveAttribute('aria-expanded', 'false');
-
-    // Enter on a nested parent opens it too; ArrowLeft closes it.
-    await page.keyboard.press('Enter');
-    await expect(focused(page)).toHaveText('Executive Board');
-    await page.keyboard.press('ArrowLeft');
-    await expect(ourTeam).toBeFocused();
-    await expect(nested).toBeHidden();
 
     await page.keyboard.press('Escape');
     await expect(menu).toBeHidden();
@@ -180,8 +159,7 @@ test.describe('desktop dropdowns from the keyboard', () => {
     await open(page, 'students.html');
     await aboutToggle(page).focus();
     await page.keyboard.press('ArrowDown');
-    await page.keyboard.press('ArrowRight');
-    await expect(focused(page)).toHaveText('Executive Board');
+    await expect(focused(page)).toHaveText('Our Team');
     await page.keyboard.press('Enter');
     await page.waitForURL(/execs\.html$/);
   });
@@ -218,8 +196,6 @@ test.describe('mouse behaviour is unchanged', () => {
     // dropotron ignores hovers while a menu is still fading in (its own
     // long-standing behaviour), so let the fade finish like a person would.
     await expect(menu).toHaveCSS('opacity', '1');
-    await page.hover('body > ul.dropotron >> text=Our Team');
-    await expect(menu.locator('ul').first()).toBeVisible();
     await page.mouse.move(10, 600);
     await expect(menu).toBeHidden();
     await expect(toggle).toHaveAttribute('aria-expanded', 'false');
@@ -244,17 +220,17 @@ test.describe('current page', () => {
     await expect(page.locator('#navPanel a[aria-current="page"]')).toHaveText('Students');
   });
 
-  test('execs.html marks the Executive Board link inside About Us', async ({ page }) => {
+  test('execs.html marks the Our Team link inside About Us', async ({ page }) => {
     await open(page, 'execs.html');
     await expect(
-      page.locator('body > ul.dropotron a[aria-current="page"]', { hasText: 'Executive Board' }),
+      page.locator('body > ul.dropotron a[aria-current="page"]', { hasText: 'Our Team' }),
     ).toHaveCount(1);
     await expect(page.locator('#nav > ul > li.esc-nav-current > a')).toHaveText('About Us');
     // Parents are highlighted visually, but only the page link is aria-current.
     await expect(
       page.locator('#nav > ul > li > a[aria-current]', { hasText: 'About Us' }),
     ).toHaveCount(0);
-    await expect(page.locator('#navPanel a[aria-current="page"]')).toHaveText('Executive Board');
+    await expect(page.locator('#navPanel a[aria-current="page"]')).toHaveText('Our Team');
   });
 
   test('events.html marks both links to it and nothing else', async ({ page }) => {
