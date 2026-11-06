@@ -220,16 +220,15 @@ test.describe('current page', () => {
     await expect(page.locator('#navPanel a[aria-current="page"]')).toHaveText('Students');
   });
 
-  test('execs.html marks the Our Team link inside About Us', async ({ page }) => {
+  test('execs.html marks the Our Team link, which is also its own dropdown trigger', async ({ page }) => {
     await open(page, 'execs.html');
-    await expect(
-      page.locator('body > ul.dropotron a[aria-current="page"]', { hasText: 'Our Team' }),
-    ).toHaveCount(1);
-    await expect(page.locator('#nav > ul > li.esc-nav-current > a')).toHaveText('About Us');
-    // Parents are highlighted visually, but only the page link is aria-current.
-    await expect(
-      page.locator('#nav > ul > li > a[aria-current]', { hasText: 'About Us' }),
-    ).toHaveCount(0);
+    const top = page.locator('#nav > ul > li > a', { hasText: 'Our Team' });
+    await expect(top).toHaveAttribute('aria-current', 'page');
+    await expect(top.locator('..')).toHaveClass(/esc-nav-current/);
+    await expect(page.locator('#nav > ul > li.esc-nav-current')).toHaveCount(1);
+    // Join Us (Our Team's own dropdown) doesn't duplicate the marking --
+    // only the page link does.
+    await expect(page.locator('body > ul.dropotron a[aria-current]')).toHaveCount(0);
     await expect(page.locator('#navPanel a[aria-current="page"]')).toHaveText('Our Team');
   });
 

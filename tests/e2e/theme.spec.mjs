@@ -20,14 +20,16 @@ test('the site is light until someone asks for dark', async ({ page }) => {
 
 test('the bear switches to dark, swaps the logos, and remembers the choice', async ({ page }) => {
   await page.goto('execs.html');
+  // execs.html now shares index.html's header (assets/js/main-header.js),
+  // so it shares its logo filename too.
   const logo = page.locator('#logo img');
-  await expect(logo).toHaveAttribute('src', 'images/main_nobckgnd.png');
+  await expect(logo).toHaveAttribute('src', 'images/MAIN_long_nobackground.png');
 
   await toggle(page).click();
   await expect.poll(() => theme(page)).toBe('dark');
   await expect(toggle(page)).toHaveAttribute('aria-pressed', 'true');
   expect(await stored(page)).toBe('dark');
-  await expect(logo).toHaveAttribute('src', /\/images\/dark\/main_nobckgnd\.png$/);
+  await expect(logo).toHaveAttribute('src', /\/images\/dark\/MAIN_long_nobackground\.png$/);
   await expect
     .poll(() => logo.evaluate((img) => img.complete && img.naturalWidth))
     .toBeGreaterThan(0);
@@ -45,7 +47,7 @@ test('the bear switches to dark, swaps the logos, and remembers the choice', asy
   await toggle(page).click();
   await expect.poll(() => theme(page)).toBe('light');
   expect(await stored(page)).toBeNull();
-  await expect(page.locator('#logo img')).toHaveAttribute('src', 'images/main_nobckgnd.png');
+  await expect(page.locator('#logo img')).toHaveAttribute('src', 'images/MAIN_long_nobackground.png');
 });
 
 test('a saved dark theme is applied before the page body exists (no white flash)', async ({
@@ -90,11 +92,10 @@ test('every open tab follows the change', async ({ page, context }) => {
   await expect(other.locator('#logo img')).toHaveAttribute('src', /\/images\/dark\//);
 });
 
-test('the homepage, which has no nav, gets its own bear', async ({ page }) => {
+test('the homepage toggle lives in the real nav, like every other page', async ({ page }) => {
   await page.goto('index.html');
-  const corner = page.locator('.esc-theme-toggle--corner');
-  await expect(corner).toBeVisible();
-  await corner.click();
+  await expect(page.locator('#nav .esc-theme-toggle')).toBeVisible();
+  await toggle(page).click();
   await expect.poll(() => theme(page)).toBe('dark');
   const hero = await page
     .locator('.esc-hero-search')

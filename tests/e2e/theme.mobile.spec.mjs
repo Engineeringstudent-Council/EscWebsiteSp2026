@@ -23,9 +23,9 @@ test('the title bar bear is a full-size tap target that fits beside search and t
   await expect(page.locator('#titleBar .title img')).toHaveAttribute('src', /\/images\/dark\//);
 });
 
-test('the homepage bear is reachable on a phone, where the header is hidden', async ({ page }) => {
+test('the homepage bear is reachable on a phone, through the title bar like every other page', async ({ page }) => {
   await page.goto('index.html');
-  const bear = page.locator('.esc-theme-toggle--corner');
+  const bear = page.locator('#titleBar .esc-theme-toggle');
   await expect(bear).toBeVisible();
   await bear.tap();
   await expect.poll(() => page.evaluate(() => document.documentElement.dataset.theme)).toBe('dark');
