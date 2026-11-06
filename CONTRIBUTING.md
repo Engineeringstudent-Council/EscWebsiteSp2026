@@ -52,5 +52,5 @@ npm run format           # auto-fix code style
   ```
 - **Dark mode:** press the bear in the nav and check your change in both themes. Prefer stylesheet rules over inline colours. If a transparent logo disappears on the dark background, add `class="esc-on-light"` to it.
 - **Don't reformat files you didn't otherwise change.** Teammates are probably editing them, and whitespace-only diffs cause merge conflicts.
-- **Accessibility:** give images real `alt` text, use headings in order, and make sure links say where they go. CI fails if a page gets worse.
+- **Accessibility:** every page passes WCAG 2.2 AA with zero violations, and CI fails on any new problem. Give images real `alt` text, use one `<h1>` and headings in order, and make sure links say where they go. The full checklist is in [docs/ACCESSIBILITY.md](docs/ACCESSIBILITY.md).
 - **Never commit secrets** (API keys, passwords). Ask the tech lead about repo secrets.

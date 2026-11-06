@@ -113,7 +113,9 @@ html #titleBar .title img {
    and still there on phones, where the template hides that header. */
 .esc-theme-toggle.esc-theme-toggle--corner {
   position: fixed;
-  top: 26px;
+  /* Clears the fixed #header (6.2em tall) so keyboard focus on this
+     button is never geometrically under it (WCAG 2.4.11). */
+  top: 7.4em;
   right: 1.5em;
   z-index: 10002;
   font-size: 16px;
