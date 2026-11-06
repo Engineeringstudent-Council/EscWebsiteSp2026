@@ -15,7 +15,8 @@ for (const page of PAGES) {
     await expect(tab.locator('body')).toHaveClass(/navPanel-visible/);
     const links = tab.locator('#navPanel a.link');
     expect(await links.count()).toBeGreaterThan(15);
-    await expect(tab.locator('#navPanel a', { hasText: 'Executive Board' })).toBeVisible();
+    const teamLink = tab.locator('#navPanel a.link[href="execs.html"]');
+    await expect(teamLink).toHaveText('Our Team');
   });
 }
 

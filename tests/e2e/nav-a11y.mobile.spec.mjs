@@ -2,6 +2,7 @@
 // #navPanel, built by main.js, enhanced by assets/js/site/nav-a11y.js).
 import { test, expect, pressTab } from './fixtures.mjs';
 import AxeBuilder from '@axe-core/playwright';
+import { AXE_TAGS } from './lib/axe.mjs';
 
 async function open(page, path) {
   await page.goto(path, { waitUntil: 'load' });
@@ -84,10 +85,12 @@ test('tapping outside still closes the panel while the page is inert', async ({ 
 
 test('group labels are text, not dead links, and the current page is marked', async ({ page }) => {
   await open(page, 'execs.html');
-  const ourTeam = page.locator('#navPanel a.link', { hasText: 'Our Team' });
-  await expect(ourTeam).not.toHaveAttribute('href', /.*/);
+  // Our Team is a real link straight to execs.html now; Our Finances is
+  // still a true group label (it expands into Our Budget / Our Sponsors).
+  const ourFinances = page.locator('#navPanel a.link', { hasText: 'Our Finances' });
+  await expect(ourFinances).not.toHaveAttribute('href', /.*/);
   await expect(page.locator('#navPanel a[href="#"]')).toHaveCount(0);
-  await expect(page.locator('#navPanel a[aria-current="page"]')).toHaveText('Executive Board');
+  await expect(page.locator('#navPanel a[aria-current="page"]')).toHaveText('Our Team');
 });
 
 test('the skip link works on a phone', async ({ page }) => {
@@ -107,7 +110,7 @@ test('the open panel and title bar have no axe violations', async ({ page }) => 
   await expect(page.locator('body')).toHaveClass(/navPanel-visible/);
   await page.waitForTimeout(600); // let the slide-in finish
   const { violations } = await new AxeBuilder({ page })
-    .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
+    .withTags(AXE_TAGS)
     .include('#navPanel')
     .include('#titleBar')
     .analyze();
