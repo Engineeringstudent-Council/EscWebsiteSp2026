@@ -9,12 +9,7 @@ document.write('\
 		 <li>\
 			<a href="about.html">About Us</a>\
 			<ul>\
-<li><a href="#">Our Team</a>\
-  <ul>\
-	<li><a href="execs.html">Executive Board</a></li>\
-	<li><a href="committees.html">Our Committees</a></li>\
-  </ul>\
-</li>\
+<li><a href="execs.html">Our Team</a></li>\
 <li><a href="#">Our Finances</a>\
   <ul>\
 					<li><a href="budget.html">Our Budget</a></li>\

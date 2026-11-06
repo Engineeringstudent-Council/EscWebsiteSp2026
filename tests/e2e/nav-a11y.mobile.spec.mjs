@@ -85,10 +85,12 @@ test('tapping outside still closes the panel while the page is inert', async ({ 
 
 test('group labels are text, not dead links, and the current page is marked', async ({ page }) => {
   await open(page, 'execs.html');
-  const ourTeam = page.locator('#navPanel a.link', { hasText: 'Our Team' });
-  await expect(ourTeam).not.toHaveAttribute('href', /.*/);
+  // Our Team is a real link straight to execs.html now; Our Finances is
+  // still a true group label (it expands into Our Budget / Our Sponsors).
+  const ourFinances = page.locator('#navPanel a.link', { hasText: 'Our Finances' });
+  await expect(ourFinances).not.toHaveAttribute('href', /.*/);
   await expect(page.locator('#navPanel a[href="#"]')).toHaveCount(0);
-  await expect(page.locator('#navPanel a[aria-current="page"]')).toHaveText('Executive Board');
+  await expect(page.locator('#navPanel a[aria-current="page"]')).toHaveText('Our Team');
 });
 
 test('the skip link works on a phone', async ({ page }) => {

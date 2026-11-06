@@ -38,9 +38,6 @@
     "boost": 1.3,
     "featured": true
   },
-  "committees.html": {
-    "keywords": "committee join tech finance communications eweek"
-  },
   "engin_decals.html": {
     "description": "Student-run DeCal courses with an engineering focus, refreshed each semester, plus how the DeCal program works.",
     "keywords": "decal course units class student-run",
@@ -63,7 +60,8 @@
     "featured": true
   },
   "execs.html": {
-    "keywords": "exec board officers president vice president leadership team contact",
+    "description": "Meet ESC's executive board and the committees each officer leads.",
+    "keywords": "exec board officers president vice president leadership team contact committee committees finance communications technical eweek",
     "boost": 1.2
   },
   "faqs.html": {
