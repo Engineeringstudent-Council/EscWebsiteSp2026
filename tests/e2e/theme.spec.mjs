@@ -98,10 +98,14 @@ test('the homepage toggle lives in the real nav, like every other page', async (
   await expect(page.locator('#nav .esc-theme-toggle')).toBeVisible();
   await toggle(page).click();
   await expect.poll(() => theme(page)).toBe('dark');
-  const hero = await page
-    .locator('.esc-hero-search')
-    .evaluate((el) => getComputedStyle(el).backgroundColor);
-  expect(hero).not.toMatch(/^rgba?\(255, 255, 255/);
+  // The reveal-circle view transition can still be mid-flight here, so poll
+  // the computed style instead of reading it once (same reasoning as the
+  // theme() poll just above).
+  await expect
+    .poll(() =>
+      page.locator('.esc-hero-search').evaluate((el) => getComputedStyle(el).backgroundColor),
+    )
+    .not.toMatch(/^rgba?\(255, 255, 255/);
 });
 
 test('reduced motion switches instantly, without the reveal animation', async ({ page }) => {
