@@ -143,15 +143,16 @@ test('ids are unique on each page', () => {
 });
 
 test('every live page links its footer in from the shared include', () => {
-  // index.html keeps its own footer design; every other page shares one, so
+  // Most pages share bottom-bar.js's footer; index.html and execs.html share
+  // their own smaller one (assets/js/main-footer.js) instead. Either way,
   // help and contact details are always in the same place (WCAG 3.2.6).
   assert.deepEqual(
     problems(($) => {
-      if ($('script[src$="bottom-bar.js"]').length) return [];
+      if ($('script[src$="bottom-bar.js"], script[src$="main-footer.js"]').length) return [];
       return $('footer#footer a[href$="accessibility.html"]').length
         ? []
         : [
-            'include <script src="assets/js/bottom-bar.js"></script> instead of a hard-coded footer',
+            'include <script src="assets/js/bottom-bar.js"></script> (or main-footer.js) instead of a hard-coded footer',
           ];
     }),
     [],

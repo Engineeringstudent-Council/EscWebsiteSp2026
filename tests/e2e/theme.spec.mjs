@@ -47,7 +47,8 @@ test('the bear switches to dark, swaps the logos, and remembers the choice', asy
   await toggle(page).click();
   await expect.poll(() => theme(page)).toBe('light');
   expect(await stored(page)).toBeNull();
-  await expect(page.locator('#logo img')).toHaveAttribute('src', 'images/MAIN_long_nobackground.png');
+  // Back on faqs.html, which still uses the old shared header/logo.
+  await expect(page.locator('#logo img')).toHaveAttribute('src', 'images/main_nobckgnd.png');
 });
 
 test('a saved dark theme is applied before the page body exists (no white flash)', async ({

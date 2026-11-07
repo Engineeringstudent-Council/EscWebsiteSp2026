@@ -220,7 +220,9 @@ test.describe('current page', () => {
     await expect(page.locator('#navPanel a[aria-current="page"]')).toHaveText('Students');
   });
 
-  test('execs.html marks the Our Team link, which is also its own dropdown trigger', async ({ page }) => {
+  test('execs.html marks the Our Team link, which is also its own dropdown trigger', async ({
+    page,
+  }) => {
     await open(page, 'execs.html');
     const top = page.locator('#nav > ul > li > a', { hasText: 'Our Team' });
     await expect(top).toHaveAttribute('aria-current', 'page');
