@@ -83,14 +83,14 @@ test('tapping outside still closes the panel while the page is inert', async ({ 
   expect(await isInert(page.locator('#page-wrapper'))).toBe(false);
 });
 
-test('group labels are text, not dead links, and the current page is marked', async ({ page }) => {
+test("execs.html's mobile panel: Our Team is current, Join Us is a real link", async ({ page }) => {
   await open(page, 'execs.html');
-  // Our Team is a real link straight to execs.html now; Our Finances is
-  // still a true group label (it expands into Our Budget / Our Sponsors).
-  const ourFinances = page.locator('#navPanel a.link', { hasText: 'Our Finances' });
-  await expect(ourFinances).not.toHaveAttribute('href', /.*/);
-  await expect(page.locator('#navPanel a[href="#"]')).toHaveCount(0);
+  // execs.html's nav is just Our Team (current page) + its Join Us dropdown
+  // now -- no more group-label-only entries like the old Our Finances.
   await expect(page.locator('#navPanel a[aria-current="page"]')).toHaveText('Our Team');
+  const joinUs = page.locator('#navPanel a.link', { hasText: 'Join Us' });
+  await expect(joinUs).toHaveAttribute('href', /docs\.google\.com/);
+  await expect(page.locator('#navPanel a[href="#"]')).toHaveCount(0);
 });
 
 test('the skip link works on a phone', async ({ page }) => {
