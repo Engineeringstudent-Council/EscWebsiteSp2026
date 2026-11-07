@@ -121,10 +121,17 @@ escInsertHere('\
 // older browsers that don't understand modules simply skip them.
 (function () {
 	var here = document.currentScript;
-	['search/ui.js', 'site/enhance.js'].forEach(function (path) {
-		var s = document.createElement('script');
-		s.type = 'module';
-		s.src = here ? new URL(path, here.src).href : 'assets/js/' + path;
-		document.head.appendChild(s);
-	});
+	var loadEnhancements = function () {
+		['search/ui.js', 'site/enhance.js'].forEach(function (path) {
+			var s = document.createElement('script');
+			s.type = 'module';
+			s.src = here ? new URL(path, here.src).href : 'assets/js/' + path;
+			document.head.appendChild(s);
+		});
+	};
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', loadEnhancements, { once: true });
+	} else {
+		loadEnhancements();
+	}
 })();
