@@ -13,7 +13,7 @@
 		<meta property="og:type" content="website" />
 		<meta property="og:site_name" content="Engineering Student Council at UC Berkeley" />
 		<meta property="og:title" content="Events Calendar" />
-		<meta property="og:description" content="Upcoming engineering student events from the Engineering Student Council, all on one calendar." />
+		<meta property="og:description" content="ENGINEERING STUDENT COUNCIL Find your next way to connect, learn, and build with the engineering community." />
 		<meta property="og:url" content="https://esc.studentorg.berkeley.edu/calendar.html" />
 		<meta property="og:image" content="https://esc.studentorg.berkeley.edu/images/og/calendar.png" />
 		<meta property="og:image:type" content="image/png" />
@@ -22,7 +22,7 @@
 		<meta property="og:image:alt" content="Events Calendar · Engineering Student Council at UC Berkeley" />
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:title" content="Events Calendar" />
-		<meta name="twitter:description" content="Upcoming engineering student events from the Engineering Student Council, all on one calendar." />
+		<meta name="twitter:description" content="ENGINEERING STUDENT COUNCIL Find your next way to connect, learn, and build with the engineering community." />
 		<meta name="twitter:image" content="https://esc.studentorg.berkeley.edu/images/og/calendar.png" />
 		<meta name="twitter:image:alt" content="Events Calendar · Engineering Student Council at UC Berkeley" />
 		<meta name="theme-color" content="#002676" />
@@ -32,6 +32,7 @@
 		<link rel='icon' href='favicon.ico'/ >
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 		<link rel="stylesheet" href="assets/css/theme.css" />
+		<link rel="stylesheet" href="assets/css/calendar.css" />
 		<script src="assets/js/theme/theme.js"></script>
 	</head>
 	<body class="is-preload">
@@ -40,16 +41,55 @@
 			<!-- Main -->
 				<main id="main" class="wrapper style1">
 					<div class="container">
-						<header class="major">
+						<header class="major calendar-heading">
 							<br>
-							<h1>Engineering Student Events Calendar</h1>
+							<p class="calendar-eyebrow">ENGINEERING STUDENT COUNCIL</p>
+							<h1>Events Calendar</h1>
+							<p>Find your next way to connect, learn, and build with the engineering community.</p>
 						</header>
 
-						<!-- Content -->
-							<section><center>
-							<iframe src="https://calendar.google.com/calendar/embed?height=600&amp;wkst=1&amp;bgcolor=%23ffffff&amp;ctz=America%2FLos_Angeles&amp;src=YmVya2VsZXkuZWR1X2Q4dTdxam1vYzdvYXB1ZjFucWFpaG1oYW5nQGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20&amp;color=%23616161&amp;showNav=1&amp;showTabs=1" title="Engineering student events calendar (Google Calendar)" style="border:solid 1px #777" width="800" height="600"></iframe>
-						</center>
-						</section>
+						<section class="calendar-preview" aria-label="Events calendar preview">
+							<div class="calendar-notice" role="note">
+								<span class="calendar-notice-dot" aria-hidden="true"></span>
+								<span><strong>Calendar preview</strong> &mdash; sample events only; a live event feed is not connected yet.</span>
+							</div>
+
+							<div class="calendar-toolbar">
+								<div class="calendar-month-controls">
+									<button class="calendar-today" id="calendar-today" type="button">Today</button>
+									<div class="calendar-arrows" aria-label="Change month">
+										<button id="calendar-previous" type="button" aria-label="Previous month">&lsaquo;</button>
+										<button id="calendar-next" type="button" aria-label="Next month">&rsaquo;</button>
+									</div>
+									<h2 id="calendar-month" aria-live="polite"></h2>
+								</div>
+								<div class="calendar-filters" role="group" aria-label="Filter sample events">
+									<button class="is-active" type="button" data-calendar-filter="all" aria-pressed="true">All events</button>
+									<button type="button" data-calendar-filter="workshop" aria-pressed="false">Workshops</button>
+									<button type="button" data-calendar-filter="community" aria-pressed="false">Community</button>
+									<button type="button" data-calendar-filter="professional" aria-pressed="false">Professional</button>
+								</div>
+							</div>
+
+							<div class="calendar-layout">
+								<div class="calendar-month-view">
+									<div class="calendar-weekdays" aria-hidden="true">
+										<span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+									</div>
+									<div class="calendar-days" id="calendar-days" aria-label="Calendar dates"></div>
+									<div class="calendar-legend"><span aria-hidden="true"></span> Sample event</div>
+								</div>
+
+								<aside class="calendar-agenda" aria-label="Events for selected date">
+									<p class="calendar-agenda-eyebrow">YOUR DAY</p>
+									<h3 id="calendar-selected-date"></h3>
+									<div id="calendar-day-events" aria-live="polite"></div>
+									<div class="calendar-upcoming">
+										<h4>Coming up this month</h4>
+										<div id="calendar-upcoming-events"></div>
+									</div>
+								</aside>
+							</div>
 					</div>
 				</main>
 
@@ -67,5 +107,8 @@
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
 
+			<script type="module" src="assets/js/search/ui.js"></script>
+			<script type="module" src="assets/js/site/enhance.js"></script>
+			<script src="assets/js/calendar.js"></script>
 	</body>
 </html>

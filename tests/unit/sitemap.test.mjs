@@ -60,7 +60,7 @@ test('sitemapPages skips verification files, noindex pages, and orphans', async 
 });
 
 test('the committed sitemap.xml matches the live pages', async () => {
-  const committed = await readFile(join(ROOT, 'sitemap.xml'), 'utf8');
+  const committed = (await readFile(join(ROOT, 'sitemap.xml'), 'utf8')).replace(/\r\n/g, '\n');
   assert.equal(
     committed,
     renderSitemap(await sitemapPages()),

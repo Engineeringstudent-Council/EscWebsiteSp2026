@@ -67,7 +67,7 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
   const target = join(ROOT, 'sitemap.xml');
   const pages = await sitemapPages();
   const xml = renderSitemap(pages);
-  const current = await readFile(target, 'utf8').catch(() => '');
+  const current = (await readFile(target, 'utf8').catch(() => '')).replace(/\r\n/g, '\n');
   if (check) {
     if (current !== xml) {
       console.error(
