@@ -636,20 +636,24 @@ export function openSearch(query = '') {
 }
 
 function triggerButton(variant) {
-  const button = h(
+  // Nav control: visible "Search" + shortcut chip form the accessible name
+  // (WCAG 2.5.3). Icon-only title-bar control hides that text, so it needs
+  // an explicit aria-label for WCAG 4.1.2.
+  const isBar = variant === 'bar';
+  const attrs = {
+    type: 'button',
+    class: `esc-search-trigger${variant ? ` esc-search-trigger--${variant}` : ''}`,
+    'aria-keyshortcuts': isMac ? 'Meta+K' : 'Control+K',
+    'data-esc-search-open': '',
+  };
+  if (isBar) attrs['aria-label'] = 'Search';
+  return h(
     'button',
-    {
-      type: 'button',
-      class: `esc-search-trigger${variant ? ` esc-search-trigger--${variant}` : ''}`,
-      'aria-label': 'Search the site',
-      'aria-keyshortcuts': isMac ? 'Meta+K' : 'Control+K',
-      'data-esc-search-open': '',
-    },
+    attrs,
     icon('search'),
     h('span', { class: 'esc-search-trigger-label', text: 'Search' }),
-    h('kbd', { 'aria-hidden': 'true', text: SHORTCUT }),
+    h('kbd', isBar ? { 'aria-hidden': 'true', text: SHORTCUT } : { text: SHORTCUT }),
   );
-  return button;
 }
 
 function mountTriggers() {
