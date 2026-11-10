@@ -636,18 +636,20 @@ export function openSearch(query = '') {
 }
 
 function triggerButton(variant) {
+  // No aria-label: the accessible name comes from the visible "Search" text and
+  // the shortcut chip. An overriding aria-label that omitted the chip failed
+  // WCAG 2.5.3 (label-content-name-mismatch) under axe.
   const button = h(
     'button',
     {
       type: 'button',
       class: `esc-search-trigger${variant ? ` esc-search-trigger--${variant}` : ''}`,
-      'aria-label': 'Search the site',
       'aria-keyshortcuts': isMac ? 'Meta+K' : 'Control+K',
       'data-esc-search-open': '',
     },
     icon('search'),
     h('span', { class: 'esc-search-trigger-label', text: 'Search' }),
-    h('kbd', { 'aria-hidden': 'true', text: SHORTCUT }),
+    h('kbd', { text: SHORTCUT }),
   );
   return button;
 }
