@@ -449,10 +449,6 @@ html[data-theme='dark'] .opp-link:focus-visible::after { outline-color: #a9c1ff;
 	margin: 0 0 0.6em;
 	font-size: 0.9em;
 	line-height: 1.4;
-	display: -webkit-box;
-	-webkit-line-clamp: 4;
-	-webkit-box-orient: vertical;
-	overflow: hidden;
 }
 .opp-meta {
 	display: flex;

@@ -40,24 +40,24 @@ The file also has a `term` (`"2025-2026"`) and a `committees` list (`id`, `name`
 
 ### Opportunity fields
 
-| Field          | Required | Example                          | Notes                                                                                                    |
-| -------------- | -------- | -------------------------------- | -------------------------------------------------------------------------------------------------------- |
-| `id`           | yes      | `"urap-spring-2027"`             | Unique, lowercase, hyphens only.                                                                         |
-| `title`        | yes      | `"Big Ideas Contest"`            |                                                                                                          |
-| `organization` | yes      | `"Blum Center"`                  |                                                                                                          |
-| `type`         | yes      | `"research"`                     | One of `internship`, `research`, `scholarship`, `fellowship`, `event`, `job`, `grad-school`, `minor`, `blue-and-gold`, `competition`, `other`. The board shows `competition` and `other` listings on the Events shelf.    |
-| `url`          | yes      | `"https://urap.berkeley.edu/"`   | Must start with `https://`.                                                                              |
-| `deadline`     |          | `"2027-01-20"`                   | `YYYY-MM-DD`. Leave it out for rolling deadlines.                                                        |
-| `eventDate`    |          | `"2027-02-22"`                   | For events.                                                                                              |
-| `postedDate`   |          | `"2026-10-01"`                   | Lets the page show "new" badges.                                                                         |
-| `description`  |          |                                  | Plain text, up to 1000 characters.                                                                       |
-| `eligibility`  |          | `"Undergraduates in any major."` |                                                                                                          |
-| `majors`       |          | `["mechanical-engineering"]`     | Which majors it is for. Leave it out if it is open to everyone. Allowed values are listed in the schema. |
-| `gradYears`    |          | `[2027, 2028]`                   | Which graduating classes can apply. Leave it out if every class can. Years only, e.g. `2027`.            |
-| `location`     |          | `"Remote"`                       |                                                                                                          |
-| `paid`         |          | `true`                           | No quotes.                                                                                               |
-| `tags`         |          | `["eecs", "summer"]`             | Lowercase, hyphens only.                                                                                 |
-| `contact`      |          | `{ "email": "..." }`             | `email` is required, `name` is optional.                                                                 |
+| Field          | Required | Example                          | Notes                                                                                                                                                                                                                  |
+| -------------- | -------- | -------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `id`           | yes      | `"urap-spring-2027"`             | Unique, lowercase, hyphens only.                                                                                                                                                                                       |
+| `title`        | yes      | `"Big Ideas Contest"`            |                                                                                                                                                                                                                        |
+| `organization` | yes      | `"Blum Center"`                  |                                                                                                                                                                                                                        |
+| `type`         | yes      | `"research"`                     | One of `internship`, `research`, `scholarship`, `fellowship`, `event`, `job`, `grad-school`, `minor`, `blue-and-gold`, `competition`, `other`. The board shows `competition` and `other` listings on the Events shelf. |
+| `url`          | yes      | `"https://urap.berkeley.edu/"`   | Must start with `https://`.                                                                                                                                                                                            |
+| `deadline`     |          | `"2027-01-20"`                   | `YYYY-MM-DD`. Leave it out for rolling deadlines.                                                                                                                                                                      |
+| `eventDate`    |          | `"2027-02-22"`                   | For events.                                                                                                                                                                                                            |
+| `postedDate`   |          | `"2026-10-01"`                   | Lets the page show "new" badges.                                                                                                                                                                                       |
+| `description`  |          |                                  | Plain text, up to 1000 characters.                                                                                                                                                                                     |
+| `eligibility`  |          | `"Undergraduates in any major."` |                                                                                                                                                                                                                        |
+| `majors`       |          | `["mechanical-engineering"]`     | Which majors it is for. Leave it out if it is open to everyone. Allowed values are listed in the schema.                                                                                                               |
+| `gradYears`    |          | `[2027, 2028]`                   | Which graduating classes can apply. Leave it out if every class can. Years only, e.g. `2027`.                                                                                                                          |
+| `location`     |          | `"Remote"`                       |                                                                                                                                                                                                                        |
+| `paid`         |          | `true`                           | No quotes.                                                                                                                                                                                                             |
+| `tags`         |          | `["eecs", "summer"]`             | Lowercase, hyphens only.                                                                                                                                                                                               |
+| `contact`      |          | `{ "email": "..." }`             | `email` is required, `name` is optional.                                                                                                                                                                               |
 
 For the full rules, read the schema files. Every field has a `description`.
 
