@@ -1,6 +1,6 @@
 {
   "site": "https://esc.studentorg.berkeley.edu",
-  "seeds": ["index.html"],
+  "seeds": ["index.html", "opportunities.html"],
   "menus": [
     { "script": "assets/js/top-bar.js", "selector": "#nav > ul" },
     { "script": "assets/js/bottom-bar.js" }

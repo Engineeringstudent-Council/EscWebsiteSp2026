@@ -1,0 +1,50 @@
+name: Sync internships
+
+# Refreshes data/opportunities.synced.json from SimplifyJobs' public list and
+# opens (or updates) one pull request with the change, so a person looks at it
+# before it reaches the live site. Run it by hand from the Actions tab with
+# "Run workflow".
+on:
+  schedule:
+    - cron: '17 13 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: sync-internships
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    name: Sync Simplify internships
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+      - name: Fetch the list
+        run: node scripts/sync-simplify.mjs
+      - name: Open or update the pull request
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if git diff --quiet -- data/opportunities.synced.json; then
+            echo "No changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -C sync/internships
+          git add data/opportunities.synced.json
+          git commit -m "Sync internship listings from SimplifyJobs"
+          git push --force origin sync/internships
+          if [ -z "$(gh pr list --head sync/internships --state open --json number --jq '.[0].number')" ]; then
+            gh pr create --base main --head sync/internships \
+              --title "Sync internship listings" \
+              --body "Automatic refresh of data/opportunities.synced.json from the SimplifyJobs Summer 2027 list. Only that file changes."
+          fi

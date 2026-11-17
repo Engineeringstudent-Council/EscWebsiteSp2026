@@ -14,7 +14,9 @@
     "opportunities": {
       "description": "The list of opportunities.",
       "type": "array",
-      "items": { "$ref": "#/$defs/opportunity" }
+      "items": {
+        "$ref": "#/$defs/opportunity"
+      }
     }
   },
   "$defs": {
@@ -55,6 +57,9 @@
             "fellowship",
             "event",
             "job",
+            "grad-school",
+            "minor",
+            "blue-and-gold",
             "competition",
             "other"
           ]
@@ -91,6 +96,43 @@
           "description": "Who can apply, in plain words, e.g. \"Undergraduates in any major; no prior research experience needed.\"",
           "type": "string",
           "maxLength": 300
+        },
+        "gradYears": {
+          "description": "Graduating classes it is open to, e.g. [2027, 2028]. Leave out (or leave empty) if every class can apply.",
+          "type": "array",
+          "uniqueItems": true,
+          "maxItems": 12,
+          "items": {
+            "type": "integer",
+            "minimum": 2000,
+            "maximum": 2100
+          }
+        },
+        "majors": {
+          "description": "Engineering majors this is aimed at. Leave out (or leave empty) if it is open to every major; the page then shows it under all of them.",
+          "type": "array",
+          "uniqueItems": true,
+          "maxItems": 20,
+          "items": {
+            "enum": [
+              "aerospace-engineering",
+              "bioengineering",
+              "civil-engineering",
+              "electrical-computer-engineering",
+              "eecs",
+              "engineering-science",
+              "energy-engineering",
+              "engineering-math-statistics",
+              "engineering-physics",
+              "environmental-engineering-science",
+              "engineering-undeclared",
+              "environmental-engineering",
+              "ieor",
+              "materials-science",
+              "mechanical-engineering",
+              "nuclear-engineering"
+            ]
+          }
         },
         "paid": {
           "description": "true if the position is paid or the award includes money, false if unpaid. Leave out if unknown or not applicable.",
