@@ -409,7 +409,9 @@ export function discoverTargets(root = ROOT) {
   const targets = names.map((name) => ({
     name,
     schemaFile: posix.join('schemas', `${name}.schema.json`),
-    files: [`${name}.json`, `${name}.example.json`].filter((f) => dataFiles.includes(f)),
+    files: [`${name}.json`, `${name}.synced.json`, `${name}.example.json`].filter((f) =>
+      dataFiles.includes(f),
+    ),
   }));
   const claimed = new Set(targets.flatMap((t) => t.files));
   const orphans = dataFiles.filter((f) => !claimed.has(f)).map((f) => posix.join('data', f));

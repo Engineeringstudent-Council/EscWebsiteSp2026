@@ -9,7 +9,12 @@ import { fileURLToPath } from 'node:url';
 export const ROOT = resolve(fileURLToPath(new URL('..', import.meta.url)));
 
 /** Files whose links seed the crawl, relative to the site root. */
-export const SEEDS = ['index.html', 'assets/js/top-bar.js', 'assets/js/bottom-bar.js'];
+export const SEEDS = [
+  'index.html',
+  'opportunities.html',
+  'assets/js/top-bar.js',
+  'assets/js/bottom-bar.js',
+];
 
 // Quoted or unquoted: browsers follow <a href=ficomm.html> just the same.
 const HREF = /\bhref\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'<>`=]+))/gi;

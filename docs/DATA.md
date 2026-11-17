@@ -40,22 +40,24 @@ The file also has a `term` (`"2025-2026"`) and a `committees` list (`id`, `name`
 
 ### Opportunity fields
 
-| Field          | Required | Example                          | Notes                                                                                                 |
-| -------------- | -------- | -------------------------------- | ----------------------------------------------------------------------------------------------------- |
-| `id`           | yes      | `"urap-spring-2027"`             | Unique, lowercase, hyphens only.                                                                      |
-| `title`        | yes      | `"Big Ideas Contest"`            |                                                                                                       |
-| `organization` | yes      | `"Blum Center"`                  |                                                                                                       |
-| `type`         | yes      | `"research"`                     | One of `internship`, `research`, `scholarship`, `fellowship`, `event`, `job`, `competition`, `other`. |
-| `url`          | yes      | `"https://urap.berkeley.edu/"`   | Must start with `https://`.                                                                           |
-| `deadline`     |          | `"2027-01-20"`                   | `YYYY-MM-DD`. Leave it out for rolling deadlines.                                                     |
-| `eventDate`    |          | `"2027-02-22"`                   | For events.                                                                                           |
-| `postedDate`   |          | `"2026-10-01"`                   | Lets the page show "new" badges.                                                                      |
-| `description`  |          |                                  | Plain text, up to 1000 characters.                                                                    |
-| `eligibility`  |          | `"Undergraduates in any major."` |                                                                                                       |
-| `location`     |          | `"Remote"`                       |                                                                                                       |
-| `paid`         |          | `true`                           | No quotes.                                                                                            |
-| `tags`         |          | `["eecs", "summer"]`             | Lowercase, hyphens only.                                                                              |
-| `contact`      |          | `{ "email": "..." }`             | `email` is required, `name` is optional.                                                              |
+| Field          | Required | Example                          | Notes                                                                                                    |
+| -------------- | -------- | -------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| `id`           | yes      | `"urap-spring-2027"`             | Unique, lowercase, hyphens only.                                                                         |
+| `title`        | yes      | `"Big Ideas Contest"`            |                                                                                                          |
+| `organization` | yes      | `"Blum Center"`                  |                                                                                                          |
+| `type`         | yes      | `"research"`                     | One of `internship`, `research`, `scholarship`, `fellowship`, `event`, `job`, `grad-school`, `minor`, `blue-and-gold`, `competition`, `other`. The board shows `competition` and `other` listings on the Events shelf.    |
+| `url`          | yes      | `"https://urap.berkeley.edu/"`   | Must start with `https://`.                                                                              |
+| `deadline`     |          | `"2027-01-20"`                   | `YYYY-MM-DD`. Leave it out for rolling deadlines.                                                        |
+| `eventDate`    |          | `"2027-02-22"`                   | For events.                                                                                              |
+| `postedDate`   |          | `"2026-10-01"`                   | Lets the page show "new" badges.                                                                         |
+| `description`  |          |                                  | Plain text, up to 1000 characters.                                                                       |
+| `eligibility`  |          | `"Undergraduates in any major."` |                                                                                                          |
+| `majors`       |          | `["mechanical-engineering"]`     | Which majors it is for. Leave it out if it is open to everyone. Allowed values are listed in the schema. |
+| `gradYears`    |          | `[2027, 2028]`                   | Which graduating classes can apply. Leave it out if every class can. Years only, e.g. `2027`.            |
+| `location`     |          | `"Remote"`                       |                                                                                                          |
+| `paid`         |          | `true`                           | No quotes.                                                                                               |
+| `tags`         |          | `["eecs", "summer"]`             | Lowercase, hyphens only.                                                                                 |
+| `contact`      |          | `{ "email": "..." }`             | `email` is required, `name` is optional.                                                                 |
 
 For the full rules, read the schema files. Every field has a `description`.
 
@@ -133,3 +135,12 @@ Opportunities work the same way: fetch `data/opportunities.json`, then filter by
 ## Changing a contract
 
 Need a new field? Add it to the schema, with a `description`, in the same PR that starts using it, and update the example file. Run `npm test` and `npm run check:data`. Adding an optional field never breaks existing data. Making a field required, or renaming one, means updating every data file in the same PR.
+
+## Synced internships (`data/opportunities.synced.json`)
+
+Internship listings come from SimplifyJobs' public Summer 2027 list. **Do not edit this file by hand.** `scripts/sync-simplify.mjs` rewrites it, and `.github/workflows/sync-internships.yml` runs that script every day and opens a pull request when something changed. It uses the same schema as `data/opportunities.json`.
+
+- Only listings that are visible and active are kept, as `type: "internship"`, with the posting date from Simplify and no deadline.
+- `majors` are filled in from Simplify's role group (software, hardware, data and so on), so the major filter works.
+- Put hand-written entries in `data/opportunities.json`. If one shares an `id` or a link with a synced listing, the hand-written one is shown and the synced one is dropped.
+- Run it yourself with `node scripts/sync-simplify.mjs`, or check it is current with `node scripts/sync-simplify.mjs --check`.

@@ -29,3 +29,5 @@ test-results/
 .claude/
 top-bar.js
 tests/e2e/baselines/
+# Written by scripts/sync-simplify.mjs (one listing per line, thousands of them).
+data/opportunities.synced.json

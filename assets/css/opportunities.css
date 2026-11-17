@@ -1,0 +1,586 @@
+/* Opportunities board (opportunities.html), styled like a Padlet shelf board:
+   a soft wallpaper, translucent columns, and white rounded cards that open
+   with a coloured link-preview tile. One accent per category drives every
+   colour, so swapping a hue is a one-line change below. */
+
+[data-cat] {
+	--accent: #475569;
+}
+[data-cat='internship'] { --accent: #1f5fbf; }
+[data-cat='job'] { --accent: #0f766e; }
+[data-cat='research'] { --accent: #6d3fb5; }
+[data-cat='grad-school'] { --accent: #3730a3; }
+[data-cat='scholarship'] { --accent: #b45309; }
+[data-cat='fellowship'] { --accent: #a1295f; }
+[data-cat='minor'] { --accent: #0e7490; }
+[data-cat='blue-and-gold'] { --accent: #002676; }
+[data-cat='competition'] { --accent: #c2410c; }
+[data-cat='event'] { --accent: #2f7d32; }
+[data-cat='other'] { --accent: #475569; }
+
+.opp-toolbar,
+.opp-board {
+	--opp-surface: #ffffff;
+	--opp-ink: #1b2333;
+	--opp-muted: #4b5568;
+	--opp-line: rgba(15, 23, 42, 0.12);
+	--opp-column: rgba(255, 255, 255, 0.55);
+	--opp-card-shadow: 0 1px 2px rgba(15, 23, 42, 0.14), 0 6px 14px -8px rgba(15, 23, 42, 0.3);
+	--opp-card-lift: 0 2px 4px rgba(15, 23, 42, 0.14), 0 14px 26px -10px rgba(15, 23, 42, 0.38);
+	text-align: left;
+}
+html[data-theme='dark'] .opp-toolbar,
+html[data-theme='dark'] .opp-board {
+	--opp-surface: var(--theme-surface, #131a33);
+	--opp-ink: var(--theme-text-strong, #f4f6fc);
+	--opp-muted: var(--theme-muted, #a6afca);
+	--opp-line: var(--theme-line, rgba(214, 224, 255, 0.13));
+	--opp-column: rgba(255, 255, 255, 0.05);
+	--opp-card-shadow: 0 1px 2px rgba(0, 0, 0, 0.5), 0 8px 18px -8px rgba(0, 0, 0, 0.7);
+	--opp-card-lift: 0 2px 4px rgba(0, 0, 0, 0.5), 0 16px 30px -10px rgba(0, 0, 0, 0.85);
+}
+
+.opp-sr {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	clip: rect(0 0 0 0);
+	white-space: nowrap;
+}
+
+/* ---- toolbar ----------------------------------------------------------- */
+
+.opp-toolbar {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.8em 1.2em;
+	align-items: flex-end;
+	margin: 0 0 1em;
+	padding: 0.9em 1.1em;
+	border: 1px solid var(--opp-line);
+	border-radius: 1em;
+	background: var(--opp-surface);
+	color: var(--opp-ink);
+	box-shadow: var(--opp-card-shadow);
+}
+.opp-field { display: block; flex: 0 1 17em; margin: 0; }
+.opp-field--grow { flex: 1 1 18em; }
+.opp-field-label,
+.opp-check {
+	color: #000066;
+}
+html[data-theme='dark'] .opp-field-label,
+html[data-theme='dark'] .opp-check {
+	color: var(--opp-ink);
+}
+.opp-field-label {
+	display: block;
+	margin-bottom: 0.3em;
+	font-size: 0.82em;
+	font-weight: 700;
+	letter-spacing: normal;
+	text-transform: none;
+}
+.opp-field input[type='search'] {
+	-webkit-appearance: none;
+	appearance: none;
+	box-sizing: border-box;
+	width: 100%;
+	height: auto;
+	margin: 0;
+	padding: 0.65em 0.9em;
+	border: 1px solid rgba(15, 23, 42, 0.3);
+	border-radius: 0.7em;
+	background-color: #ffffff;
+	box-shadow: none;
+	color: #1b2333;
+	font: inherit;
+	font-size: 0.95em;
+	line-height: 1.3;
+}
+/* main.css forces a near-white placeholder with !important, so this must too. */
+.opp-field input[type='search']::placeholder,
+.opp-field input[type='search']::-webkit-input-placeholder {
+	color: #5b6477 !important;
+	opacity: 1;
+}
+html[data-theme='dark'] .opp-field input[type='search'],
+html[data-theme='dark'] .opp-field input[type='search']:hover,
+html[data-theme='dark'] .opp-field input[type='search']:focus {
+	border-color: var(--theme-line, rgba(214, 224, 255, 0.3));
+	background-color: var(--theme-surface-2, #1a2342);
+	color: var(--theme-text-strong, #f4f6fc);
+}
+html[data-theme='dark'] .opp-field input[type='search']::placeholder,
+html[data-theme='dark'] .opp-field input[type='search']::-webkit-input-placeholder {
+	color: var(--opp-muted) !important;
+	opacity: 1;
+}
+.opp-field input:focus-visible {
+	outline: 3px solid #1f5fbf;
+	outline-offset: 1px;
+}
+html[data-theme='dark'] .opp-field input:focus-visible {
+	outline-color: #a9c1ff;
+}
+
+/* main.css hides native checkboxes and redraws them on the label; this one
+   stays a normal, visible checkbox. */
+.opp-check {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5em;
+	margin: 0 0 0.55em;
+	font-size: 0.9em;
+	cursor: pointer;
+}
+.opp-check input[type='checkbox'] {
+	-webkit-appearance: checkbox;
+	appearance: auto;
+	display: inline-block;
+	float: none;
+	flex: none;
+	width: 1.15em;
+	height: 1.15em;
+	margin: 0;
+	opacity: 1;
+	position: static;
+	z-index: auto;
+}
+.opp-check::before,
+.opp-check::after { content: none; }
+
+.opp-status {
+	flex: 1 0 100%;
+	margin: 0;
+	color: var(--opp-muted);
+	font-size: 0.85em;
+}
+
+/* ---- major pills ------------------------------------------------------- */
+
+.opp-majors-set {
+	flex: 1 0 100%;
+	min-width: 0;
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+.opp-majors-set .opp-field-label { padding: 0; }
+.opp-pills { display: flex; flex-wrap: wrap; gap: 0.45em; }
+.opp-pill { position: relative; display: inline-block; margin: 0; cursor: pointer; }
+/* The radio stays in the page (arrow keys and screen readers work); the pill
+   beside it is what people see. */
+.opp-pill input[type='radio'] {
+	-webkit-appearance: none;
+	appearance: none;
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	opacity: 0;
+	float: none;
+	z-index: 1;
+	cursor: pointer;
+}
+.opp-pill::before,
+.opp-pill::after { content: none; }
+.opp-pill-text {
+	display: flex;
+	align-items: center;
+	gap: 0.45em;
+	padding: 0.4em 0.95em;
+	border: 1.5px solid #000066;
+	border-radius: 999px;
+	background: #ffffff;
+	color: #000066;
+	font-size: 0.85em;
+	font-weight: 700;
+	line-height: 1.3;
+}
+@media (prefers-reduced-motion: no-preference) {
+	.opp-pill-text { transition: background-color 0.15s ease, color 0.15s ease; }
+}
+.opp-pill:hover .opp-pill-text { background: #e6ebf7; }
+/* Chosen pill: ESC navy with white text. */
+.opp-pill input:checked + .opp-pill-text {
+	border-color: #000066;
+	background: #000066;
+	color: #ffffff;
+}
+.opp-pill input:focus-visible + .opp-pill-text { outline: 3px solid #fdb515; outline-offset: 2px; }
+
+/* Dark mode: same ink as the rest of the board, ESC gold for the chosen pill. */
+html[data-theme='dark'] .opp-pill-text {
+	border-color: var(--theme-line, rgba(214, 224, 255, 0.3));
+	background: var(--theme-surface-2, #1a2342);
+	color: var(--opp-ink);
+}
+html[data-theme='dark'] .opp-pill:hover .opp-pill-text { background: var(--theme-surface-3, #232d52); }
+html[data-theme='dark'] .opp-pill input:checked + .opp-pill-text {
+	border-color: #fdb515;
+	background: #fdb515;
+	color: #0c1124;
+}
+html[data-theme='dark'] .opp-pill input:focus-visible + .opp-pill-text { outline-color: #ffffff; }
+
+/* ---- the wallpaper ----------------------------------------------------- */
+
+.opp-board {
+	padding: 1.1em;
+	border-radius: 1.3em;
+	background: linear-gradient(155deg, #dfe7f8 0%, #ece9f2 48%, #f5ebdc 100%);
+	color: var(--opp-ink);
+}
+html[data-theme='dark'] .opp-board {
+	background: linear-gradient(155deg, #101733 0%, #151b36 55%, #1d1a2c 100%);
+}
+.opp-loading { margin: 0; color: var(--opp-muted); text-align: center; }
+
+.opp-shelves {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(16.5em, 1fr));
+	gap: 1.1em;
+	align-items: start;
+}
+
+/* A shelf is a translucent column holding a title row and its cards. */
+.opp-shelf {
+	min-width: 0;
+	padding: 0.7em 0.7em 0.8em;
+	border-radius: 1.1em;
+	background: var(--opp-column);
+}
+
+.opp-head { margin: 0 0 0.7em; padding: 0.15em 0.35em 0; text-align: left; }
+.opp-head--wide { margin: 0.9em 0 1em; padding: 0 0.2em; }
+.opp-head-row { display: flex; align-items: center; gap: 0.55em; }
+.opp-dot {
+	flex: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 1.9em;
+	height: 1.9em;
+	border-radius: 50%;
+	background: var(--accent);
+	color: #ffffff;
+	box-shadow: 0 1px 2px rgba(15, 23, 42, 0.25);
+}
+.opp-dot .opp-icon { width: 1.1em; height: 1.1em; }
+.opp-head--wide .opp-dot { width: 2.1em; height: 2.1em; }
+html[data-theme='dark'] .opp-dot {
+	background: color-mix(in srgb, var(--accent) 70%, #0c1124);
+	box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.28);
+}
+
+/* Line icons: drawn in the current text colour, so they follow both themes. */
+.opp-icon {
+	display: inline-block;
+	flex: none;
+	width: 1em;
+	height: 1em;
+	fill: none;
+	stroke: currentColor;
+	stroke-width: 2;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+}
+.opp-head-title {
+	flex: 1 1 auto;
+	margin: 0;
+	color: var(--opp-ink);
+	font-size: 1.15em;
+	font-weight: 800;
+	letter-spacing: normal;
+	line-height: 1.2;
+	text-transform: none;
+}
+.opp-head--wide .opp-head-title { font-size: 1.6em; }
+.opp-head-title:focus-visible { outline: 3px solid #1f5fbf; outline-offset: 3px; border-radius: 0.2em; }
+html[data-theme='dark'] .opp-head-title:focus-visible { outline-color: #a9c1ff; }
+.opp-head-count {
+	flex: none;
+	min-width: 1.7em;
+	padding: 0.1em 0.55em;
+	border-radius: 999px;
+	background: var(--opp-surface);
+	color: var(--opp-ink);
+	font-size: 0.8em;
+	font-weight: 700;
+	text-align: center;
+	box-shadow: 0 1px 2px rgba(15, 23, 42, 0.14);
+}
+.opp-head-blurb {
+	margin: 0.3em 0 0 2.5em;
+	color: var(--opp-muted);
+	font-size: 0.85em;
+}
+
+.opp-list,
+.opp-wall { list-style: none; margin: 0; padding: 0; }
+.opp-list { display: grid; gap: 0.7em; }
+.opp-item { margin: 0; padding: 0; }
+.opp-wall {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(16.5em, 1fr));
+	gap: 1em;
+}
+
+/* ---- cards -------------------------------------------------------------- */
+
+.opp-card {
+	position: relative;
+	box-sizing: border-box;
+	height: 100%;
+	overflow: hidden;
+	border-radius: 0.95em;
+	background: var(--opp-surface);
+	color: var(--opp-ink);
+	box-shadow: var(--opp-card-shadow);
+}
+@media (prefers-reduced-motion: no-preference) {
+	.opp-card { transition: transform 0.15s ease, box-shadow 0.15s ease; }
+}
+.opp-card:hover,
+.opp-card:focus-within {
+	transform: translateY(-2px);
+	box-shadow: var(--opp-card-lift);
+}
+@media (prefers-reduced-motion: reduce) {
+	.opp-card:hover,
+	.opp-card:focus-within { transform: none; }
+}
+
+/* The link-preview tile. Text on it sits in white pills, so it stays
+   readable whatever the category colour. */
+.opp-preview {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	gap: 1.3em;
+	min-height: 5.6em;
+	padding: 0.65em 0.7em;
+	background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 86%, #ffffff) 0%, color-mix(in srgb, var(--accent) 62%, #000000) 100%);
+	overflow: hidden;
+}
+html[data-theme='dark'] .opp-preview {
+	background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 62%, #0c1124) 0%, color-mix(in srgb, var(--accent) 36%, #0c1124) 100%);
+}
+.opp-initial {
+	position: absolute;
+	right: 0.12em;
+	bottom: -0.22em;
+	color: rgba(255, 255, 255, 0.2);
+	font-size: 5.2em;
+	font-weight: 800;
+	line-height: 1;
+	pointer-events: none;
+}
+.opp-watermark {
+	position: absolute;
+	right: 0.45em;
+	bottom: 0.3em;
+	color: rgba(255, 255, 255, 0.3);
+	font-size: 3.6em;
+	line-height: 0;
+	pointer-events: none;
+}
+.opp-watermark .opp-icon { width: 1em; height: 1em; stroke-width: 1.6; }
+.opp-chips { position: relative; display: flex; flex-wrap: wrap; gap: 0.4em; }
+.opp-chip,
+.opp-new,
+.opp-domain {
+	display: inline-block;
+	max-width: 100%;
+	padding: 0.15em 0.7em;
+	border-radius: 999px;
+	font-size: 0.75em;
+	font-weight: 700;
+	line-height: 1.5;
+}
+.opp-chip {
+	background: rgba(255, 255, 255, 0.95);
+	color: color-mix(in srgb, var(--accent) 72%, #000000);
+}
+.opp-new { background: #fdb515; color: #1b2333; }
+.opp-domain {
+	position: relative;
+	align-self: flex-start;
+	overflow: hidden;
+	background: rgba(255, 255, 255, 0.95);
+	color: #1b2333;
+	font-weight: 600;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+html[data-theme='dark'] .opp-chip { background: rgba(12, 17, 36, 0.78); color: #ffffff; }
+html[data-theme='dark'] .opp-domain { background: rgba(12, 17, 36, 0.78); color: #ffffff; }
+
+.opp-body { padding: 0.7em 0.95em 0.95em; }
+
+.opp-title {
+	margin: 0 0 0.15em;
+	font-size: 1.05em;
+	font-weight: 800;
+	line-height: 1.25;
+	letter-spacing: normal;
+	text-transform: none;
+}
+.opp-link,
+html[data-theme='dark'] .opp-link { color: var(--opp-ink); border: 0; text-decoration: none; }
+.opp-link:hover { text-decoration: underline; }
+/* The whole card is the tap target. */
+.opp-link::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+	border-radius: 0.95em;
+}
+.opp-link:focus-visible { outline: none; }
+.opp-link:focus-visible::after { outline: 3px solid #1f5fbf; outline-offset: -3px; }
+html[data-theme='dark'] .opp-link:focus-visible::after { outline-color: #a9c1ff; }
+
+.opp-org { margin: 0 0 0.45em; color: var(--opp-muted); font-size: 0.86em; font-weight: 600; }
+.opp-desc {
+	margin: 0 0 0.6em;
+	font-size: 0.9em;
+	line-height: 1.4;
+	display: -webkit-box;
+	-webkit-line-clamp: 4;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+.opp-meta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.3em 0.9em;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	color: var(--opp-muted);
+	font-size: 0.82em;
+}
+.opp-meta li { margin: 0; padding: 0; }
+.opp-meta li:first-child { color: var(--opp-ink); font-weight: 700; }
+.opp-majors { display: flex; align-items: flex-start; line-height: 1.4; gap: 0.5em; margin: 0.5em 0 0; color: var(--opp-muted); font-size: 0.8em; }
+.opp-major-icons { flex: none; display: inline-flex; gap: 0.25em; }
+.opp-major-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 1.9em;
+	height: 1.9em;
+	border-radius: 50%;
+	background: #e8edf8;
+	color: #000066;
+}
+.opp-major-icon .opp-icon { width: 1.05em; height: 1.05em; }
+html[data-theme='dark'] .opp-major-icon { background: var(--theme-surface-3, #232d52); color: var(--opp-ink); }
+.opp-elig { margin: 0.3em 0 0; color: var(--opp-muted); font-size: 0.8em; font-style: italic; }
+
+/* ---- buttons ------------------------------------------------------------ */
+
+.opp-btn {
+	display: inline-block;
+	box-sizing: border-box;
+	height: auto;
+	margin: 0;
+	padding: 0.55em 1.15em;
+	border: 0;
+	border-radius: 999px;
+	background: var(--opp-surface);
+	box-shadow: var(--opp-card-shadow);
+	color: #000066;
+	font: inherit;
+	font-size: 0.9em;
+	font-weight: 700;
+	letter-spacing: normal;
+	line-height: 1.2;
+	text-transform: none;
+	cursor: pointer;
+}
+html[data-theme='dark'] .opp-btn { color: var(--theme-link, #a9c1ff); }
+@media (prefers-reduced-motion: no-preference) {
+	.opp-btn { transition: background-color 0.15s ease, color 0.15s ease; }
+}
+.opp-btn:hover,
+.opp-btn:focus-visible { background: #000066; color: #ffffff; }
+html[data-theme='dark'] .opp-btn:hover,
+html[data-theme='dark'] .opp-btn:focus-visible { background: var(--theme-link, #a9c1ff); color: #0c1124; }
+.opp-btn:focus-visible { outline: 3px solid #1f5fbf; outline-offset: 2px; }
+.opp-btn--block { display: block; width: 100%; margin-top: 0.75em; text-align: center; }
+.opp-btn--ghost { background: transparent; box-shadow: none; padding-left: 0.2em; }
+
+.opp-empty { padding: 1.5em 1em; color: var(--opp-muted); text-align: center; }
+.opp-empty p { margin: 0 0 1em; }
+
+/* ---- phones ------------------------------------------------------------- */
+
+@media screen and (max-width: 736px) {
+	.opp-board { padding: 0.7em; border-radius: 1em; }
+	.opp-shelves,
+	.opp-wall { grid-template-columns: 1fr; }
+	.opp-field,
+	.opp-field--grow { flex: 1 1 100%; }
+}
+.opp-pill-text .opp-icon { width: 1.15em; height: 1.15em; }
+.opp-majors-text { flex: 1 1 auto; min-width: 0; padding-top: 0.25em; }
+
+/* ---- filters button + panel -------------------------------------------- */
+
+.opp-actions {
+	flex: 1 0 100%;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.6em 1.2em;
+	margin: 0.2em 0 0.4em;
+}
+.opp-actions .opp-check { margin: 0; }
+.opp-filter-toggle {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5em;
+	border: 1.5px solid #000066;
+	background: #ffffff;
+	box-shadow: none;
+}
+.opp-filter-toggle .opp-icon { width: 1.1em; height: 1.1em; }
+.opp-filter-toggle[aria-expanded='true'] { background: #000066; color: #ffffff; }
+html[data-theme='dark'] .opp-filter-toggle {
+	border-color: var(--theme-line, rgba(214, 224, 255, 0.4));
+	background: var(--theme-surface-2, #1a2342);
+	color: var(--opp-ink);
+}
+html[data-theme='dark'] .opp-filter-toggle[aria-expanded='true'] {
+	border-color: #fdb515;
+	background: #fdb515;
+	color: #0c1124;
+}
+.opp-filters {
+	flex: 1 0 100%;
+	box-sizing: border-box;
+	margin: 0.2em 0 0.6em;
+	padding: 0.9em 1em 0.6em;
+	border: 1px solid rgba(15, 23, 42, 0.18);
+	border-radius: 0.9em;
+	background: rgba(0, 38, 118, 0.04);
+}
+.opp-filters[hidden] { display: none; }
+html[data-theme='dark'] .opp-filters {
+	border-color: var(--theme-line, rgba(214, 224, 255, 0.25));
+	background: rgba(255, 255, 255, 0.04);
+}
+.opp-filter-group { margin: 0 0 1em; }
+
+.opp-credit {
+	max-width: 46em;
+	margin: 1.2em auto 0;
+	color: var(--opp-muted);
+	font-size: 0.8em;
+	text-align: center;
+}
