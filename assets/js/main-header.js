@@ -29,6 +29,7 @@ escInsertHere('\
 				<li><a href="https://docs.google.com/forms/d/e/1FAIpQLSekmRMjn2weQUrBLl4xukqHT9f-0daD28Pufqyeu30jSc1oHA/viewform?usp=sharing&ouid=108883144436249446366" target="_blank">Join Us</a></li>\
 			</ul>\
 		</li>\
+		<li><a href="opportunities.html">Opportunities</a></li>\
 	</ul>\
 </nav>\
 </header>\
