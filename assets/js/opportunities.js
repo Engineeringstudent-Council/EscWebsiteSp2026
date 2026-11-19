@@ -376,7 +376,7 @@
     var button = el('button', 'opp-btn opp-btn--block');
     button.type = 'button';
     button.textContent = 'See all ' + num(count);
-    button.setAttribute('aria-label', 'See all ' + count + ' ' + cat.label.toLowerCase());
+    button.setAttribute('aria-label', 'See all ' + num(count) + ' ' + cat.label.toLowerCase());
     button.addEventListener('click', function () {
       go(cat.key);
     });
