@@ -235,7 +235,8 @@ class Palette {
       {
         class: 'esc-search-close',
         type: 'button',
-        'aria-label': 'Close search',
+        // The accessible name has to contain the visible "esc" (WCAG 2.5.3).
+        'aria-label': 'Close search with Esc',
         onclick: () => this.close(),
       },
       h('kbd', { text: 'esc' }),
@@ -641,12 +642,20 @@ function triggerButton(variant) {
     {
       type: 'button',
       class: `esc-search-trigger${variant ? ` esc-search-trigger--${variant}` : ''}`,
-      'aria-label': 'Search the site',
+      // The title bar button is icon only, so it needs a label of its own. The
+      // nav button names itself from its text instead: an aria-label there
+      // would not contain the visible shortcut hint (WCAG 2.5.3).
+      'aria-label': variant === 'bar' ? 'Search the site' : undefined,
       'aria-keyshortcuts': isMac ? 'Meta+K' : 'Control+K',
       'data-esc-search-open': '',
     },
     icon('search'),
-    h('span', { class: 'esc-search-trigger-label', text: 'Search' }),
+    h(
+      'span',
+      { class: 'esc-search-trigger-label' },
+      'Search',
+      h('span', { class: 'esc-search-sr', text: ' the site' }),
+    ),
     h('kbd', { 'aria-hidden': 'true', text: SHORTCUT }),
   );
   return button;
